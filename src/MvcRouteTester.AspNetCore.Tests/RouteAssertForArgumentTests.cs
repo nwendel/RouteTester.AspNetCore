@@ -1,4 +1,4 @@
-#region License
+﻿#region License
 // Copyright (c) Niklas Wendel 2018
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
@@ -13,10 +13,11 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using System.Net.Http;
+
+using System;
 using Microsoft.AspNetCore.TestHost;
-using Xunit;
 using TestWebApplication.Controllers;
+using Xunit;
 
 namespace MvcRouteTester.AspNetCore.Tests
 {
@@ -24,8 +25,9 @@ namespace MvcRouteTester.AspNetCore.Tests
     /// <summary>
     /// 
     /// </summary>
-    public class BasicRouteTests : IClassFixture<TestServerFixture>
+    public class RouteAssertForArgumentTests : IClassFixture<TestServerFixture>
     {
+
 
         /// <summary>
         /// 
@@ -35,7 +37,7 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// <summary>
         /// 
         /// </summary>
-        public BasicRouteTests(TestServerFixture testServerFixture)
+        public RouteAssertForArgumentTests(TestServerFixture testServerFixture)
         {
             _server = testServerFixture.Server;
         }
@@ -44,40 +46,44 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void CanGetSimpleAttributeRoute()
+        public void ThrowsOnNullServer()
         {
-            RouteAssert.For(
-                _server,
-                request => request.WithPathAndQuery("/simple-attribute-route"),
-                route => route.MapsTo<HomeController>(a => a.SimpleAttributeRoute()));
+            Assert.Throws<ArgumentNullException>("server", () =>
+                RouteAssert.For(
+                    null,
+                    request => request.WithPathAndQuery("/simple-attribute-route"),
+                    route => route.MapsTo<HomeController>(a => a.SimpleAttributeRoute())));
+
         }
 
         /// <summary>
         /// 
         /// </summary>
         [Fact]
-        public void CanGetSimpleAttributeRouteAsync()
+        public void ThrowsOnNullRequestBuilder()
         {
-            RouteAssert.For(
-                _server,
-                request => request.WithPathAndQuery("/simple-attribute-route-async"),
-                route => route.MapsTo<HomeController>(a => a.SimpleAttributeRouteAsync()));
+            Assert.Throws<ArgumentNullException>("requestBuilder", () =>
+                RouteAssert.For(
+                    _server,
+                    null,
+                    route => route.MapsTo<HomeController>(a => a.SimpleAttributeRoute())));
+
         }
 
         /// <summary>
         /// 
         /// </summary>
         [Fact]
-        public void CanPostSimpleAttributeRoute()
+        public void ThrowsOnNullRouteAssertBuilder()
         {
-            RouteAssert.For(
-                _server,
-                request => request
-                    .WithMethod(HttpMethod.Post)
-                    .WithPathAndQuery("/simple-attribute-route-post"),
-                route => route.MapsTo<PostController>(a => a.SimpleAttributeRoute()));
+            Assert.Throws<ArgumentNullException>("routeAssertBuilder", () =>
+                RouteAssert.For(
+                    _server,
+                    request => request.WithPathAndQuery("/simple-attribute-route"),
+                    null));
+
         }
-        
+
     }
 
 }
