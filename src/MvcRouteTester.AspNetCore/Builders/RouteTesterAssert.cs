@@ -27,7 +27,9 @@ namespace MvcRouteTester.AspNetCore.Builders
     /// <summary>
     /// 
     /// </summary>
-    public class RouteTesterAssert : IRouteAssertBuilder
+    public class RouteTesterAssert : 
+        IRouteAssertBuilder,
+        IRouteAssert
     {
 
         #region Maps To
@@ -38,7 +40,8 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// <typeparam name="TController"></typeparam>
         /// <param name="actionCallExpression"></param>
         /// <returns></returns>
-        public IRouteAssertBuilder MapsTo<TController>(Expression<Func<TController, IActionResult>> actionCallExpression) where TController : Controller
+        public IRouteAssertBuilder MapsTo<TController>(Expression<Func<TController, IActionResult>> actionCallExpression) 
+            where TController : Controller
         {
             return this;
         }
@@ -49,7 +52,8 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// <typeparam name="TController"></typeparam>
         /// <param name="actionCallExpression"></param>
         /// <returns></returns>
-        public IRouteAssertBuilder MapsTo<TController>(Expression<Func<TController, Task<IActionResult>>> actionCallExpression) where TController : Controller
+        public IRouteAssertBuilder MapsTo<TController>(Expression<Func<TController, Task<IActionResult>>> actionCallExpression) 
+            where TController : Controller
         {
             return this;
         }
