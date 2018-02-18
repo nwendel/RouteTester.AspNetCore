@@ -69,10 +69,14 @@ namespace MvcRouteTester.AspNetCore.Internal
             {
                 ValueProviderFactories = _valueProviderFactories
             };
+            var controllerActionDescriptor = controllerContext.ActionDescriptor;
+            var controllerTypeInfo = controllerActionDescriptor.ControllerTypeInfo;
+            var actionMethodInfo = controllerActionDescriptor.MethodInfo;
 
             var actionInvokeInfo = new ActionInvokeInfo
             {
-                ControllerTypeAssemblyQualifiedName = controllerContext.ActionDescriptor.ControllerTypeInfo.AssemblyQualifiedName
+                ControllerTypeAssemblyQualifiedName = controllerTypeInfo.AssemblyQualifiedName,
+                ActionMethodName = actionMethodInfo.Name
             };
 
             var jsonResult = new JsonResult(actionInvokeInfo);

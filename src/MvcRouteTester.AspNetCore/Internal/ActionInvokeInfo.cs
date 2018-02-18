@@ -29,6 +29,11 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// </summary>
         public string ControllerTypeAssemblyQualifiedName { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ActionMethodName { get; set; }
+
         #endregion
 
     }

@@ -7,6 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.0.1" />
+    <PackageReference Include="xunit.assert" Version="2.3.1" />
   </ItemGroup>
 
 </Project>

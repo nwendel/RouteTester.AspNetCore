@@ -16,6 +16,7 @@
 using System.Linq.Expressions;
 using System.Net.Http;
 using Newtonsoft.Json;
+using Xunit;
 using MvcRouteTester.AspNetCore.Internal;
 
 namespace MvcRouteTester.AspNetCore.Builders
@@ -31,7 +32,7 @@ namespace MvcRouteTester.AspNetCore.Builders
 
         #region Fields
 
-        private readonly LambdaExpression _actionCallExpression;
+        private ActionInvokeInfo _expected;
 
         #endregion
 
@@ -43,7 +44,21 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// <param name="actionCallExpression"></param>
         public RouteTesterMapsToAssert(LambdaExpression actionCallExpression)
         {
-            _actionCallExpression = actionCallExpression;
+            ParseActionCallExpression(actionCallExpression);
+        }
+
+        #endregion
+
+        #region Parse Action Call Expression
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="actionCallExpression"></param>
+        private void ParseActionCallExpression(LambdaExpression actionCallExpression)
+        {
+            var parser = new RouteExpressionParser();
+            _expected = parser.Parse(actionCallExpression);
         }
 
         #endregion
@@ -60,6 +75,10 @@ namespace MvcRouteTester.AspNetCore.Builders
 
             var json = responseMessage.Content.ReadAsStringAsync().Result;
             var actionInvokeInfo = JsonConvert.DeserializeObject<ActionInvokeInfo>(json);
+
+            // TODO: Is this how I want to check this?
+            Assert.Equal(_expected.ControllerTypeAssemblyQualifiedName, actionInvokeInfo.ControllerTypeAssemblyQualifiedName);
+            Assert.Equal(_expected.ActionMethodName, actionInvokeInfo.ActionMethodName);
         }
 
         #endregion
