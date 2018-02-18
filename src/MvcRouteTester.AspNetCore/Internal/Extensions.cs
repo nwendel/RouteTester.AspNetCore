@@ -36,6 +36,10 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <param name="predicate"></param>
         public static void RemoveWhere<TItem>(this ICollection<TItem> self, Func<TItem, bool> predicate)
         {
+            if (self == null)
+            {
+                throw new ArgumentNullException(nameof(self));
+            }
             if (predicate == null)
             {
                 throw new ArgumentNullException(nameof(predicate));
@@ -57,6 +61,10 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <param name="items"></param>
         public static void RemoveRange<TItem>(this ICollection<TItem> self, IEnumerable<TItem> items)
         {
+            if (self == null)
+            {
+                throw new ArgumentNullException(nameof(self));
+            }
             if (items == null)
             {
                 throw new ArgumentNullException(nameof(items));
