@@ -35,6 +35,16 @@ namespace TestWebApplication.Controllers
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("invalid/static")]
+        public static IActionResult Static()
+        {
+            throw new NotImplementedException();
+        }
+
     }
 
 }
