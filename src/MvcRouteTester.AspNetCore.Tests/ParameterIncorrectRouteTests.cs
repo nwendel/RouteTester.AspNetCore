@@ -13,33 +13,45 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-namespace MvcRouteTester.AspNetCore.Internal
+using Microsoft.AspNetCore.TestHost;
+using Xunit;
+using Xunit.Sdk;
+using TestWebApplication.Controllers;
+
+namespace MvcRouteTester.AspNetCore.Tests
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class ActionInvokeInfo
+    public class ParameterIncorrectRouteTests : IClassFixture<TestServerFixture>
     {
 
-        #region Properties
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly TestServer _server;
 
         /// <summary>
         /// 
         /// </summary>
-        public string ControllerTypeName { get; set; }
+        public ParameterIncorrectRouteTests(TestServerFixture testServerFixture)
+        {
+            _server = testServerFixture.Server;
+        }
 
         /// <summary>
         /// 
         /// </summary>
-        public string ActionMethodName { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string[] ParameterTypeNames { get; set; }
-
-        #endregion
+        [Fact]
+        public void ThrowsOnMapsToIncorrectController()
+        {
+            Assert.Throws<EqualException>(() =>
+                RouteAssert.For(
+                    _server,
+                    request => request.WithPathAndQuery("/parameter/same-name-with-string"),
+                    route => route.MapsTo<ParameterController>(a => a.SameName(null, default(int)))));
+        }
 
     }
 

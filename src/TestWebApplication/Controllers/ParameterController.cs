@@ -13,33 +13,40 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-namespace MvcRouteTester.AspNetCore.Internal
+using System;
+using Microsoft.AspNetCore.Mvc;
+
+namespace TestWebApplication.Controllers
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class ActionInvokeInfo
+    public class ParameterController : Controller
     {
-
-        #region Properties
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameter1"></param>
+        /// <param name="parameter2"></param>
+        /// <returns></returns>
+        [HttpGet("parameter/same-name-with-string")]
+        public IActionResult SameName(string parameter1, string parameter2)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// 
         /// </summary>
-        public string ControllerTypeName { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string ActionMethodName { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string[] ParameterTypeNames { get; set; }
-
-        #endregion
+        /// <param name="parameter1"></param>
+        /// <param name="parameter2"></param>
+        /// <returns></returns>
+        [HttpGet("parameter/same-name-with-int")]
+        public IActionResult SameName(string parameter1, int parameter2)
+        {
+            throw new NotImplementedException();
+        }
 
     }
 

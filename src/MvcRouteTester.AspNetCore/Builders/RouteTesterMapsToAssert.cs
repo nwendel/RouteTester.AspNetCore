@@ -76,9 +76,14 @@ namespace MvcRouteTester.AspNetCore.Builders
             var json = responseMessage.Content.ReadAsStringAsync().Result;
             var actionInvokeInfo = JsonConvert.DeserializeObject<ActionInvokeInfo>(json);
 
-            // TODO: Is this how I want to check this?
-            Assert.Equal(_expected.ControllerTypeAssemblyQualifiedName, actionInvokeInfo.ControllerTypeAssemblyQualifiedName);
+            // TODO: Is this how I want to check?
+            Assert.Equal(_expected.ControllerTypeName, actionInvokeInfo.ControllerTypeName);
             Assert.Equal(_expected.ActionMethodName, actionInvokeInfo.ActionMethodName);
+            Assert.Equal(_expected.ParameterTypeNames.Length, actionInvokeInfo.ParameterTypeNames.Length);
+            for (var ix = 0; ix < _expected.ParameterTypeNames.Length; ix++)
+            {
+                Assert.Equal(_expected.ParameterTypeNames[ix], actionInvokeInfo.ParameterTypeNames[ix]);
+            }
         }
 
         #endregion

@@ -14,6 +14,7 @@
 // limitations under the License.
 #endregion
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace MvcRouteTester.AspNetCore.Internal
@@ -39,8 +40,11 @@ namespace MvcRouteTester.AspNetCore.Internal
 
             var result = new ActionInvokeInfo
             {
-                ControllerTypeAssemblyQualifiedName = methodInfo.ReflectedType.AssemblyQualifiedName,
-                ActionMethodName = methodInfo.Name
+                ControllerTypeName = methodInfo.ReflectedType.AssemblyQualifiedName,
+                ActionMethodName = methodInfo.Name,
+                ParameterTypeNames = methodInfo.GetParameters()
+                    .Select(p => p.ParameterType.AssemblyQualifiedName)
+                    .ToArray()
             };
             return result;
         }

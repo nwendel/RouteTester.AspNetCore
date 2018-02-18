@@ -14,6 +14,7 @@
 // limitations under the License.
 #endregion
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
@@ -75,8 +76,11 @@ namespace MvcRouteTester.AspNetCore.Internal
 
             var actionInvokeInfo = new ActionInvokeInfo
             {
-                ControllerTypeAssemblyQualifiedName = controllerTypeInfo.AssemblyQualifiedName,
-                ActionMethodName = actionMethodInfo.Name
+                ControllerTypeName = controllerTypeInfo.AssemblyQualifiedName,
+                ActionMethodName = actionMethodInfo.Name,
+                ParameterTypeNames = actionMethodInfo.GetParameters()
+                    .Select(p => p.ParameterType.AssemblyQualifiedName)
+                    .ToArray()
             };
 
             var jsonResult = new JsonResult(actionInvokeInfo);
