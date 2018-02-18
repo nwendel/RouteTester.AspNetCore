@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+
+using System.Net.Http;
 using Microsoft.AspNetCore.TestHost;
 using Xunit;
 using TestWebApplication.Controllers;
@@ -43,7 +45,7 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void CanGetSimpleRoute()
+        public void CanGetSimpleAttributeRoute()
         {
             RouteAssert.For(
                 _server,
@@ -55,12 +57,26 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void CanGetSimpleAsyncRoute()
+        public void CanGetSimpleAttributeRouteAsync()
         {
             RouteAssert.For(
                 _server,
                 request => request.WithPathAndQuery("/simple-attribute-route-async"),
                 route => route.MapsTo<HomeController>(a => a.SimpleAttributeRouteAsync()));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanPostSimpleAttributeRoute()
+        {
+            RouteAssert.For(
+                _server,
+                request => request
+                    .WithMethod(HttpMethod.Post)
+                    .WithPathAndQuery("/simple-attribute-route-post"),
+                route => route.MapsTo<PostController>(a => a.SimpleAttributeRoute()));
         }
         
     }
