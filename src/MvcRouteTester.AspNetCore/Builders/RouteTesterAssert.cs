@@ -18,8 +18,6 @@ using System.Linq.Expressions;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using MvcRouteTester.AspNetCore.Internal;
 
 namespace MvcRouteTester.AspNetCore.Builders
 {
@@ -32,6 +30,12 @@ namespace MvcRouteTester.AspNetCore.Builders
         IRouteAssert
     {
 
+        #region Fields
+
+        private IRouteAssert _routeAssert;
+
+        #endregion
+
         #region Maps To
 
         /// <summary>
@@ -40,10 +44,10 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// <typeparam name="TController"></typeparam>
         /// <param name="actionCallExpression"></param>
         /// <returns></returns>
-        public IRouteAssertBuilder MapsTo<TController>(Expression<Func<TController, IActionResult>> actionCallExpression) 
+        public IRouteAssertMapsToBuilder MapsTo<TController>(Expression<Func<TController, IActionResult>> actionCallExpression) 
             where TController : Controller
         {
-            return this;
+            return MapsToCore(actionCallExpression);
         }
 
         /// <summary>
@@ -52,10 +56,22 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// <typeparam name="TController"></typeparam>
         /// <param name="actionCallExpression"></param>
         /// <returns></returns>
-        public IRouteAssertBuilder MapsTo<TController>(Expression<Func<TController, Task<IActionResult>>> actionCallExpression) 
+        public IRouteAssertMapsToBuilder MapsTo<TController>(Expression<Func<TController, Task<IActionResult>>> actionCallExpression) 
             where TController : Controller
         {
-            return this;
+            return MapsToCore(actionCallExpression);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="actionCallExpression"></param>
+        /// <returns></returns>
+        private IRouteAssertMapsToBuilder MapsToCore(LambdaExpression actionCallExpression)
+        {
+            var builder = new RouteTesterMapsToAssert(actionCallExpression);
+            _routeAssert = builder;
+            return builder;
         }
 
         #endregion
@@ -68,11 +84,7 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// <param name="responseMessage"></param>
         public void Ensure(HttpResponseMessage responseMessage)
         {
-            responseMessage.EnsureSuccessStatusCode();
-
-            var json = responseMessage.Content.ReadAsStringAsync().Result;
-            var actionInvokeInfo = JsonConvert.DeserializeObject<ActionInvokeInfo>(json);
-
+            _routeAssert.Ensure(responseMessage);
         }
 
         #endregion

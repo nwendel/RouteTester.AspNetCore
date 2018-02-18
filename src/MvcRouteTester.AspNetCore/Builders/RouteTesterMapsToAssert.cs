@@ -13,7 +13,10 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System.Linq.Expressions;
 using System.Net.Http;
+using Newtonsoft.Json;
+using MvcRouteTester.AspNetCore.Internal;
 
 namespace MvcRouteTester.AspNetCore.Builders
 {
@@ -21,8 +24,29 @@ namespace MvcRouteTester.AspNetCore.Builders
     /// <summary>
     /// 
     /// </summary>
-    public class RouteTesterMapsToAssert : IRouteAssert
+    public class RouteTesterMapsToAssert :
+        IRouteAssertMapsToBuilder,
+        IRouteAssert
     {
+
+        #region Fields
+
+        private readonly LambdaExpression _actionCallExpression;
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="actionCallExpression"></param>
+        public RouteTesterMapsToAssert(LambdaExpression actionCallExpression)
+        {
+            _actionCallExpression = actionCallExpression;
+        }
+
+        #endregion
 
         #region Ensure
 
@@ -32,6 +56,10 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// <param name="responseMessage"></param>
         public void Ensure(HttpResponseMessage responseMessage)
         {
+            responseMessage.EnsureSuccessStatusCode();
+
+            var json = responseMessage.Content.ReadAsStringAsync().Result;
+            var actionInvokeInfo = JsonConvert.DeserializeObject<ActionInvokeInfo>(json);
         }
 
         #endregion
