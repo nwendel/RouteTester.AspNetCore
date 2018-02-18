@@ -18,6 +18,8 @@ using System.Linq.Expressions;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using MvcRouteTester.AspNetCore.Internal;
 
 namespace MvcRouteTester.AspNetCore.Builders
 {
@@ -63,6 +65,10 @@ namespace MvcRouteTester.AspNetCore.Builders
         public void Ensure(HttpResponseMessage responseMessage)
         {
             responseMessage.EnsureSuccessStatusCode();
+
+            var json = responseMessage.Content.ReadAsStringAsync().Result;
+            var actionInvokeInfo = JsonConvert.DeserializeObject<ActionInvokeInfo>(json);
+
         }
 
         #endregion

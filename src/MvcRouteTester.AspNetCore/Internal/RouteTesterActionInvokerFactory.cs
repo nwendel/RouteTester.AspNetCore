@@ -15,7 +15,9 @@
 #endregion
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Mvc.Formatters.Json.Internal;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.Options;
 
 namespace MvcRouteTester.AspNetCore.Internal
 {
@@ -26,6 +28,30 @@ namespace MvcRouteTester.AspNetCore.Internal
     public class RouteTesterActionInvokerFactory : IActionInvokerFactory
     {
 
+        #region Dependencies
+
+        private readonly IOptions<MvcOptions> _mvcOptions;
+        private readonly JsonResultExecutor _jsonResultExecutor;
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mvcOptions"></param>
+        /// <param name="jsonResultExecutor"></param>
+        public RouteTesterActionInvokerFactory(
+            IOptions<MvcOptions> mvcOptions, 
+            JsonResultExecutor jsonResultExecutor)
+        {
+            _mvcOptions = mvcOptions;
+            _jsonResultExecutor = jsonResultExecutor;
+        }
+
+        #endregion
+
         #region Create Invoker
 
         /// <summary>
@@ -35,7 +61,9 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <returns></returns>
         public IActionInvoker CreateInvoker(ActionContext actionContext)
         {
-            return new RouteTesterActionInvoker();
+            var valueProviderFactories = _mvcOptions.Value.ValueProviderFactories;
+
+            return new RouteTesterActionInvoker(actionContext, valueProviderFactories, _jsonResultExecutor);
         }
 
         #endregion

@@ -13,8 +13,12 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Mvc.Formatters.Json.Internal;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace MvcRouteTester.AspNetCore.Internal
 {
@@ -25,15 +29,54 @@ namespace MvcRouteTester.AspNetCore.Internal
     public class RouteTesterActionInvoker : IActionInvoker
     {
 
+        #region Dependencies
+
+        private readonly ActionContext _actionContext;
+        private readonly IList<IValueProviderFactory> _valueProviderFactories;
+        private readonly JsonResultExecutor _jsonResultExecutor;
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="actionContext"></param>
+        /// <param name="valueProviderFactories"></param>
+        /// <param name="jsonResultExecutor"></param>
+        public RouteTesterActionInvoker(
+            ActionContext actionContext, 
+            IList<IValueProviderFactory> valueProviderFactories, 
+            JsonResultExecutor jsonResultExecutor)
+        {
+            _actionContext = actionContext;
+            _valueProviderFactories = valueProviderFactories;
+            _jsonResultExecutor = jsonResultExecutor;
+        }
+
+        #endregion
+
         #region Invoke Async
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public Task InvokeAsync()
+        public async Task InvokeAsync()
         {
-            return Task.CompletedTask;
+            var controllerContext = new ControllerContext(_actionContext)
+            {
+                ValueProviderFactories = _valueProviderFactories
+            };
+
+            var actionInvokeInfo = new ActionInvokeInfo
+            {
+                ControllerTypeAssemblyQualifiedName = controllerContext.ActionDescriptor.ControllerTypeInfo.AssemblyQualifiedName
+            };
+
+            var jsonResult = new JsonResult(actionInvokeInfo);
+            await _jsonResultExecutor.ExecuteAsync(_actionContext, jsonResult);
         }
 
         #endregion
