@@ -37,8 +37,8 @@ namespace MvcRouteTester.AspNetCore
         {
             serviceCollection.RemoveWhere(x => x.ImplementationType == typeof(AuthorizationApplicationModelProvider));
 
-            serviceCollection.RemoveWhere(x => x.ServiceType == typeof(IActionInvokerFactory));
-            serviceCollection.AddSingleton<IActionInvokerFactory, RouteTestingActionInvokerFactory>();
+            //serviceCollection.RemoveWhere(x => x.ServiceType == typeof(IActionInvokerFactory));
+            //serviceCollection.AddSingleton<IActionInvokerFactory, RouteTestingActionInvokerFactory>();
         }
 
         #endregion

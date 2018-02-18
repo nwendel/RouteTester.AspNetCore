@@ -35,6 +35,9 @@ namespace MvcRouteTester.AspNetCore
         /// <param name="routeAssertBuilder"></param>
         public static void For(TestServer server, Action<IRequestBuilder> requestBuilder, Action<IRouteAssertBuilder> routeAssertBuilder)
         {
+            var request = new RouteTesterRequest();
+            requestBuilder(request);
+            var httpResponse = request.Execute(server);
         }
 
         #endregion

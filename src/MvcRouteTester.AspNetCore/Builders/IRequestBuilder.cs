@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System.Net.Http;
 using MvcRouteTester.AspNetCore.Internal;
 
 namespace MvcRouteTester.AspNetCore.Builders
@@ -23,6 +24,17 @@ namespace MvcRouteTester.AspNetCore.Builders
     /// </summary>
     public interface IRequestBuilder : IFluentInterface
     {
+
+        #region With Method
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="method"></param>
+        /// <returns></returns>
+        IRequestBuilder WithMethod(HttpMethod method);
+
+        #endregion
 
         #region With Path And Query
 
