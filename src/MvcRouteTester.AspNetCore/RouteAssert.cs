@@ -35,11 +35,26 @@ namespace MvcRouteTester.AspNetCore
         /// <param name="routeAssertBuilder"></param>
         public static void For(TestServer server, Action<IRequestBuilder> requestBuilder, Action<IRouteAssertBuilder> routeAssertBuilder)
         {
+            if (server == null)
+            {
+                throw new ArgumentNullException(nameof(server));
+            }
+            if (requestBuilder == null)
+            {
+                throw new ArgumentNullException(nameof(requestBuilder));
+            }
+            if (routeAssertBuilder == null)
+            {
+                throw new ArgumentNullException(nameof(routeAssertBuilder));
+            }
+
             var request = new RouteTesterRequest();
             requestBuilder(request);
-            var httpResponse = request.Execute(server);
+            var routeAssert = new RouteTesterAssert();
+            routeAssertBuilder(routeAssert);
 
-            httpResponse.EnsureSuccessStatusCode();
+            var responseMessage = request.Execute(server);
+            routeAssert.Ensure(responseMessage);
         }
 
         #endregion
