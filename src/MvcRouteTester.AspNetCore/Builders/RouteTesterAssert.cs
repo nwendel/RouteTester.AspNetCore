@@ -76,6 +76,19 @@ namespace MvcRouteTester.AspNetCore.Builders
 
         #endregion
 
+        #region Not Found
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void NotFound()
+        {
+            var builder = new RouteTesterNotFoundAssert();
+            _routeAssert = builder;
+        }
+
+        #endregion
+
         #region Ensure
 
         /// <summary>

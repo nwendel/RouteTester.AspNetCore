@@ -77,7 +77,7 @@ namespace MvcRouteTester.AspNetCore.Tests
                     .WithPathAndQuery("/simple-attribute-route-post"),
                 route => route.MapsTo<PostController>(a => a.SimpleAttributeRoute()));
         }
-        
+
     }
 
 }

@@ -16,7 +16,6 @@
 using Microsoft.AspNetCore.TestHost;
 using Xunit;
 using Xunit.Sdk;
-using TestWebApplication.Controllers;
 
 namespace MvcRouteTester.AspNetCore.Tests
 {
@@ -24,7 +23,7 @@ namespace MvcRouteTester.AspNetCore.Tests
     /// <summary>
     /// 
     /// </summary>
-    public class BasicIncorrectRouteTests : IClassFixture<TestServerFixture>
+    public class NotFoundRouteTests : IClassFixture<TestServerFixture>
     {
 
         /// <summary>
@@ -35,7 +34,7 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// <summary>
         /// 
         /// </summary>
-        public BasicIncorrectRouteTests(TestServerFixture testServerFixture)
+        public NotFoundRouteTests(TestServerFixture testServerFixture)
         {
             _server = testServerFixture.Server;
         }
@@ -44,27 +43,27 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void ThrowsOnMapsToIncorrectController()
+        public void CanRouteNotFound()
         {
-            Assert.Throws<EqualException>(() =>
-                RouteAssert.For(
-                    _server,
-                    request => request.WithPathAndQuery("/simple-attribute-route"),
-                    route => route.MapsTo<InvalidController>(a => a.Default())));
+            RouteAssert.For(
+                _server,
+                request => request.WithPathAndQuery("/non-existant-route"),
+                route => route.NotFound());
         }
 
         /// <summary>
         /// 
         /// </summary>
         [Fact]
-        public void ThrowsOnMapsToIncorrectActionMethodName()
+        public void ThrowsOnFound()
         {
-            Assert.Throws<EqualException>(() =>
+            Assert.Throws<FalseException>(() =>
                 RouteAssert.For(
                     _server,
                     request => request.WithPathAndQuery("/simple-attribute-route"),
-                    route => route.MapsTo<HomeController>(a => a.SimpleAttributeRouteAsync())));
+                    route => route.NotFound()));
         }
+
 
     }
 

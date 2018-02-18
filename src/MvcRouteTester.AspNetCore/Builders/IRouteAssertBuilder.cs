@@ -49,6 +49,15 @@ namespace MvcRouteTester.AspNetCore.Builders
 
         #endregion
 
+        #region Not Found
+
+        /// <summary>
+        /// 
+        /// </summary>
+        void NotFound();
+
+        #endregion
+
     }
 
 }
