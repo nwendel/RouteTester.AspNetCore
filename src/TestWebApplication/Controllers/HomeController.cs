@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,7 +33,7 @@ namespace TestWebApplication.Controllers
         [HttpGet("simple-attribute-route")]
         public IActionResult SimpleAttributeRoute()
         {
-            return Content(nameof(SimpleAttributeRoute));
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -42,9 +43,9 @@ namespace TestWebApplication.Controllers
         [HttpGet("simple-attribute-route-async")]
         public Task<IActionResult> SimpleAttributeRouteAsync()
         {
-            return Task.FromResult<IActionResult>(Content(nameof(SimpleAttributeRouteAsync)));
+            throw new NotImplementedException();
         }
-        
+
     }
 
 }

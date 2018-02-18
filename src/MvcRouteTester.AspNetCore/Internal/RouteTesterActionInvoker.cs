@@ -13,10 +13,8 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using System;
-using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Abstractions;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace MvcRouteTester.AspNetCore.Internal
 {
@@ -24,19 +22,18 @@ namespace MvcRouteTester.AspNetCore.Internal
     /// <summary>
     /// 
     /// </summary>
-    public class RouteTestingActionInvokerFactory : IActionInvokerFactory
+    public class RouteTesterActionInvoker : IActionInvoker
     {
 
-        #region Create Invoker
+        #region Invoke Async
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="actionContext"></param>
         /// <returns></returns>
-        public IActionInvoker CreateInvoker(ActionContext actionContext)
+        public Task InvokeAsync()
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
 
         #endregion

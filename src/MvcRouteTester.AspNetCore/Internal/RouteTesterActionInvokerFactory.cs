@@ -13,27 +13,32 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using System;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
-namespace TestWebApplication.Controllers
+namespace MvcRouteTester.AspNetCore.Internal
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class PostController : Controller
+    public class RouteTesterActionInvokerFactory : IActionInvokerFactory
     {
+
+        #region Create Invoker
 
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="actionContext"></param>
         /// <returns></returns>
-        [HttpPost("simple-attribute-route-post")]
-        public IActionResult SimpleAttributeRoute()
+        public IActionInvoker CreateInvoker(ActionContext actionContext)
         {
-            throw new NotImplementedException();
+            return new RouteTesterActionInvoker();
         }
+
+        #endregion
 
     }
 
