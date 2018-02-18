@@ -38,6 +38,8 @@ namespace MvcRouteTester.AspNetCore
             var request = new RouteTesterRequest();
             requestBuilder(request);
             var httpResponse = request.Execute(server);
+
+            httpResponse.EnsureSuccessStatusCode();
         }
 
         #endregion

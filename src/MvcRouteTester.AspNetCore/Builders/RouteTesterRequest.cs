@@ -14,6 +14,7 @@
 // limitations under the License.
 #endregion
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using Microsoft.AspNetCore.TestHost;
 
@@ -77,14 +78,20 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// <returns></returns>
         public HttpResponseMessage Execute(TestServer server)
         {
-            var request = server
-                .CreateRequest(_pathAndQuery)
-                .And(x =>
+            var client = server.CreateClient();
+            var requestMessage = new HttpRequestMessage(_method, _pathAndQuery);
+
+            if (_method == HttpMethod.Post)
+            {
+                var formData = new Dictionary<string, string>
                 {
-                    x.Method = _method;
-                })
-                .GetAsync();
-            var response = request.Result;
+                    {"FirstName", "John"},
+                    {"LastName", "Doe"}
+                };
+                requestMessage.Content = new FormUrlEncodedContent(formData);
+            }
+
+            var response = client.SendAsync(requestMessage).Result;
             return response;
         }
 
