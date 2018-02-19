@@ -40,11 +40,7 @@ namespace MvcRouteTester.AspNetCore.Internal
 
             var result = new ActionInvokeInfo
             {
-                ControllerTypeName = methodInfo.ReflectedType.AssemblyQualifiedName,
-                ActionMethodName = methodInfo.Name,
-                ParameterTypeNames = methodInfo.GetParameters()
-                    .Select(p => p.ParameterType.AssemblyQualifiedName)
-                    .ToArray()
+                ActionInfo = new ActionInfo(methodInfo)
             };
             return result;
         }
