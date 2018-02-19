@@ -77,6 +77,18 @@ namespace MvcRouteTester.AspNetCore.Tests
                 route => route.MapsTo<ParameterController>(a => a.QueryStringParameter(null)));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanRouteWithoutParameterMatchingAny()
+        {
+            RouteAssert.For(
+                _server,
+                request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
+                route => route.MapsTo<ParameterController>(a => a.QueryStringParameter(Args.Any<string>())));
+        }
+
     }
 
 }

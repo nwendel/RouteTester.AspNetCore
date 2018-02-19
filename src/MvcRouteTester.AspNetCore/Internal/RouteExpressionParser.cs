@@ -41,11 +41,30 @@ namespace MvcRouteTester.AspNetCore.Internal
             var arguments = methodCallExpression.Arguments
                 .Select(x => Expression.Lambda(x).Compile().DynamicInvoke())
                 .ToArray();
+            var isAny = methodCallExpression.Arguments
+                .Select(x =>
+                {
+                    if(x is MethodCallExpression call)
+                    {
+                        if(call.Method.ReturnType == null)
+                        {
+                            return false;
+                        }
+                        var anyMethod = typeof(Args).GetMethod(nameof(Args.Any)).MakeGenericMethod(new[] { call.Method.ReturnType });
+                        if (call.Method == anyMethod)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                })
+                .ToArray();
 
             var result = new ActionInvokeInfo
             {
                 ActionInfo = new ActionInfo(methodInfo),
-                Arguments = arguments
+                Arguments = arguments,
+                IsAny = isAny
             };
             return result;
         }

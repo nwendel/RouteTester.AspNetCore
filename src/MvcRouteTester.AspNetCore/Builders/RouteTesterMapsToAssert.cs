@@ -91,9 +91,12 @@ namespace MvcRouteTester.AspNetCore.Builders
                 Assert.Equal(
                     _expected.ActionInfo.ParameterTypeNameInfos[ix].AssemblyQualifiedName, 
                     actionInvokeInfo.ActionInfo.ParameterTypeNameInfos[ix].AssemblyQualifiedName);
-                Assert.Equal(
-                    _expected.Arguments[ix],
-                    actionInvokeInfo.Arguments[ix]);
+                if (!_expected.IsAny[ix])
+                {
+                    Assert.Equal(
+                        _expected.Arguments[ix],
+                        actionInvokeInfo.Arguments[ix]);
+                }
             }
         }
 

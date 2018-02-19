@@ -13,31 +13,26 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-namespace MvcRouteTester.AspNetCore.Internal
+namespace MvcRouteTester.AspNetCore
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class ActionInvokeInfo
+    public static class Args
     {
 
-        #region Properties
+        #region Any
 
         /// <summary>
         /// 
         /// </summary>
-        public ActionInfo ActionInfo { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public object[] Arguments { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool[] IsAny { get; set; }
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T Any<T>()
+        {
+            return default(T);
+        }
 
         #endregion
 
