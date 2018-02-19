@@ -44,19 +44,13 @@ namespace MvcRouteTester.AspNetCore.Internal
             var isAny = methodCallExpression.Arguments
                 .Select(x =>
                 {
-                    if(x is MethodCallExpression call)
+                    if (!(x is MethodCallExpression call))
                     {
-                        if(call.Method.ReturnType == null)
-                        {
-                            return false;
-                        }
-                        var anyMethod = typeof(Args).GetMethod(nameof(Args.Any)).MakeGenericMethod(new[] { call.Method.ReturnType });
-                        if (call.Method == anyMethod)
-                        {
-                            return true;
-                        }
+                        return false;
                     }
-                    return false;
+                    var anyMethod = typeof(Args).GetMethod(nameof(Args.Any)).MakeGenericMethod(call.Method.ReturnType);
+                    var isAnyCall = call.Method == anyMethod;
+                    return isAnyCall;
                 })
                 .ToArray();
 

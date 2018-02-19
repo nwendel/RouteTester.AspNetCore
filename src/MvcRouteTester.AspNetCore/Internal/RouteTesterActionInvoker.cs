@@ -82,26 +82,37 @@ namespace MvcRouteTester.AspNetCore.Internal
             };
             var controllerActionDescriptor = controllerContext.ActionDescriptor;
             var actionMethodInfo = controllerActionDescriptor.MethodInfo;
+            var arguments = BindArguments(controllerContext);
 
+            var actionInvokeInfo = new ActionInvokeInfo
+            {
+                ActionInfo = new ActionInfo(actionMethodInfo),
+                Arguments = arguments
+            };
+
+            var jsonResult = new JsonResult(actionInvokeInfo);
+            await _jsonResultExecutor.ExecuteAsync(_actionContext, jsonResult);
+        }
+
+        #endregion
+
+        #region Bind Arguments
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="controllerContext"></param>
+        /// <returns></returns>
+        private object[] BindArguments(ControllerContext controllerContext)
+        {
             (ControllerActionInvokerCacheEntry, IFilterMetadata[]) cacheEntry = _controllerActionInvokerCache.GetCachedResult(controllerContext);
             var actionMethodExecutor = cacheEntry.Item1.GetActionMethodExecutor();
             var arguments = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
             var controllerActionIvoker = (ControllerActionInvoker)_actionInvokerFactory.CreateInvoker(_actionContext);
             var binder = cacheEntry.Item1.ControllerBinderDelegate;
-            if(binder != null)
-            {
-                binder(controllerContext, new object(), arguments).Wait();
-            }
+            binder?.Invoke(controllerContext, new object(), arguments).Wait();
             var orderedArguments = controllerActionIvoker.PrepareArguments(arguments, actionMethodExecutor);
-
-            var actionInvokeInfo = new ActionInvokeInfo
-            {
-                ActionInfo = new ActionInfo(actionMethodInfo),
-                Arguments = orderedArguments
-            };
-
-            var jsonResult = new JsonResult(actionInvokeInfo);
-            await _jsonResultExecutor.ExecuteAsync(_actionContext, jsonResult);
+            return orderedArguments;
         }
 
         #endregion

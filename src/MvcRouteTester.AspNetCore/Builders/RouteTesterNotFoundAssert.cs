@@ -36,7 +36,7 @@ namespace MvcRouteTester.AspNetCore.Builders
         {
             if (responseMessage.StatusCode != HttpStatusCode.NotFound)
             {
-                // TODO: Change this?
+                // TODO: Rewrite!
                 Assert.False(true, "Status code is not 404 (Not Found)");
             }
         }

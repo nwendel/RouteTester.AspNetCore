@@ -28,7 +28,7 @@ namespace MvcRouteTester.AspNetCore.Internal
 
         #region Get Action Method Executor
 
-        private static PropertyInfo _actionMethodExecutorPropertyInfo = typeof(ControllerActionInvokerCacheEntry).GetProperty("ActionMethodExecutor", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly PropertyInfo _actionMethodExecutorPropertyInfo = typeof(ControllerActionInvokerCacheEntry).GetProperty("ActionMethodExecutor", BindingFlags.NonPublic | BindingFlags.Instance);
 
         /// <summary>
         /// 
@@ -45,12 +45,14 @@ namespace MvcRouteTester.AspNetCore.Internal
 
         #region prepare Arguments
 
-        private static MethodInfo _prepareArgumentsMethodInfo = typeof(ControllerActionInvoker).GetMethod("PrepareArguments", BindingFlags.NonPublic | BindingFlags.Static);
+        private static readonly MethodInfo _prepareArgumentsMethodInfo = typeof(ControllerActionInvoker).GetMethod("PrepareArguments", BindingFlags.NonPublic | BindingFlags.Static);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="self"></param>
+        /// <param name="arguments"></param>
+        /// <param name="actionMethodExecutor"></param>
         /// <returns></returns>
         public static object[] PrepareArguments(this ControllerActionInvoker self, Dictionary<string, object> arguments, object actionMethodExecutor)
         {
