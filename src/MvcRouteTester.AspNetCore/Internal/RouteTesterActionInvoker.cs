@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Formatters.Json.Internal;
 using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -105,7 +104,7 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <returns></returns>
         private object[] BindArguments(ControllerContext controllerContext)
         {
-            (ControllerActionInvokerCacheEntry cacheEntry, IFilterMetadata[] _) = _controllerActionInvokerCache.GetCachedResult(controllerContext);
+            (var cacheEntry, var _) = _controllerActionInvokerCache.GetCachedResult(controllerContext);
             var actionMethodExecutor = cacheEntry.GetActionMethodExecutor();
             var arguments = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
             var controllerActionInvoker = (ControllerActionInvoker)_actionInvokerFactory.CreateInvoker(_actionContext);
