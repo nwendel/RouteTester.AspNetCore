@@ -34,7 +34,7 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <summary>
         /// 
         /// </summary>
-        public Dictionary<string, object> Arguments { get; set; }
+        public object[] Arguments { get; set; }
 
         #endregion
 

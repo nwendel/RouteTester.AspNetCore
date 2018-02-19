@@ -92,16 +92,12 @@ namespace MvcRouteTester.AspNetCore.Internal
             {
                 binder(controllerContext, new object(), arguments).Wait();
             }
-            controllerActionIvoker.PrepareArguments(arguments, actionMethodExecutor);
-
-
-            //_controllerActionInvoker.PrepareArguments(arguments, actionMethodExecutor);
-
-
+            var orderedArguments = controllerActionIvoker.PrepareArguments(arguments, actionMethodExecutor);
 
             var actionInvokeInfo = new ActionInvokeInfo
             {
-                ActionInfo = new ActionInfo(actionMethodInfo)
+                ActionInfo = new ActionInfo(actionMethodInfo),
+                Arguments = orderedArguments
             };
 
             var jsonResult = new JsonResult(actionInvokeInfo);

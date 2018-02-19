@@ -43,12 +43,24 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void CanRoute()
+        public void CanRouteWithParameter()
         {
             RouteAssert.For(
                 _server,
                 request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
                 route => route.MapsTo<ParameterController>(a => a.QueryStringParameter("value")));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanRouteWithoutParameter()
+        {
+            RouteAssert.For(
+                _server,
+                request => request.WithPathAndQuery("/parameter/query-string-parameter"),
+                route => route.MapsTo<ParameterController>(a => a.QueryStringParameter(null)));
         }
 
     }
