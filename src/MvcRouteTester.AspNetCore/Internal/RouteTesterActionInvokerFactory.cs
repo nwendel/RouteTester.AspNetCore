@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Formatters.Json.Internal;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.Extensions.Options;
 
 namespace MvcRouteTester.AspNetCore.Internal
@@ -32,6 +33,8 @@ namespace MvcRouteTester.AspNetCore.Internal
 
         private readonly IOptions<MvcOptions> _mvcOptions;
         private readonly JsonResultExecutor _jsonResultExecutor;
+        private readonly ControllerActionInvokerCache _controllerActionInvokerCache;
+        private readonly ActionInvokerFactory _actionInvokerFactory;
 
         #endregion
 
@@ -42,12 +45,18 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// </summary>
         /// <param name="mvcOptions"></param>
         /// <param name="jsonResultExecutor"></param>
+        /// <param name="controllerActionInvokerCache"></param>
+        /// <param name="actionInvokerFactory"></param>
         public RouteTesterActionInvokerFactory(
             IOptions<MvcOptions> mvcOptions, 
-            JsonResultExecutor jsonResultExecutor)
+            JsonResultExecutor jsonResultExecutor,
+            ControllerActionInvokerCache controllerActionInvokerCache,
+            ActionInvokerFactory actionInvokerFactory)
         {
             _mvcOptions = mvcOptions;
             _jsonResultExecutor = jsonResultExecutor;
+            _controllerActionInvokerCache = controllerActionInvokerCache;
+            _actionInvokerFactory = actionInvokerFactory;
         }
 
         #endregion
@@ -63,7 +72,7 @@ namespace MvcRouteTester.AspNetCore.Internal
         {
             var valueProviderFactories = _mvcOptions.Value.ValueProviderFactories;
 
-            return new RouteTesterActionInvoker(actionContext, valueProviderFactories, _jsonResultExecutor);
+            return new RouteTesterActionInvoker(actionContext, valueProviderFactories, _jsonResultExecutor, _controllerActionInvokerCache, _actionInvokerFactory);
         }
 
         #endregion

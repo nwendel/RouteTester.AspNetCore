@@ -39,6 +39,7 @@ namespace MvcRouteTester.AspNetCore
 
             serviceCollection.RemoveWhere(x => x.ServiceType == typeof(IActionInvokerFactory));
             serviceCollection.AddSingleton<IActionInvokerFactory, RouteTesterActionInvokerFactory>();
+            serviceCollection.AddSingleton<ActionInvokerFactory, ActionInvokerFactory>();
         }
 
         #endregion

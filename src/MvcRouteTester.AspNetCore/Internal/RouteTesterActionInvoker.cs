@@ -14,11 +14,12 @@
 // limitations under the License.
 #endregion
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Formatters.Json.Internal;
+using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace MvcRouteTester.AspNetCore.Internal
@@ -35,6 +36,8 @@ namespace MvcRouteTester.AspNetCore.Internal
         private readonly ActionContext _actionContext;
         private readonly IList<IValueProviderFactory> _valueProviderFactories;
         private readonly JsonResultExecutor _jsonResultExecutor;
+        private readonly ControllerActionInvokerCache _controllerActionInvokerCache;
+        private readonly ActionInvokerFactory _actionInvokerFactory;
 
         #endregion
 
@@ -46,14 +49,20 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <param name="actionContext"></param>
         /// <param name="valueProviderFactories"></param>
         /// <param name="jsonResultExecutor"></param>
+        /// <param name="controllerActionInvokerCache"></param>
+        /// <param name="actionInvokerFactory"></param>
         public RouteTesterActionInvoker(
             ActionContext actionContext, 
             IList<IValueProviderFactory> valueProviderFactories, 
-            JsonResultExecutor jsonResultExecutor)
+            JsonResultExecutor jsonResultExecutor,
+            ControllerActionInvokerCache controllerActionInvokerCache,
+            ActionInvokerFactory actionInvokerFactory)
         {
             _actionContext = actionContext;
             _valueProviderFactories = valueProviderFactories;
             _jsonResultExecutor = jsonResultExecutor;
+            _controllerActionInvokerCache = controllerActionInvokerCache;
+            _actionInvokerFactory = actionInvokerFactory;
         }
 
         #endregion
@@ -72,6 +81,22 @@ namespace MvcRouteTester.AspNetCore.Internal
             };
             var controllerActionDescriptor = controllerContext.ActionDescriptor;
             var actionMethodInfo = controllerActionDescriptor.MethodInfo;
+
+            (ControllerActionInvokerCacheEntry, IFilterMetadata[]) cacheEntry = _controllerActionInvokerCache.GetCachedResult(controllerContext);
+            var actionMethodExecutor = cacheEntry.Item1.GetActionMethodExecutor();
+            var arguments = new Dictionary<string, object>();
+            var controllerActionIvoker = (ControllerActionInvoker)_actionInvokerFactory.CreateInvoker(_actionContext);
+            controllerActionIvoker.PrepareArguments(arguments, actionMethodExecutor);
+            var binder = cacheEntry.Item1.ControllerBinderDelegate;
+            if(binder != null)
+            {
+                binder(controllerContext, new object(), arguments).Wait();
+            }
+            
+
+            //_controllerActionInvoker.PrepareArguments(arguments, actionMethodExecutor);
+
+
 
             var actionInvokeInfo = new ActionInvokeInfo
             {
