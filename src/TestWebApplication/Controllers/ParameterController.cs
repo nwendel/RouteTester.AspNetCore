@@ -48,6 +48,17 @@ namespace TestWebApplication.Controllers
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        [HttpGet("parameter/query-string-parameter")]
+        public IActionResult QueryStringParameter(string parameter)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 
 }

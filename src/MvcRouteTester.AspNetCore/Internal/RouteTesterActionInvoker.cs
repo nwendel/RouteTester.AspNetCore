@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -84,15 +85,15 @@ namespace MvcRouteTester.AspNetCore.Internal
 
             (ControllerActionInvokerCacheEntry, IFilterMetadata[]) cacheEntry = _controllerActionInvokerCache.GetCachedResult(controllerContext);
             var actionMethodExecutor = cacheEntry.Item1.GetActionMethodExecutor();
-            var arguments = new Dictionary<string, object>();
+            var arguments = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
             var controllerActionIvoker = (ControllerActionInvoker)_actionInvokerFactory.CreateInvoker(_actionContext);
-            controllerActionIvoker.PrepareArguments(arguments, actionMethodExecutor);
             var binder = cacheEntry.Item1.ControllerBinderDelegate;
             if(binder != null)
             {
                 binder(controllerContext, new object(), arguments).Wait();
             }
-            
+            controllerActionIvoker.PrepareArguments(arguments, actionMethodExecutor);
+
 
             //_controllerActionInvoker.PrepareArguments(arguments, actionMethodExecutor);
 

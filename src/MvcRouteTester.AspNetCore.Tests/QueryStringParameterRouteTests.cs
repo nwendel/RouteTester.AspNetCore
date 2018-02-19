@@ -13,30 +13,43 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using System.Collections.Generic;
+using Microsoft.AspNetCore.TestHost;
+using Xunit;
+using TestWebApplication.Controllers;
 
-namespace MvcRouteTester.AspNetCore.Internal
+namespace MvcRouteTester.AspNetCore.Tests
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class ActionInvokeInfo
+    public class QueryStringParameterRouteTests : IClassFixture<TestServerFixture>
     {
 
-        #region Properties
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly TestServer _server;
 
         /// <summary>
         /// 
         /// </summary>
-        public ActionInfo ActionInfo { get; set; }
+        public QueryStringParameterRouteTests(TestServerFixture testServerFixture)
+        {
+            _server = testServerFixture.Server;
+        }
 
         /// <summary>
         /// 
         /// </summary>
-        public Dictionary<string, object> Arguments { get; set; }
-
-        #endregion
+        [Fact]
+        public void CanRoute()
+        {
+            RouteAssert.For(
+                _server,
+                request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
+                route => route.MapsTo<ParameterController>(a => a.QueryStringParameter("value")));
+        }
 
     }
 
