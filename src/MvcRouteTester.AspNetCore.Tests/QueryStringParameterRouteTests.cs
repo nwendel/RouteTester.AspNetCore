@@ -16,6 +16,7 @@
 using Microsoft.AspNetCore.TestHost;
 using Xunit;
 using TestWebApplication.Controllers;
+using Xunit.Sdk;
 
 namespace MvcRouteTester.AspNetCore.Tests
 {
@@ -49,6 +50,19 @@ namespace MvcRouteTester.AspNetCore.Tests
                 _server,
                 request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
                 route => route.MapsTo<ParameterController>(a => a.QueryStringParameter("value")));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void ThrowsOnRouteWithParameterWrongValue()
+        {
+            Assert.Throws<EqualException>(() =>
+               RouteAssert.For(
+                    _server,
+                    request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
+                    route => route.MapsTo<ParameterController>(a => a.QueryStringParameter("wrong-value"))));
         }
 
         /// <summary>
