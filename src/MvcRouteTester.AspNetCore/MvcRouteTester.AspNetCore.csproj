@@ -2,6 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>MvcRouteTester.AspNetCore</PackageId>
+    <Title>MvcRouteTester.AspNetCore</Title>
+    <Description>MvcRouteTester.AspNetCore</Description>
+    <Version>0.1.0</Version>
+    <Copyright>Niklas Wendel 2018</Copyright>
+    <Authors>Niklas Wendel</Authors>
+    <PackageTags>Route;Test;AspNetCore;Mvc;UnitTest</PackageTags>
+    <PackageProjectUrl>https://github.com/nwendel/mvcroutetester.aspnetcore</PackageProjectUrl>
+    <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
   </PropertyGroup>
 
   <ItemGroup>
