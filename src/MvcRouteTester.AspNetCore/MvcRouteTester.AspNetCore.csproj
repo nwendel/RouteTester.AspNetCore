@@ -9,7 +9,7 @@
     <PackageId>MvcRouteTester.AspNetCore</PackageId>
     <Title>MvcRouteTester.AspNetCore</Title>
     <Description>MvcRouteTester.AspNetCore</Description>
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
     <Copyright>Niklas Wendel 2018</Copyright>
     <Authors>Niklas Wendel</Authors>
     <PackageTags>Route;Test;AspNetCore;Mvc;UnitTest</PackageTags>
