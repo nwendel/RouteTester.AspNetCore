@@ -38,9 +38,14 @@ namespace MvcRouteTester.AspNetCore.Internal
             var methodCallExpression = GetInstanceMethodCallExpression(actionCallExpression);
             var methodInfo = methodCallExpression.Method;
 
+            var arguments = methodCallExpression.Arguments
+                .Select(x => Expression.Lambda(x).Compile().DynamicInvoke())
+                .ToArray();
+
             var result = new ActionInvokeInfo
             {
-                ActionInfo = new ActionInfo(methodInfo)
+                ActionInfo = new ActionInfo(methodInfo),
+                Arguments = arguments
             };
             return result;
         }
