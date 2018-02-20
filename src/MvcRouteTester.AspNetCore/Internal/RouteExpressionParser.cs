@@ -33,7 +33,7 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// </summary>
         /// <param name="actionCallExpression"></param>
         /// <returns></returns>
-        public ActionInvokeInfo Parse(LambdaExpression actionCallExpression)
+        public ExpectedActionInvokeInfo Parse(LambdaExpression actionCallExpression)
         {
             var methodCallExpression = GetInstanceMethodCallExpression(actionCallExpression);
             var methodInfo = methodCallExpression.Method;
@@ -54,7 +54,7 @@ namespace MvcRouteTester.AspNetCore.Internal
                 })
                 .ToArray();
 
-            var result = new ActionInvokeInfo
+            var result = new ExpectedActionInvokeInfo
             {
                 ActionInfo = new ActionInfo(methodInfo),
                 Arguments = arguments,

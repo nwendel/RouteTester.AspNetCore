@@ -19,20 +19,10 @@ namespace MvcRouteTester.AspNetCore.Internal
     /// <summary>
     /// 
     /// </summary>
-    public class ActionInvokeInfo
+    public class ExpectedActionInvokeInfo : ActualActionInvokeInfo
     {
 
         #region Properties
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ActionInfo ActionInfo { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public object[] Arguments { get; set; }
 
         /// <summary>
         /// 

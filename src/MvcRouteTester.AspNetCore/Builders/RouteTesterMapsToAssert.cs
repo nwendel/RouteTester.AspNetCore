@@ -32,7 +32,7 @@ namespace MvcRouteTester.AspNetCore.Builders
 
         #region Fields
 
-        private ActionInvokeInfo _expected;
+        private ExpectedActionInvokeInfo _expectedActionInvokeInfo;
 
         #endregion
 
@@ -58,7 +58,7 @@ namespace MvcRouteTester.AspNetCore.Builders
         private void ParseActionCallExpression(LambdaExpression actionCallExpression)
         {
             var parser = new RouteExpressionParser();
-            _expected = parser.Parse(actionCallExpression);
+            _expectedActionInvokeInfo = parser.Parse(actionCallExpression);
         }
 
         #endregion
@@ -74,28 +74,28 @@ namespace MvcRouteTester.AspNetCore.Builders
             responseMessage.EnsureSuccessStatusCode();
 
             var json = responseMessage.Content.ReadAsStringAsync().Result;
-            var actionInvokeInfo = JsonConvert.DeserializeObject<ActionInvokeInfo>(json);
+            var actualActionInvokeInfo = JsonConvert.DeserializeObject<ActualActionInvokeInfo>(json);
 
             // TODO: Rewrite!
             Assert.Equal(
-                _expected.ActionInfo.ControllerTypeNameInfo.AssemblyQualifiedName, 
-                actionInvokeInfo.ActionInfo.ControllerTypeNameInfo.AssemblyQualifiedName);
+                _expectedActionInvokeInfo.ActionInfo.ControllerTypeNameInfo.AssemblyQualifiedName, 
+                actualActionInvokeInfo.ActionInfo.ControllerTypeNameInfo.AssemblyQualifiedName);
             Assert.Equal(
-                _expected.ActionInfo.ActionMethodName, 
-                actionInvokeInfo.ActionInfo.ActionMethodName);
+                _expectedActionInvokeInfo.ActionInfo.ActionMethodName, 
+                actualActionInvokeInfo.ActionInfo.ActionMethodName);
             Assert.Equal(
-                _expected.ActionInfo.ParameterTypeNameInfos.Length, 
-                actionInvokeInfo.ActionInfo.ParameterTypeNameInfos.Length);
-            for (var ix = 0; ix < _expected.ActionInfo.ParameterTypeNameInfos.Length; ix++)
+                _expectedActionInvokeInfo.ActionInfo.ParameterTypeNameInfos.Length, 
+                actualActionInvokeInfo.ActionInfo.ParameterTypeNameInfos.Length);
+            for (var ix = 0; ix < _expectedActionInvokeInfo.ActionInfo.ParameterTypeNameInfos.Length; ix++)
             {
                 Assert.Equal(
-                    _expected.ActionInfo.ParameterTypeNameInfos[ix].AssemblyQualifiedName, 
-                    actionInvokeInfo.ActionInfo.ParameterTypeNameInfos[ix].AssemblyQualifiedName);
-                if (!_expected.IsAny[ix])
+                    _expectedActionInvokeInfo.ActionInfo.ParameterTypeNameInfos[ix].AssemblyQualifiedName, 
+                    actualActionInvokeInfo.ActionInfo.ParameterTypeNameInfos[ix].AssemblyQualifiedName);
+                if (!_expectedActionInvokeInfo.IsAny[ix])
                 {
                     Assert.Equal(
-                        _expected.Arguments[ix],
-                        actionInvokeInfo.Arguments[ix]);
+                        _expectedActionInvokeInfo.Arguments[ix],
+                        actualActionInvokeInfo.Arguments[ix]);
                 }
             }
         }

@@ -83,7 +83,7 @@ namespace MvcRouteTester.AspNetCore.Internal
             var actionMethodInfo = controllerActionDescriptor.MethodInfo;
             var arguments = BindArguments(controllerContext);
 
-            var actionInvokeInfo = new ActionInvokeInfo
+            var actionInvokeInfo = new ActualActionInvokeInfo
             {
                 ActionInfo = new ActionInfo(actionMethodInfo),
                 Arguments = arguments
