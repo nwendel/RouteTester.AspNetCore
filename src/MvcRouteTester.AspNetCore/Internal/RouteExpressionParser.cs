@@ -41,16 +41,30 @@ namespace MvcRouteTester.AspNetCore.Internal
             var arguments = methodCallExpression.Arguments
                 .Select(x => Expression.Lambda(x).Compile().DynamicInvoke())
                 .ToArray();
-            var isAny = methodCallExpression.Arguments
+            var argumentAssertKinds = methodCallExpression.Arguments
                 .Select(x =>
                 {
                     if (!(x is MethodCallExpression call))
                     {
-                        return false;
+                        return ArgumentAssertKind.Value;
                     }
+
                     var anyMethod = typeof(Args).GetMethod(nameof(Args.Any)).MakeGenericMethod(call.Method.ReturnType);
-                    var isAnyCall = call.Method == anyMethod;
-                    return isAnyCall;
+                    var trueMethod = typeof(Args).GetMethod(nameof(Args.True)).MakeGenericMethod(call.Method.ReturnType);
+                    var assertMethod = typeof(Args).GetMethod(nameof(Args.Assert)).MakeGenericMethod(call.Method.ReturnType);
+                    if(call.Method == anyMethod)
+                    {
+                        return ArgumentAssertKind.Any;
+                    }
+                    else if(call.Method == trueMethod)
+                    {
+                        return ArgumentAssertKind.True;
+                    }
+                    else if(call.Method == assertMethod)
+                    {
+                        return ArgumentAssertKind.Assert;
+                    }
+                    return ArgumentAssertKind.Value;
                 })
                 .ToArray();
 
@@ -58,7 +72,7 @@ namespace MvcRouteTester.AspNetCore.Internal
             {
                 ActionInfo = new ActionInfo(methodInfo),
                 Arguments = arguments,
-                IsAny = isAny
+                ArgumentAssertKinds = argumentAssertKinds
             };
             return result;
         }

@@ -18,6 +18,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using Xunit;
 using MvcRouteTester.AspNetCore.Internal;
+using System;
 
 namespace MvcRouteTester.AspNetCore.Builders
 {
@@ -91,11 +92,17 @@ namespace MvcRouteTester.AspNetCore.Builders
                 Assert.Equal(
                     _expectedActionInvokeInfo.ActionInfo.ParameterTypeNameInfos[ix].AssemblyQualifiedName, 
                     actualActionInvokeInfo.ActionInfo.ParameterTypeNameInfos[ix].AssemblyQualifiedName);
-                if (!_expectedActionInvokeInfo.IsAny[ix])
+                switch(_expectedActionInvokeInfo.ArgumentAssertKinds[ix])
                 {
-                    Assert.Equal(
-                        _expectedActionInvokeInfo.Arguments[ix],
-                        actualActionInvokeInfo.Arguments[ix]);
+                    case ArgumentAssertKind.Value:
+                        Assert.Equal(
+                            _expectedActionInvokeInfo.Arguments[ix],
+                            actualActionInvokeInfo.Arguments[ix]);
+                        break;
+                    case ArgumentAssertKind.Any:
+                        break;
+                    default:
+                        throw new NotImplementedException();
                 }
             }
         }

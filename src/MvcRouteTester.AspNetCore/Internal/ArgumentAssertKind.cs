@@ -19,18 +19,12 @@ namespace MvcRouteTester.AspNetCore.Internal
     /// <summary>
     /// 
     /// </summary>
-    public class ExpectedActionInvokeInfo : ActualActionInvokeInfo
+    public enum ArgumentAssertKind
     {
-
-        #region Properties
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ArgumentAssertKind[] ArgumentAssertKinds { get; set; }
-
-        #endregion
-
+        Value = 0,
+        Any = 1,
+        True = 2,
+        Assert = 3
     }
 
 }
