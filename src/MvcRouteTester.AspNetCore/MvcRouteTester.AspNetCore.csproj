@@ -8,7 +8,7 @@
   <PropertyGroup>
     <PackageId>MvcRouteTester.AspNetCore</PackageId>
     <Title>MvcRouteTester.AspNetCore</Title>
-    <Description>MvcRouteTester.AspNetCore</Description>
+    <Description>A library for unit testing ASP MVC route tables for both Web and API Routes</Description>
     <Version>0.2.0</Version>
     <Copyright>Niklas Wendel 2018</Copyright>
     <Authors>Niklas Wendel</Authors>
