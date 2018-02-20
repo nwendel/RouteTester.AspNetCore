@@ -26,7 +26,7 @@ namespace MvcRouteTester.AspNetCore.Builders
     public class RouteTesterNotFoundAssert : IRouteAssert
     {
 
-        #region Ensure
+        #region Assert Expected
 
         /// <summary>
         /// 
@@ -37,7 +37,7 @@ namespace MvcRouteTester.AspNetCore.Builders
             if (responseMessage.StatusCode != HttpStatusCode.NotFound)
             {
                 // TODO: Rewrite!
-                Xunit.Assert.False(true, "Status code is not 404 (Not Found)");
+                Assert.False(true, "Status code is not 404 (Not Found)");
             }
         }
 

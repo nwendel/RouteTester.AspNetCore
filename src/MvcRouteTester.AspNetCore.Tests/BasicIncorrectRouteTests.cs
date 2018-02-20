@@ -50,7 +50,7 @@ namespace MvcRouteTester.AspNetCore.Tests
                 RouteAssert.For(
                     _server,
                     request => request.WithPathAndQuery("/simple-attribute-route"),
-                    route => route.MapsTo<InvalidController>(a => a.Default())));
+                    routeAssert => routeAssert.MapsTo<InvalidController>(a => a.Default())));
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace MvcRouteTester.AspNetCore.Tests
                 RouteAssert.For(
                     _server,
                     request => request.WithPathAndQuery("/simple-attribute-route"),
-                    route => route.MapsTo<HomeController>(a => a.SimpleAttributeRouteAsync())));
+                    routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRouteAsync())));
         }
 
     }

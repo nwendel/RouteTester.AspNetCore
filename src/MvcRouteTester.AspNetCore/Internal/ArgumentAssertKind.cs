@@ -22,9 +22,7 @@ namespace MvcRouteTester.AspNetCore.Internal
     public enum ArgumentAssertKind
     {
         Value = 0,
-        Any = 1,
-        True = 2,
-        Assert = 3
+        Any = 1
     }
 
 }

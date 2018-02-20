@@ -49,7 +49,7 @@ namespace MvcRouteTester.AspNetCore.Tests
             RouteAssert.For(
                 _server,
                 request => request.WithPathAndQuery("/simple-attribute-route"),
-                route => route.MapsTo<HomeController>(a => a.SimpleAttributeRoute()));
+                routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRoute()));
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace MvcRouteTester.AspNetCore.Tests
             RouteAssert.For(
                 _server,
                 request => request.WithPathAndQuery("/simple-attribute-route-async"),
-                route => route.MapsTo<HomeController>(a => a.SimpleAttributeRouteAsync()));
+                routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRouteAsync()));
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace MvcRouteTester.AspNetCore.Tests
                 request => request
                     .WithMethod(HttpMethod.Post)
                     .WithPathAndQuery("/simple-attribute-route-post"),
-                route => route.MapsTo<PostController>(a => a.SimpleAttributeRoute()));
+                routeAssert => routeAssert.MapsTo<PostController>(a => a.SimpleAttributeRoute()));
         }
 
     }

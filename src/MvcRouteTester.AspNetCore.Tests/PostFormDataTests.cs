@@ -58,7 +58,7 @@ namespace MvcRouteTester.AspNetCore.Tests
                         { "FirstName", "Niklas" },
                         { "LastName", "Wendel" }
                     }),
-                route => route.MapsTo<PostController>(a => a.WithPerson(Args.Any<Person>())));
+                routeAssert => routeAssert.MapsTo<PostController>(a => a.WithPerson(Args.Any<Person>())));
         }
 
     }

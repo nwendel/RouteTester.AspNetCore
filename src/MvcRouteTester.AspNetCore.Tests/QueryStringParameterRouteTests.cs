@@ -15,8 +15,8 @@
 #endregion
 using Microsoft.AspNetCore.TestHost;
 using Xunit;
-using TestWebApplication.Controllers;
 using Xunit.Sdk;
+using TestWebApplication.Controllers;
 
 namespace MvcRouteTester.AspNetCore.Tests
 {
@@ -49,7 +49,7 @@ namespace MvcRouteTester.AspNetCore.Tests
             RouteAssert.For(
                 _server,
                 request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
-                route => route.MapsTo<ParameterController>(a => a.QueryStringParameter("value")));
+                routeAssert => routeAssert.MapsTo<ParameterController>(a => a.QueryStringParameter("value")));
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace MvcRouteTester.AspNetCore.Tests
                RouteAssert.For(
                     _server,
                     request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
-                    route => route.MapsTo<ParameterController>(a => a.QueryStringParameter("wrong-value"))));
+                    routeAssert => routeAssert.MapsTo<ParameterController>(a => a.QueryStringParameter("wrong-value"))));
         }
 
         /// <summary>
@@ -74,21 +74,52 @@ namespace MvcRouteTester.AspNetCore.Tests
             RouteAssert.For(
                 _server,
                 request => request.WithPathAndQuery("/parameter/query-string-parameter"),
-                route => route.MapsTo<ParameterController>(a => a.QueryStringParameter(null)));
+                routeAssert => routeAssert.MapsTo<ParameterController>(a => a.QueryStringParameter(null)));
         }
 
         /// <summary>
         /// 
         /// </summary>
         [Fact]
-        public void CanRouteWithoutParameterMatchingAny()
+        public void CanRouteWithParameterMatchingAny()
         {
             RouteAssert.For(
                 _server,
                 request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
-                route => route.MapsTo<ParameterController>(a => a.QueryStringParameter(Args.Any<string>())));
+                routeAssert => routeAssert.MapsTo<ParameterController>(a => a.QueryStringParameter(Args.Any<string>())));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanRouteWithParameterForParameterSimpleExpression()
+        {
+            RouteAssert.For(
+                _server,
+                request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
+                routeAssert => routeAssert
+                    .MapsTo<ParameterController>(a => a.QueryStringParameter(Args.Any<string>()))
+                    .ForParameter<string>("parameter", p => Assert.True(p == "value")));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanRouteWithParameterForParameterBlockExpression()
+        {
+            RouteAssert.For(
+                _server,
+                request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
+                routeAssert => routeAssert
+                    .MapsTo<ParameterController>(a => a.QueryStringParameter(Args.Any<string>()))
+                    .ForParameter<string>("parameter", p =>
+                    {
+                        Assert.True(p == "value");
+                    }));
+        }
+        
     }
 
 }

@@ -13,8 +13,6 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using System;
-
 namespace MvcRouteTester.AspNetCore
 {
 
@@ -32,36 +30,6 @@ namespace MvcRouteTester.AspNetCore
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         public static T Any<T>()
-        {
-            return default(T);
-        }
-
-        #endregion
-
-        #region True
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="predicate"></param>
-        /// <returns></returns>
-        public static T True<T>(Func<T, bool> predicate)
-        {
-            return default(T);
-        }
-
-        #endregion
-
-        #region Assert
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="action"></param>
-        /// <returns></returns>
-        public static T Assert<T>(Action<T> action)
         {
             return default(T);
         }

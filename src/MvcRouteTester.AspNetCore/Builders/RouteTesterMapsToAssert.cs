@@ -13,12 +13,12 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System;
 using System.Linq.Expressions;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Xunit;
 using MvcRouteTester.AspNetCore.Internal;
-using System;
 
 namespace MvcRouteTester.AspNetCore.Builders
 {
@@ -64,7 +64,22 @@ namespace MvcRouteTester.AspNetCore.Builders
 
         #endregion
 
-        #region Ensure
+        #region For Parameter
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public IRouteAssertMapsToBuilder ForParameter<T>(string name, Action<T> action)
+        {
+            return this;
+        }
+
+        #endregion
+
+        #region Assert Expected
 
         /// <summary>
         /// 

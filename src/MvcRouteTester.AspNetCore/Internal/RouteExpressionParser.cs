@@ -50,21 +50,9 @@ namespace MvcRouteTester.AspNetCore.Internal
                     }
 
                     var anyMethod = typeof(Args).GetMethod(nameof(Args.Any)).MakeGenericMethod(call.Method.ReturnType);
-                    var trueMethod = typeof(Args).GetMethod(nameof(Args.True)).MakeGenericMethod(call.Method.ReturnType);
-                    var assertMethod = typeof(Args).GetMethod(nameof(Args.Assert)).MakeGenericMethod(call.Method.ReturnType);
-                    if(call.Method == anyMethod)
-                    {
-                        return ArgumentAssertKind.Any;
-                    }
-                    else if(call.Method == trueMethod)
-                    {
-                        return ArgumentAssertKind.True;
-                    }
-                    else if(call.Method == assertMethod)
-                    {
-                        return ArgumentAssertKind.Assert;
-                    }
-                    return ArgumentAssertKind.Value;
+                    return call.Method == anyMethod 
+                        ? ArgumentAssertKind.Any 
+                        : ArgumentAssertKind.Value;
                 })
                 .ToArray();
 

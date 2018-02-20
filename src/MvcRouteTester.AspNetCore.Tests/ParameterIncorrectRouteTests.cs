@@ -50,7 +50,7 @@ namespace MvcRouteTester.AspNetCore.Tests
                 RouteAssert.For(
                     _server,
                     request => request.WithPathAndQuery("/parameter/same-name-with-string"),
-                    route => route.MapsTo<ParameterController>(a => a.SameName(null, default(int)))));
+                    routeAssert => routeAssert.MapsTo<ParameterController>(a => a.SameName(null, default(int)))));
         }
 
     }

@@ -48,7 +48,7 @@ namespace MvcRouteTester.AspNetCore.Tests
             RouteAssert.For(
                 _server,
                 request => request.WithPathAndQuery("/non-existant-route"),
-                route => route.NotFound());
+                routeAssert => routeAssert.NotFound());
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace MvcRouteTester.AspNetCore.Tests
                 RouteAssert.For(
                     _server,
                     request => request.WithPathAndQuery("/simple-attribute-route"),
-                    route => route.NotFound()));
+                    routeAssert => routeAssert.NotFound()));
         }
 
 

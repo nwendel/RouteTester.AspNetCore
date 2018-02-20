@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System;
+
 namespace MvcRouteTester.AspNetCore.Builders
 {
 
@@ -21,6 +23,20 @@ namespace MvcRouteTester.AspNetCore.Builders
     /// </summary>
     public interface IRouteAssertMapsToBuilder
     {
+
+        #region For Parameter
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="name"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        IRouteAssertMapsToBuilder ForParameter<T>(string name, Action<T> action);
+
+        #endregion
+
     }
 
 }
