@@ -13,37 +13,24 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using System;
-using Microsoft.AspNetCore.Mvc;
-using TestWebApplication.Model;
-
-namespace TestWebApplication.Controllers
+namespace TestWebApplication.Model
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class PostController : Controller
+    public class Person
     {
 
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
-        [HttpPost("simple-attribute-route-post")]
-        public IActionResult SimpleAttributeRoute()
-        {
-            throw new NotImplementedException();
-        }
+        public string FirstName { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [HttpPost("post-with-person")]
-        public IActionResult WithPerson(Person person)
-        {
-            throw new NotImplementedException();
-        }
+        public string LastName { get; set; }
 
     }
 

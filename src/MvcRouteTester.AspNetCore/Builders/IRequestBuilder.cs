@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System.Collections.Generic;
 using System.Net.Http;
 using MvcRouteTester.AspNetCore.Internal;
 
@@ -44,6 +45,16 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// <param name="pathAndQuery"></param>
         /// <returns></returns>
         IRequestBuilder WithPathAndQuery(string pathAndQuery);
+
+        #endregion
+
+        #region With Form Data
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IRequestBuilder WithFormData(IDictionary<string, string> formData);
 
         #endregion
 

@@ -14,6 +14,8 @@
 // limitations under the License.
 #endregion
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using Microsoft.AspNetCore.TestHost;
 
@@ -30,6 +32,7 @@ namespace MvcRouteTester.AspNetCore.Builders
 
         private HttpMethod _method = HttpMethod.Get;
         private string _pathAndQuery = "/";
+        private IDictionary<string, string> _formData = new Dictionary<string, string>();
 
         #endregion
 
@@ -67,6 +70,21 @@ namespace MvcRouteTester.AspNetCore.Builders
             return this;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public IRequestBuilder WithFormData(IDictionary<string, string> formData)
+        {
+            if(formData == null)
+            {
+                throw new ArgumentNullException(nameof(formData));
+            }
+
+            _formData = formData;
+            return this;
+        }
+
         #endregion
 
         #region Execute
@@ -80,15 +98,11 @@ namespace MvcRouteTester.AspNetCore.Builders
             var client = server.CreateClient();
             var requestMessage = new HttpRequestMessage(_method, _pathAndQuery);
 
-            //if (_method == HttpMethod.Post)
-            //{
-            //    var formData = new Dictionary<string, string>
-            //    {
-            //        {"FirstName", "John"},
-            //        {"LastName", "Doe"}
-            //    };
-            //    requestMessage.Content = new FormUrlEncodedContent(formData);
-            //}
+            // REVIEW: Only with POST method?
+            if(_method == HttpMethod.Post && _formData.Any())
+            {
+                requestMessage.Content = new FormUrlEncodedContent(_formData);
+            }
 
             var responseMessage = client.SendAsync(requestMessage).Result;
             return responseMessage;
