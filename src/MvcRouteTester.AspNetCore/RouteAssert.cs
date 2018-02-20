@@ -54,7 +54,7 @@ namespace MvcRouteTester.AspNetCore
             routeAssertBuilder(routeAssert);
 
             var responseMessage = request.Execute(server);
-            routeAssert.Ensure(responseMessage);
+            routeAssert.AssertExpected(responseMessage);
         }
 
         #endregion

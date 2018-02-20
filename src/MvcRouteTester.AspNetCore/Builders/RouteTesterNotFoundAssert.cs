@@ -32,12 +32,12 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// 
         /// </summary>
         /// <param name="responseMessage"></param>
-        public void Ensure(HttpResponseMessage responseMessage)
+        public void AssertExpected(HttpResponseMessage responseMessage)
         {
             if (responseMessage.StatusCode != HttpStatusCode.NotFound)
             {
                 // TODO: Rewrite!
-                Assert.False(true, "Status code is not 404 (Not Found)");
+                Xunit.Assert.False(true, "Status code is not 404 (Not Found)");
             }
         }
 

@@ -69,7 +69,7 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// 
         /// </summary>
         /// <param name="responseMessage"></param>
-        public void Ensure(HttpResponseMessage responseMessage)
+        public void AssertExpected(HttpResponseMessage responseMessage)
         {
             responseMessage.EnsureSuccessStatusCode();
 

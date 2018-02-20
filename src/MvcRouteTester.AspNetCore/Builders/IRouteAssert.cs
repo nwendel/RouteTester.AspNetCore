@@ -30,7 +30,7 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// 
         /// </summary>
         /// <param name="responseMessage"></param>
-        void Ensure(HttpResponseMessage responseMessage);
+        void AssertExpected(HttpResponseMessage responseMessage);
 
         #endregion
 
