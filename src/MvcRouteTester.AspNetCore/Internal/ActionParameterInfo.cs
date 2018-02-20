@@ -13,8 +13,6 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using System;
-using System.Linq;
 using System.Reflection;
 
 namespace MvcRouteTester.AspNetCore.Internal
@@ -23,7 +21,7 @@ namespace MvcRouteTester.AspNetCore.Internal
     /// <summary>
     /// 
     /// </summary>
-    public class ActionInfo
+    public class ActionParameterInfo
     {
 
         #region Constructor
@@ -31,26 +29,18 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <summary>
         /// 
         /// </summary>
-        public ActionInfo()
+        public ActionParameterInfo()
         {
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="methodInfo"></param>
-        public ActionInfo(MethodInfo methodInfo)
+        /// <param name="parameterInfo"></param>
+        public ActionParameterInfo(ParameterInfo parameterInfo)
         {
-            if(methodInfo == null)
-            {
-                throw new ArgumentNullException(nameof(methodInfo));
-            }
-
-            ControllerTypeNameInfo = new TypeNameInfo(methodInfo.ReflectedType);
-            ActionMethodName = methodInfo.Name;
-            ParameterInfos = methodInfo.GetParameters()
-                .Select(p => new ActionParameterInfo(p))
-                .ToArray();
+            Name = parameterInfo.Name;
+            TypeNameInfo = new TypeNameInfo(parameterInfo.ParameterType);
         }
 
         #endregion
@@ -60,17 +50,12 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <summary>
         /// 
         /// </summary>
-        public TypeNameInfo ControllerTypeNameInfo { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string ActionMethodName { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ActionParameterInfo[] ParameterInfos { get; set; }
+        public TypeNameInfo TypeNameInfo { get; set; }
 
         #endregion
 

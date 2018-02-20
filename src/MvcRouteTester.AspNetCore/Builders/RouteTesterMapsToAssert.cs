@@ -100,13 +100,13 @@ namespace MvcRouteTester.AspNetCore.Builders
                 _expectedActionInvokeInfo.ActionInfo.ActionMethodName, 
                 actualActionInvokeInfo.ActionInfo.ActionMethodName);
             Assert.Equal(
-                _expectedActionInvokeInfo.ActionInfo.ParameterTypeNameInfos.Length, 
-                actualActionInvokeInfo.ActionInfo.ParameterTypeNameInfos.Length);
-            for (var ix = 0; ix < _expectedActionInvokeInfo.ActionInfo.ParameterTypeNameInfos.Length; ix++)
+                _expectedActionInvokeInfo.ActionInfo.ParameterInfos.Length, 
+                actualActionInvokeInfo.ActionInfo.ParameterInfos.Length);
+            for (var ix = 0; ix < _expectedActionInvokeInfo.ActionInfo.ParameterInfos.Length; ix++)
             {
                 Assert.Equal(
-                    _expectedActionInvokeInfo.ActionInfo.ParameterTypeNameInfos[ix].AssemblyQualifiedName, 
-                    actualActionInvokeInfo.ActionInfo.ParameterTypeNameInfos[ix].AssemblyQualifiedName);
+                    _expectedActionInvokeInfo.ActionInfo.ParameterInfos[ix].TypeNameInfo.AssemblyQualifiedName, 
+                    actualActionInvokeInfo.ActionInfo.ParameterInfos[ix].TypeNameInfo.AssemblyQualifiedName);
                 switch(_expectedActionInvokeInfo.ArgumentAssertKinds[ix])
                 {
                     case ArgumentAssertKind.Value:
