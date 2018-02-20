@@ -12,7 +12,7 @@
     <Version>0.2.0</Version>
     <Copyright>Niklas Wendel 2018</Copyright>
     <Authors>Niklas Wendel</Authors>
-    <PackageTags>Route;Test;AspNetCore;Mvc;UnitTest</PackageTags>
+    <PackageTags>Route;Test;Testing;AspNetCore;Mvc;UnitTest</PackageTags>
     <PackageProjectUrl>https://github.com/nwendel/mvcroutetester.aspnetcore</PackageProjectUrl>
     <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
   </PropertyGroup>
