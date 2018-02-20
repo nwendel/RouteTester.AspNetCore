@@ -23,7 +23,7 @@ namespace MvcRouteTester.AspNetCore.Internal
     /// <summary>
     /// 
     /// </summary>
-    public static class ExposeNonPublicMethodsExtensions
+    public static class InvokeNonPublicMethodsExtensions
     {
 
         #region Get Action Method Executor
