@@ -58,7 +58,13 @@ namespace MvcRouteTester.AspNetCore.Tests
                         { "FirstName", "Niklas" },
                         { "LastName", "Wendel" }
                     }),
-                routeAssert => routeAssert.MapsTo<PostController>(a => a.WithPerson(Args.Any<Person>())));
+                routeAssert => routeAssert
+                    .MapsTo<PostController>(a => a.WithPerson(Args.Any<Person>()))
+                    .ForParameter<Person>("person", p =>
+                    {
+                        Assert.Equal("Niklas", p.FirstName);
+                        Assert.Equal("Wendel", p.LastName);
+                    }));
         }
 
     }
