@@ -16,6 +16,7 @@
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.Extensions.DependencyInjection;
+using MvcRouteTester.AspNetCore.Builders;
 using MvcRouteTester.AspNetCore.Internal;
 
 namespace MvcRouteTester.AspNetCore
@@ -33,13 +34,22 @@ namespace MvcRouteTester.AspNetCore
         /// 
         /// </summary>
         /// <param name="serviceCollection"></param>
-        public static void AddRouteTesting(this IServiceCollection serviceCollection)
+        public static void AddMvcRouteTester(this IServiceCollection serviceCollection)
         {
-            serviceCollection.RemoveWhere(x => x.ImplementationType == typeof(AuthorizationApplicationModelProvider));
+            // Register services needed by MvcRouteTester
+            serviceCollection.AddTransient<RouteTesterRequest>();
+            serviceCollection.AddTransient<RouteTesterRouteAssert>();
+            serviceCollection.AddTransient<RouteTesterMapsToRouteAssert>();
+            serviceCollection.AddTransient<RouteTesterNotFoundRouteAssert>();
+            serviceCollection.AddTransient<ActionInvokerFactory>();
 
+            // Replace standard IActionInvokerFactory implementation
             serviceCollection.RemoveWhere(x => x.ServiceType == typeof(IActionInvokerFactory));
             serviceCollection.AddSingleton<IActionInvokerFactory, RouteTesterActionInvokerFactory>();
-            serviceCollection.AddSingleton<ActionInvokerFactory, ActionInvokerFactory>();
+
+            // Remove authorization
+            // TODO: Should this be an option?
+            serviceCollection.RemoveWhere(x => x.ImplementationType == typeof(AuthorizationApplicationModelProvider));
         }
 
         #endregion

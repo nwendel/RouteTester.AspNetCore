@@ -26,7 +26,7 @@ namespace MvcRouteTester.AspNetCore.Builders
     /// <summary>
     /// 
     /// </summary>
-    public class RouteTesterMapsToAssert :
+    public class RouteTesterMapsToRouteAssert :
         IRouteAssertMapsToBuilder,
         IRouteAssert
     {
@@ -37,26 +37,13 @@ namespace MvcRouteTester.AspNetCore.Builders
 
         #endregion
 
-        #region Constructor
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="actionCallExpression"></param>
-        public RouteTesterMapsToAssert(LambdaExpression actionCallExpression)
-        {
-            ParseActionCallExpression(actionCallExpression);
-        }
-
-        #endregion
-
         #region Parse Action Call Expression
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="actionCallExpression"></param>
-        private void ParseActionCallExpression(LambdaExpression actionCallExpression)
+        public void ParseActionCallExpression(LambdaExpression actionCallExpression)
         {
             var parser = new RouteExpressionParser();
             _expectedActionInvokeInfo = parser.Parse(actionCallExpression);

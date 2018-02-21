@@ -18,6 +18,7 @@ using System.Linq.Expressions;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MvcRouteTester.AspNetCore.Builders
 {
@@ -25,14 +26,27 @@ namespace MvcRouteTester.AspNetCore.Builders
     /// <summary>
     /// 
     /// </summary>
-    public class RouteTesterAssert : 
+    public class RouteTesterRouteAssert : 
         IRouteAssertBuilder,
         IRouteAssert
     {
 
-        #region Fields
+        #region Dependencies
 
-        private IRouteAssert _routeAssert;
+        private readonly IServiceProvider _serviceProvider;
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        public RouteTesterRouteAssert(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+        }
 
         #endregion
 
@@ -69,7 +83,8 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// <returns></returns>
         private IRouteAssertMapsToBuilder MapsToCore(LambdaExpression actionCallExpression)
         {
-            var builder = new RouteTesterMapsToAssert(actionCallExpression);
+            var builder = _serviceProvider.GetRequiredService<RouteTesterMapsToRouteAssert>();
+            builder.ParseActionCallExpression(actionCallExpression);
             _routeAssert = builder;
             return builder;
         }
@@ -83,13 +98,15 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// </summary>
         public void NotFound()
         {
-            var builder = new RouteTesterNotFoundAssert();
+            var builder = _serviceProvider.GetRequiredService<RouteTesterNotFoundRouteAssert>();
             _routeAssert = builder;
         }
 
         #endregion
 
         #region Assert Expected
+
+        private IRouteAssert _routeAssert;
 
         /// <summary>
         /// 

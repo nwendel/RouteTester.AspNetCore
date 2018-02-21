@@ -54,7 +54,7 @@ namespace MvcRouteTester.AspNetCore.Tests
             public void ConfigureServices(IServiceCollection serviceCollection)
             {
                 serviceCollection.AddMvc();
-                serviceCollection.AddRouteTesting();
+                serviceCollection.AddMvcRouteTester();
             }
 
             /// <summary>

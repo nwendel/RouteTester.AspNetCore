@@ -23,7 +23,7 @@ namespace MvcRouteTester.AspNetCore.Builders
     /// <summary>
     /// 
     /// </summary>
-    public class RouteTesterNotFoundAssert : IRouteAssert
+    public class RouteTesterNotFoundRouteAssert : IRouteAssert
     {
 
         #region Assert Expected

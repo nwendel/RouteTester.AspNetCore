@@ -15,6 +15,7 @@
 #endregion
 using System;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
 using MvcRouteTester.AspNetCore.Builders;
 
 namespace MvcRouteTester.AspNetCore
@@ -48,9 +49,11 @@ namespace MvcRouteTester.AspNetCore
                 throw new ArgumentNullException(nameof(routeAssertBuilder));
             }
 
-            var request = new RouteTesterRequest();
+            var serviceProvider = server.Host.Services;
+            var request = serviceProvider.GetRequiredService<RouteTesterRequest>();
+            var routeAssert = serviceProvider.GetRequiredService<RouteTesterRouteAssert>();
+
             requestBuilder(request);
-            var routeAssert = new RouteTesterAssert();
             routeAssertBuilder(routeAssert);
 
             var responseMessage = request.Execute(server);
@@ -60,4 +63,5 @@ namespace MvcRouteTester.AspNetCore
         #endregion
 
     }
+
 }
