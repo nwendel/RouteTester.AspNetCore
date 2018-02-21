@@ -41,11 +41,12 @@ namespace MvcRouteTester.AspNetCore
             serviceCollection.AddTransient<RouteTesterRouteAssert>();
             serviceCollection.AddTransient<RouteTesterMapsToRouteAssert>();
             serviceCollection.AddTransient<RouteTesterNotFoundRouteAssert>();
+            serviceCollection.AddSingleton<ActualActionInvokeInfoCache>();
 
             // Register Standard ActionInvoker as self insetad of via interface since MvcRouteTester depends on it for binding arguments
             serviceCollection.AddSingleton<ActionInvokerFactory>();
 
-            // Replace standard IActionInvokerFactory implementation to avoid creating controller and calling action
+            // Replace standard IActionInvokerFactory implementation which records action info and avoids calling the action
             serviceCollection.RemoveWhere(x => x.ServiceType == typeof(IActionInvokerFactory));
             serviceCollection.AddSingleton<IActionInvokerFactory, RouteTesterActionInvokerFactory>();
 

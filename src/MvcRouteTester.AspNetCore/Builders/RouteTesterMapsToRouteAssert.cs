@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Http;
-using Newtonsoft.Json;
 using Xunit;
 using MvcRouteTester.AspNetCore.Internal;
 
@@ -33,10 +32,29 @@ namespace MvcRouteTester.AspNetCore.Builders
         IRouteAssert
     {
 
+        #region Dependencies
+
+        private readonly ActualActionInvokeInfoCache _actionInvokeInfoCache;
+
+        #endregion
+
         #region Fields
 
         private ExpectedActionInvokeInfo _expectedActionInvokeInfo;
         private List<ParameterAssert> _parameterAsserts = new List<ParameterAssert>();
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="actionInvokeInfoCache"></param>
+        public RouteTesterMapsToRouteAssert(ActualActionInvokeInfoCache actionInvokeInfoCache)
+        {
+            _actionInvokeInfoCache = actionInvokeInfoCache;
+        }
 
         #endregion
 
@@ -81,8 +99,9 @@ namespace MvcRouteTester.AspNetCore.Builders
         {
             responseMessage.EnsureSuccessStatusCode();
 
-            var json = responseMessage.Content.ReadAsStringAsync().Result;
-            var actualActionInvokeInfo = JsonConvert.DeserializeObject<ActualActionInvokeInfo>(json);
+            var key = responseMessage.Content.ReadAsStringAsync().Result;
+            var actualActionInvokeInfo = _actionInvokeInfoCache[key];
+            _actionInvokeInfoCache.Remove(key);
 
             // TODO: Rewrite!
             Assert.Equal(

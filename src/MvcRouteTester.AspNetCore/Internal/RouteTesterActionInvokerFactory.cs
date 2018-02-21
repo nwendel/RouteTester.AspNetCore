@@ -32,9 +32,10 @@ namespace MvcRouteTester.AspNetCore.Internal
         #region Dependencies
 
         private readonly IOptions<MvcOptions> _mvcOptions;
-        private readonly JsonResultExecutor _jsonResultExecutor;
+        private readonly ContentResultExecutor _contentResultExecutor;
         private readonly ControllerActionInvokerCache _controllerActionInvokerCache;
         private readonly ActionInvokerFactory _actionInvokerFactory;
+        private readonly ActualActionInvokeInfoCache _actionInvokeInfoCache;
 
         #endregion
 
@@ -44,19 +45,22 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// 
         /// </summary>
         /// <param name="mvcOptions"></param>
-        /// <param name="jsonResultExecutor"></param>
+        /// <param name="contentResultExecutor"></param>
         /// <param name="controllerActionInvokerCache"></param>
         /// <param name="actionInvokerFactory"></param>
+        /// <param name="actionInvokeInfoCache"></param>
         public RouteTesterActionInvokerFactory(
             IOptions<MvcOptions> mvcOptions, 
-            JsonResultExecutor jsonResultExecutor,
+            ContentResultExecutor contentResultExecutor,
             ControllerActionInvokerCache controllerActionInvokerCache,
-            ActionInvokerFactory actionInvokerFactory)
+            ActionInvokerFactory actionInvokerFactory,
+            ActualActionInvokeInfoCache actionInvokeInfoCache)
         {
             _mvcOptions = mvcOptions;
-            _jsonResultExecutor = jsonResultExecutor;
+            _contentResultExecutor = contentResultExecutor;
             _controllerActionInvokerCache = controllerActionInvokerCache;
             _actionInvokerFactory = actionInvokerFactory;
+            _actionInvokeInfoCache = actionInvokeInfoCache;
         }
 
         #endregion
@@ -72,7 +76,7 @@ namespace MvcRouteTester.AspNetCore.Internal
         {
             var valueProviderFactories = _mvcOptions.Value.ValueProviderFactories;
 
-            return new RouteTesterActionInvoker(actionContext, valueProviderFactories, _jsonResultExecutor, _controllerActionInvokerCache, _actionInvokerFactory);
+            return new RouteTesterActionInvoker(actionContext, valueProviderFactories, _contentResultExecutor, _controllerActionInvokerCache, _actionInvokerFactory, _actionInvokeInfoCache);
         }
 
         #endregion

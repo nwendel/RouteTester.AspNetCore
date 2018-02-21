@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
-using Microsoft.AspNetCore.Mvc.Formatters.Json.Internal;
 using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -35,9 +34,10 @@ namespace MvcRouteTester.AspNetCore.Internal
 
         private readonly ActionContext _actionContext;
         private readonly IList<IValueProviderFactory> _valueProviderFactories;
-        private readonly JsonResultExecutor _jsonResultExecutor;
+        private readonly ContentResultExecutor _contentResultExecutor;
         private readonly ControllerActionInvokerCache _controllerActionInvokerCache;
         private readonly ActionInvokerFactory _actionInvokerFactory;
+        private readonly ActualActionInvokeInfoCache _actionInvokeInfoCache;
 
         #endregion
 
@@ -48,21 +48,24 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// </summary>
         /// <param name="actionContext"></param>
         /// <param name="valueProviderFactories"></param>
-        /// <param name="jsonResultExecutor"></param>
+        /// <param name="contentResultExecutor"></param>
         /// <param name="controllerActionInvokerCache"></param>
         /// <param name="actionInvokerFactory"></param>
+        /// <param name="actionInvokeInfoCache"></param>
         public RouteTesterActionInvoker(
             ActionContext actionContext, 
             IList<IValueProviderFactory> valueProviderFactories, 
-            JsonResultExecutor jsonResultExecutor,
+            ContentResultExecutor contentResultExecutor,
             ControllerActionInvokerCache controllerActionInvokerCache,
-            ActionInvokerFactory actionInvokerFactory)
+            ActionInvokerFactory actionInvokerFactory,
+            ActualActionInvokeInfoCache actionInvokeInfoCache)
         {
             _actionContext = actionContext;
             _valueProviderFactories = valueProviderFactories;
-            _jsonResultExecutor = jsonResultExecutor;
+            _contentResultExecutor = contentResultExecutor;
             _controllerActionInvokerCache = controllerActionInvokerCache;
             _actionInvokerFactory = actionInvokerFactory;
+            _actionInvokeInfoCache = actionInvokeInfoCache;
         }
 
         #endregion
@@ -89,8 +92,14 @@ namespace MvcRouteTester.AspNetCore.Internal
                 Arguments = arguments
             };
 
-            var jsonResult = new JsonResult(actionInvokeInfo);
-            await _jsonResultExecutor.ExecuteAsync(_actionContext, jsonResult);
+            var key = Guid.NewGuid().ToString();
+            _actionInvokeInfoCache.Add(key, actionInvokeInfo);
+
+            var contentResult = new ContentResult
+            {
+                Content = key
+            };
+            await _contentResultExecutor.ExecuteAsync(_actionContext, contentResult);
         }
 
         #endregion
