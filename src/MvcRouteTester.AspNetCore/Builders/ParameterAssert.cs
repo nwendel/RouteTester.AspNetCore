@@ -14,16 +14,14 @@
 // limitations under the License.
 #endregion
 using System;
-using System.Linq;
-using System.Reflection;
 
-namespace MvcRouteTester.AspNetCore.Internal
+namespace MvcRouteTester.AspNetCore.Builders
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class ActionInfo
+    public class ParameterAssert
     {
 
         #region Constructor
@@ -31,26 +29,12 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <summary>
         /// 
         /// </summary>
-        public ActionInfo()
+        /// <param name="name"></param>
+        /// <param name="action"></param>
+        public ParameterAssert(string name, Action<object> action)
         {
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="methodInfo"></param>
-        public ActionInfo(MethodInfo methodInfo)
-        {
-            if(methodInfo == null)
-            {
-                throw new ArgumentNullException(nameof(methodInfo));
-            }
-
-            ControllerTypeNameInfo = new TypeNameInfo(methodInfo.ReflectedType);
-            ActionMethodName = methodInfo.Name;
-            ParameterInfos = methodInfo.GetParameters()
-                .Select((p, ix) => new ActionParameterInfo(ix, p))
-                .ToArray();
+            Name = name;
+            Action = action;
         }
 
         #endregion
@@ -60,17 +44,12 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <summary>
         /// 
         /// </summary>
-        public TypeNameInfo ControllerTypeNameInfo { get; set; }
+        public string Name { get; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string ActionMethodName { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ActionParameterInfo[] ParameterInfos { get; set; }
+        public Action<object> Action { get; }
 
         #endregion
 

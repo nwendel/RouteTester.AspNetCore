@@ -37,8 +37,9 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// 
         /// </summary>
         /// <param name="parameterInfo"></param>
-        public ActionParameterInfo(ParameterInfo parameterInfo)
+        public ActionParameterInfo(int index, ParameterInfo parameterInfo)
         {
+            Index = index;
             Name = parameterInfo.Name;
             TypeNameInfo = new TypeNameInfo(parameterInfo.ParameterType);
         }
@@ -46,6 +47,11 @@ namespace MvcRouteTester.AspNetCore.Internal
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Index { get; set; }
 
         /// <summary>
         /// 

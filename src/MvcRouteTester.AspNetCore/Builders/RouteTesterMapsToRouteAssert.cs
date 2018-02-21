@@ -14,6 +14,8 @@
 // limitations under the License.
 #endregion
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Http;
 using Newtonsoft.Json;
@@ -34,6 +36,7 @@ namespace MvcRouteTester.AspNetCore.Builders
         #region Fields
 
         private ExpectedActionInvokeInfo _expectedActionInvokeInfo;
+        private List<ParameterAssert> _parameterAsserts = new List<ParameterAssert>();
 
         #endregion
 
@@ -61,6 +64,8 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// <returns></returns>
         public IRouteAssertMapsToBuilder ForParameter<T>(string name, Action<T> action)
         {
+            var parameterAssert = new ParameterAssert(name, x => { action.Invoke((T)x); });
+            _parameterAsserts.Add(parameterAssert);
             return this;
         }
 
@@ -106,6 +111,13 @@ namespace MvcRouteTester.AspNetCore.Builders
                     default:
                         throw new NotImplementedException();
                 }
+            }
+
+            foreach(var parameterAssert in _parameterAsserts)
+            {
+                var ix = actualActionInvokeInfo.ActionInfo.ParameterInfos.Single(x => x.Name == parameterAssert.Name).Index;
+                var value = actualActionInvokeInfo.Arguments[ix];
+                parameterAssert.Action(value);
             }
         }
 

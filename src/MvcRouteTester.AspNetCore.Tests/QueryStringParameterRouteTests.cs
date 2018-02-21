@@ -93,21 +93,7 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void CanRouteWithParameterForParameterSimpleExpression()
-        {
-            RouteAssert.For(
-                _server,
-                request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
-                routeAssert => routeAssert
-                    .MapsTo<ParameterController>(a => a.QueryStringParameter(Args.Any<string>()))
-                    .ForParameter<string>("parameter", p => Assert.True(p == "value")));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Fact]
-        public void CanRouteWithParameterForParameterBlockExpression()
+        public void CanRouteWithParameterForParameterExpression()
         {
             RouteAssert.For(
                 _server,
@@ -119,7 +105,25 @@ namespace MvcRouteTester.AspNetCore.Tests
                         Assert.True(p == "value");
                     }));
         }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void ThrowsOnRouteWithParameterForParameterExpressionWrongValue()
+        {
+            Assert.Throws<EqualException>(() =>
+                RouteAssert.For(
+                    _server,
+                    request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=wrong-value"),
+                    routeAssert => routeAssert
+                        .MapsTo<ParameterController>(a => a.QueryStringParameter(Args.Any<string>()))
+                        .ForParameter<string>("parameter", p =>
+                        {
+                            Assert.Equal("value", p);
+                        })));
+        }
+
     }
 
 }
