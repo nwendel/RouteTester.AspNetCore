@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System;
 using System.Reflection;
 
 namespace MvcRouteTester.AspNetCore.Internal
@@ -26,19 +27,23 @@ namespace MvcRouteTester.AspNetCore.Internal
 
         #region Constructor
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public ActionParameterInfo()
-        {
-        }
 
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="index"></param>
         /// <param name="parameterInfo"></param>
         public ActionParameterInfo(int index, ParameterInfo parameterInfo)
         {
+            if (index < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+            if (parameterInfo == null)
+            {
+                throw new ArgumentNullException(nameof(parameterInfo));
+            }
+
             Index = index;
             Name = parameterInfo.Name;
             TypeNameInfo = new TypeNameInfo(parameterInfo.ParameterType);
@@ -51,17 +56,17 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <summary>
         /// 
         /// </summary>
-        public int Index { get; set; }
+        public int Index { get; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary>
         /// 
         /// </summary>
-        public TypeNameInfo TypeNameInfo { get; set; }
+        public TypeNameInfo TypeNameInfo { get; }
 
         #endregion
 

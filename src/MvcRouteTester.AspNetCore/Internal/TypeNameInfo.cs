@@ -29,13 +29,6 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <summary>
         /// 
         /// </summary>
-        public TypeNameInfo()
-        {
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="type"></param>
         public TypeNameInfo(Type type)
         {
@@ -56,17 +49,17 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <summary>
         /// 
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string FullName { get; set; }
+        public string FullName { get; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string AssemblyQualifiedName { get; set; }
+        public string AssemblyQualifiedName { get; }
 
         #endregion
 

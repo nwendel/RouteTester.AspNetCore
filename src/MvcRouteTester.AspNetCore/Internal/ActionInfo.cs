@@ -31,13 +31,6 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <summary>
         /// 
         /// </summary>
-        public ActionInfo()
-        {
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="methodInfo"></param>
         public ActionInfo(MethodInfo methodInfo)
         {
@@ -60,17 +53,17 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <summary>
         /// 
         /// </summary>
-        public TypeNameInfo ControllerTypeNameInfo { get; set; }
+        public TypeNameInfo ControllerTypeNameInfo { get; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string ActionMethodName { get; set; }
+        public string ActionMethodName { get; }
 
         /// <summary>
         /// 
         /// </summary>
-        public ActionParameterInfo[] ParameterInfos { get; set; }
+        public ActionParameterInfo[] ParameterInfos { get; }
 
         #endregion
 
