@@ -9,7 +9,7 @@
     <PackageId>MvcRouteTester.AspNetCore</PackageId>
     <Title>MvcRouteTester.AspNetCore</Title>
     <Description>A library for unit testing AspNetCore routes</Description>
-    <Version>0.3.0</Version>
+    <Version>0.3.1</Version>
     <Copyright>Niklas Wendel 2018</Copyright>
     <Authors>Niklas Wendel</Authors>
     <PackageTags>Route;Test;Testing;AspNetCore;Mvc;UnitTest</PackageTags>
