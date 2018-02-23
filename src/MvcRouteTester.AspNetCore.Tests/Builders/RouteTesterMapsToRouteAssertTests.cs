@@ -23,40 +23,31 @@ namespace MvcRouteTester.AspNetCore.Tests.Builders
     /// <summary>
     /// 
     /// </summary>
-    public class RouteTesterRequestArgumentTests
+    public class RouteTesterMapsToRouteAssertTests
     {
 
         /// <summary>
         /// 
         /// </summary>
         [Fact]
-        public void ThrowsOnWithMethodNullMethod()
+        public void ThrowsOnForParameterNullParameterName()
         {
-            var tested = new RouteTesterRequest();
+            var tested = new RouteTesterMapsToRouteAssert(null, null, null);
 
-            Assert.Throws<ArgumentNullException>("method", () => tested.WithMethod(null));
+            Assert.Throws<ArgumentNullException>("parameterName", () =>
+                tested.ForParameter<string>(null, p => { }));
         }
 
         /// <summary>
         /// 
         /// </summary>
         [Fact]
-        public void ThrowsOnWithPathAndQueryNullPathAndQuery()
+        public void ThrowsOnForParameterNullAction()
         {
-            var tested = new RouteTesterRequest();
+            var tested = new RouteTesterMapsToRouteAssert(null, null, null);
 
-            Assert.Throws<ArgumentNullException>("pathAndQuery", () => tested.WithPathAndQuery(null));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Fact]
-        public void ThrowsOnWithPathAndQueryNullFormData()
-        {
-            var tested = new RouteTesterRequest();
-
-            Assert.Throws<ArgumentNullException>("formData", () => tested.WithFormData(null));
+            Assert.Throws<ArgumentNullException>("action", () =>
+                tested.ForParameter<string>("parameter", null));
         }
         
     }
