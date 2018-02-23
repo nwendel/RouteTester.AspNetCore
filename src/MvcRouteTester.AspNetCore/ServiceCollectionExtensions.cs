@@ -42,6 +42,7 @@ namespace MvcRouteTester.AspNetCore
             serviceCollection.AddTransient<RouteTesterMapsToRouteAssert>();
             serviceCollection.AddTransient<RouteTesterNotFoundRouteAssert>();
             serviceCollection.AddSingleton<ActualActionInvokeInfoCache>();
+            serviceCollection.AddSingleton<RouteExpressionParser>();
 
             // Register Standard ActionInvoker as self insetad of via interface since MvcRouteTester depends on it for binding arguments
             serviceCollection.AddSingleton<ActionInvokerFactory>();

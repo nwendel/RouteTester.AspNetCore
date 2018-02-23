@@ -60,7 +60,8 @@ namespace MvcRouteTester.AspNetCore.Internal
             {
                 ActionInfo = new ActionInfo(methodInfo),
                 Arguments = arguments,
-                ArgumentAssertKinds = argumentAssertKinds
+                ArgumentAssertKinds = argumentAssertKinds,
+                MethodInfo = methodInfo
             };
             return result;
         }

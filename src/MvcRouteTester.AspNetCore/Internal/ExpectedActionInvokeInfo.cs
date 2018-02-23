@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System.Reflection;
+
 namespace MvcRouteTester.AspNetCore.Internal
 {
 
@@ -28,6 +30,11 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// 
         /// </summary>
         public ArgumentAssertKind[] ArgumentAssertKinds { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public MethodInfo MethodInfo { get; set; }
 
         #endregion
 

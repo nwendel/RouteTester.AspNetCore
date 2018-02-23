@@ -16,6 +16,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace MvcRouteTester.AspNetCore.Internal
 {
@@ -67,6 +68,29 @@ namespace MvcRouteTester.AspNetCore.Internal
 
         #endregion
 
+        #region Get Text
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="getTypeName"></param>
+        /// <returns></returns>
+        public string GetText(Func<TypeNameInfo, string> getTypeName)
+        {
+            var builder = new StringBuilder();
+
+            builder.Append(getTypeName(ControllerTypeNameInfo));
+            builder.Append(".");
+            builder.Append(ActionMethodName);
+            builder.Append("(");
+            builder.Append(string.Join(",", ParameterInfos
+                .Select(p => getTypeName(p.TypeNameInfo))));
+            builder.Append(")");
+            return builder.ToString();
+        }
+
+        #endregion
+        
     }
 
 }

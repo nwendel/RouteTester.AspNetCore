@@ -18,6 +18,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Http;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Xunit;
 using MvcRouteTester.AspNetCore.Internal;
 
@@ -35,13 +37,15 @@ namespace MvcRouteTester.AspNetCore.Builders
         #region Dependencies
 
         private readonly ActualActionInvokeInfoCache _actionInvokeInfoCache;
+        private readonly RouteExpressionParser _routeExpressionParser;
+        private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;
 
         #endregion
 
         #region Fields
 
         private ExpectedActionInvokeInfo _expectedActionInvokeInfo;
-        private List<ParameterAssert> _parameterAsserts = new List<ParameterAssert>();
+        private readonly List<ParameterAssert> _parameterAsserts = new List<ParameterAssert>();
 
         #endregion
 
@@ -51,9 +55,16 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// 
         /// </summary>
         /// <param name="actionInvokeInfoCache"></param>
-        public RouteTesterMapsToRouteAssert(ActualActionInvokeInfoCache actionInvokeInfoCache)
+        /// <param name="routeExpressionParser"></param>
+        /// <param name="actionDescriptorCollectionProvider"></param>
+        public RouteTesterMapsToRouteAssert(
+            ActualActionInvokeInfoCache actionInvokeInfoCache,
+            RouteExpressionParser routeExpressionParser, 
+            IActionDescriptorCollectionProvider actionDescriptorCollectionProvider)
         {
             _actionInvokeInfoCache = actionInvokeInfoCache;
+            _routeExpressionParser = routeExpressionParser;
+            _actionDescriptorCollectionProvider = actionDescriptorCollectionProvider;
         }
 
         #endregion
@@ -66,8 +77,19 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// <param name="actionCallExpression"></param>
         public void ParseActionCallExpression(LambdaExpression actionCallExpression)
         {
-            var parser = new RouteExpressionParser();
-            _expectedActionInvokeInfo = parser.Parse(actionCallExpression);
+            _expectedActionInvokeInfo = _routeExpressionParser.Parse(actionCallExpression);
+
+            var isActionMethod = _actionDescriptorCollectionProvider
+                .ActionDescriptors
+                .Items
+                .OfType<ControllerActionDescriptor>()
+                .Any(x => x.MethodInfo == _expectedActionInvokeInfo.MethodInfo);
+            if (isActionMethod)
+            {
+                return;
+            }
+            var actionText = _expectedActionInvokeInfo.ActionInfo.GetText(x => x.Name);
+            throw new ArgumentException($"Method {actionText} is not a valid controller action", nameof(actionCallExpression));
         }
 
         #endregion
