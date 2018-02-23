@@ -16,6 +16,7 @@
 using System;
 using Xunit;
 using MvcRouteTester.AspNetCore.Internal;
+using TestWebApplication.Controllers;
 
 namespace MvcRouteTester.AspNetCore.Tests.Internal
 {
@@ -23,18 +24,31 @@ namespace MvcRouteTester.AspNetCore.Tests.Internal
     /// <summary>
     /// 
     /// </summary>
-    public class ActionInfoTests
+    public class ActionParameterInfoTests
     {
 
         /// <summary>
         /// 
         /// </summary>
         [Fact]
-        public void ThrowsOnCreateNullMethodInfo()
+        public void ThrowsOnCreateNegativeIndex()
         {
-            Assert.Throws<ArgumentNullException>("methodInfo", () => new ActionInfo(null));
+            var parameterInfo = typeof(ParameterController)
+                .GetMethod(nameof(ParameterController.QueryStringParameter))
+                .GetParameters()[0];
+
+            Assert.Throws<ArgumentOutOfRangeException>("index", () => new ActionParameterInfo(-1, parameterInfo));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void ThrowsOnCreateNullParameterInfo()
+        {
+            Assert.Throws<ArgumentNullException>("parameterInfo", () => new ActionParameterInfo(0, null));
+        }
+        
     }
 
 }
