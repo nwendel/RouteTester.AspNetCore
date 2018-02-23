@@ -115,11 +115,13 @@ namespace MvcRouteTester.AspNetCore.Internal
         {
             (var cacheEntry, var _) = _controllerActionInvokerCache.GetCachedResult(controllerContext);
             var actionMethodExecutor = cacheEntry.GetActionMethodExecutor();
-            var arguments = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
             var controllerActionInvoker = (ControllerActionInvoker)_actionInvokerFactory.CreateInvoker(_actionContext);
             var binder = cacheEntry.ControllerBinderDelegate;
+
+            var arguments = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
             binder?.Invoke(controllerContext, new object(), arguments).Wait();
             var orderedArguments = controllerActionInvoker.PrepareArguments(arguments, actionMethodExecutor);
+
             return orderedArguments;
         }
 
