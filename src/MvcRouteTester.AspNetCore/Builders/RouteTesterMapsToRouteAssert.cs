@@ -104,6 +104,15 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// <returns></returns>
         public IRouteAssertMapsToBuilder ForParameter<T>(string parameterName, Action<T> action)
         {
+            if (parameterName == null)
+            {
+                throw new ArgumentNullException(nameof(parameterName));
+            }
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+
             var validParameterName = _expectedActionInvokeInfo
                 .ActionInfo
                 .ParameterInfos
