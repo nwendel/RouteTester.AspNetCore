@@ -77,8 +77,12 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <returns></returns>
         public string GetText(Func<TypeNameInfo, string> getTypeName)
         {
-            var builder = new StringBuilder();
+            if (getTypeName == null)
+            {
+                throw new ArgumentNullException(nameof(getTypeName));
+            }
 
+            var builder = new StringBuilder();
             builder.Append(getTypeName(ControllerTypeNameInfo));
             builder.Append(".");
             builder.Append(ActionMethodName);

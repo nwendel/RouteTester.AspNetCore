@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System;
 using Microsoft.AspNetCore.TestHost;
 using Xunit;
 using Xunit.Sdk;
@@ -124,6 +125,24 @@ namespace MvcRouteTester.AspNetCore.Tests
                         })));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void ThrowsOnRouteWithParameterForParameterWrongParameterName()
+        {
+            Assert.Throws<ArgumentException>("parameterName", () =>
+                RouteAssert.For(
+                    _server,
+                    request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=wrong-value"),
+                    routeAssert => routeAssert
+                        .MapsTo<ParameterController>(a => a.QueryStringParameter(Args.Any<string>()))
+                        .ForParameter<string>("wrong-parameter", p =>
+                        {
+                            Assert.Equal("value", p);
+                        })));
+        }
+        
     }
 
 }

@@ -16,6 +16,7 @@
 using System;
 using Xunit;
 using MvcRouteTester.AspNetCore.Internal;
+using TestWebApplication.Controllers;
 
 namespace MvcRouteTester.AspNetCore.Tests.Internal
 {
@@ -35,6 +36,19 @@ namespace MvcRouteTester.AspNetCore.Tests.Internal
             Assert.Throws<ArgumentNullException>("methodInfo", () => new ActionInfo(null));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void ThrowsOnGetTextNullGetTypeName()
+        {
+            var methodInfo = typeof(ParameterController)
+                .GetMethod(nameof(ParameterController.QueryStringParameter));
+
+            var tested = new ActionInfo(methodInfo);
+            Assert.Throws<ArgumentNullException>("getTypeName", () => tested.GetText(null));
+        }
+        
     }
 
 }
