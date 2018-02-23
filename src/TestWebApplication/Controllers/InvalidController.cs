@@ -45,6 +45,16 @@ namespace TestWebApplication.Controllers
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [NonAction]
+        public IActionResult NonAction()
+        {
+            throw new NotImplementedException();
+        }
+        
     }
 
 }

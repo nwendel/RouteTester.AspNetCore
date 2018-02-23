@@ -66,7 +66,20 @@ namespace MvcRouteTester.AspNetCore.Tests
                     request => request.WithPathAndQuery("/invalid/static"),
                     routeAssert => routeAssert.MapsTo<InvalidController>(a => (IActionResult)null)));
         }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void ThrowsOnMapsToNonActionMethod()
+        {
+            Assert.Throws<ArgumentException>("actionCallExpression", () =>
+                RouteAssert.For(
+                    _server,
+                    request => request.WithPathAndQuery("/invalid/non-action"),
+                    routeAssert => routeAssert.MapsTo<InvalidController>(a => a.NonAction())));
+        }
+
     }
 
 }
