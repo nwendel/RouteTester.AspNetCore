@@ -35,10 +35,10 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
-        public static object GetActionMethodExecutor(this ControllerActionInvokerCacheEntry self)
+        public static ObjectMethodExecutor GetActionMethodExecutor(this ControllerActionInvokerCacheEntry self)
         {
             var value = _actionMethodExecutorPropertyInfo.GetValue(self);
-            return value;
+            return new ObjectMethodExecutor(value);
         }
 
         #endregion
@@ -54,9 +54,9 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <param name="arguments"></param>
         /// <param name="actionMethodExecutor"></param>
         /// <returns></returns>
-        public static object[] PrepareArguments(this ControllerActionInvoker self, Dictionary<string, object> arguments, object actionMethodExecutor)
+        public static object[] PrepareArguments(this ControllerActionInvoker self, Dictionary<string, object> arguments, ObjectMethodExecutor actionMethodExecutor)
         {
-            return (object[])_prepareArgumentsMethodInfo.Invoke(self, new[] { arguments, actionMethodExecutor });
+            return (object[])_prepareArgumentsMethodInfo.Invoke(self, new[] { arguments, actionMethodExecutor.Unwrap() });
         }
 
         #endregion
