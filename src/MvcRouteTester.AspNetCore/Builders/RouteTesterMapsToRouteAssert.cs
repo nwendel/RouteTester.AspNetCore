@@ -99,12 +99,21 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="parameterName"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public IRouteAssertMapsToBuilder ForParameter<T>(string name, Action<T> action)
+        public IRouteAssertMapsToBuilder ForParameter<T>(string parameterName, Action<T> action)
         {
-            var parameterAssert = new ParameterAssert(name, x => { action.Invoke((T)x); });
+            var validParameterName = _expectedActionInvokeInfo
+                .ActionInfo
+                .ParameterInfos
+                .Any(x => x.Name == parameterName);
+            if (!validParameterName)
+            {
+                throw new ArgumentException($"Invalid parameter name {parameterName}", nameof(parameterName));
+            }
+
+            var parameterAssert = new ParameterAssert(parameterName, x => { action.Invoke((T)x); });
             _parameterAsserts.Add(parameterAssert);
             return this;
         }
