@@ -143,8 +143,28 @@ namespace MvcRouteTester.AspNetCore.Builders
             var actualActionInvokeInfo = _actionInvokeInfoCache[key];
             _actionInvokeInfoCache.Remove(key);
 
-            // TODO: Rewrite!
+            AssertExpectedMethodInfo(actualActionInvokeInfo);
+            AssertExpectedParameterValues(actualActionInvokeInfo);
+            AssertExpectedParameterAsserts(actualActionInvokeInfo);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="actualActionInvokeInfo"></param>
+        private void AssertExpectedMethodInfo(ActualActionInvokeInfo actualActionInvokeInfo)
+        {
+            // TODO: Remove Xunit usage
             Assert.Equal(_expectedActionInvokeInfo.ActionMethodInfo, actualActionInvokeInfo.ActionMethodInfo);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="actualActionInvokeInfo"></param>
+        private void AssertExpectedParameterValues(ActualActionInvokeInfo actualActionInvokeInfo)
+        {
+            // TODO: Remove Xunit usage
             for (var ix = 0; ix < _expectedActionInvokeInfo.ActionMethodInfo.GetParameters().Length; ix++)
             {
                 switch (_expectedActionInvokeInfo.ArgumentAssertKinds[ix])
@@ -160,7 +180,15 @@ namespace MvcRouteTester.AspNetCore.Builders
                         throw new NotImplementedException();
                 }
             }
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="actualActionInvokeInfo"></param>
+        private void AssertExpectedParameterAsserts(ActualActionInvokeInfo actualActionInvokeInfo)
+        {
+            // TODO: Remove Xunit usage
             foreach (var parameterAssert in _parameterAsserts)
             {
                 var index = actualActionInvokeInfo
