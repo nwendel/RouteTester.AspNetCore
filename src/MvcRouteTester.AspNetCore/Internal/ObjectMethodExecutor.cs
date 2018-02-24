@@ -34,7 +34,7 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// 
         /// </summary>
         /// <param name="instance"></param>
-        public ObjectMethodExecutor(object instance)
+        internal ObjectMethodExecutor(object instance)
         {
             _instance = instance;
         }
@@ -47,10 +47,7 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// 
         /// </summary>
         /// <returns></returns>
-        public object Unwrap()
-        {
-            return _instance;
-        }
+        internal object Value => _instance;
 
         #endregion
 

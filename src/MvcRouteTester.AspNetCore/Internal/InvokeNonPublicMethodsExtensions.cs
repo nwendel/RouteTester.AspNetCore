@@ -56,7 +56,7 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <returns></returns>
         public static object[] PrepareArguments(this ControllerActionInvoker self, Dictionary<string, object> arguments, ObjectMethodExecutor actionMethodExecutor)
         {
-            return (object[])_prepareArgumentsMethodInfo.Invoke(self, new[] { arguments, actionMethodExecutor.Unwrap() });
+            return (object[])_prepareArgumentsMethodInfo.Invoke(self, new[] { arguments, actionMethodExecutor.Value });
         }
 
         #endregion
