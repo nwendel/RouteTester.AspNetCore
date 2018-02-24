@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Http;
+using System.Reflection;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Xunit;
@@ -143,7 +144,7 @@ namespace MvcRouteTester.AspNetCore.Builders
             var actualActionInvokeInfo = _actionInvokeInfoCache[key];
             _actionInvokeInfoCache.Remove(key);
 
-            AssertExpectedMethodInfo(actualActionInvokeInfo);
+            AssertExpectedMethodInfo(actualActionInvokeInfo.ActionMethodInfo);
             AssertExpectedParameterValues(actualActionInvokeInfo);
             AssertExpectedParameterAsserts(actualActionInvokeInfo);
         }
@@ -151,11 +152,11 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="actualActionInvokeInfo"></param>
-        private void AssertExpectedMethodInfo(ActualActionInvokeInfo actualActionInvokeInfo)
+        /// <param name="actualActionMethodInfo"></param>
+        private void AssertExpectedMethodInfo(MethodInfo actualActionMethodInfo)
         {
             // TODO: Remove Xunit usage
-            Assert.Equal(_expectedActionInvokeInfo.ActionMethodInfo, actualActionInvokeInfo.ActionMethodInfo);
+            Assert.Equal(_expectedActionInvokeInfo.ActionMethodInfo, actualActionMethodInfo);
         }
 
         /// <summary>
@@ -177,7 +178,7 @@ namespace MvcRouteTester.AspNetCore.Builders
                     case ArgumentAssertKind.Any:
                         break;
                     default:
-                        throw new NotImplementedException();
+                        throw new ArgumentOutOfRangeException();
                 }
             }
         }
