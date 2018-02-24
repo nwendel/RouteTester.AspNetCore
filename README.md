@@ -3,7 +3,7 @@
 ### NuGet Package
 
 ```
-Install-Package AttachedProperties
+Install-Package MvcRouteTester.AspNetCore
 ```
 
 ### Example
