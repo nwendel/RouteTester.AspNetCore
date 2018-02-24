@@ -83,12 +83,12 @@ namespace MvcRouteTester.AspNetCore.Builders
                 .ActionDescriptors
                 .Items
                 .OfType<ControllerActionDescriptor>()
-                .Any(x => x.MethodInfo == _expectedActionInvokeInfo.MethodInfo);
+                .Any(x => x.MethodInfo == _expectedActionInvokeInfo.ActionMethodInfo);
             if (isActionMethod)
             {
                 return;
             }
-            var actionText = _expectedActionInvokeInfo.ActionInfo.GetText(x => x.Name);
+            var actionText = _expectedActionInvokeInfo.ActionMethodInfo.GetActionText(x => x.Name);
             throw new ArgumentException($"Method {actionText} is not a valid controller action", nameof(actionCallExpression));
         }
 
@@ -114,8 +114,8 @@ namespace MvcRouteTester.AspNetCore.Builders
             }
 
             var validParameterName = _expectedActionInvokeInfo
-                .ActionInfo
-                .ParameterInfos
+                .ActionMethodInfo
+                .GetParameters()
                 .Any(x => x.Name == parameterName);
             if (!validParameterName)
             {
@@ -144,21 +144,10 @@ namespace MvcRouteTester.AspNetCore.Builders
             _actionInvokeInfoCache.Remove(key);
 
             // TODO: Rewrite!
-            Assert.Equal(
-                _expectedActionInvokeInfo.ActionInfo.ControllerTypeNameInfo.AssemblyQualifiedName, 
-                actualActionInvokeInfo.ActionInfo.ControllerTypeNameInfo.AssemblyQualifiedName);
-            Assert.Equal(
-                _expectedActionInvokeInfo.ActionInfo.ActionMethodName, 
-                actualActionInvokeInfo.ActionInfo.ActionMethodName);
-            Assert.Equal(
-                _expectedActionInvokeInfo.ActionInfo.ParameterInfos.Length, 
-                actualActionInvokeInfo.ActionInfo.ParameterInfos.Length);
-            for (var ix = 0; ix < _expectedActionInvokeInfo.ActionInfo.ParameterInfos.Length; ix++)
+            Assert.Equal(_expectedActionInvokeInfo.ActionMethodInfo, actualActionInvokeInfo.ActionMethodInfo);
+            for (var ix = 0; ix < _expectedActionInvokeInfo.ActionMethodInfo.GetParameters().Length; ix++)
             {
-                Assert.Equal(
-                    _expectedActionInvokeInfo.ActionInfo.ParameterInfos[ix].TypeNameInfo.AssemblyQualifiedName, 
-                    actualActionInvokeInfo.ActionInfo.ParameterInfos[ix].TypeNameInfo.AssemblyQualifiedName);
-                switch(_expectedActionInvokeInfo.ArgumentAssertKinds[ix])
+                switch (_expectedActionInvokeInfo.ArgumentAssertKinds[ix])
                 {
                     case ArgumentAssertKind.Value:
                         Assert.Equal(
@@ -172,10 +161,15 @@ namespace MvcRouteTester.AspNetCore.Builders
                 }
             }
 
-            foreach(var parameterAssert in _parameterAsserts)
+            foreach (var parameterAssert in _parameterAsserts)
             {
-                var ix = actualActionInvokeInfo.ActionInfo.ParameterInfos.Single(x => x.Name == parameterAssert.Name).Index;
-                var value = actualActionInvokeInfo.Arguments[ix];
+                var index = actualActionInvokeInfo
+                    .ActionMethodInfo
+                    .GetParameters()
+                    .Select((p, ix) => new { Parameter = p, Index = ix })
+                    .Single(p => p.Parameter.Name == parameterAssert.Name)
+                    .Index;
+                var value = actualActionInvokeInfo.Arguments[index];
                 parameterAssert.Action(value);
             }
         }

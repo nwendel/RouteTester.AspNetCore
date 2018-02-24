@@ -24,17 +24,8 @@ namespace MvcRouteTester.AspNetCore.Tests.Internal
     /// <summary>
     /// 
     /// </summary>
-    public class ActionInfoTests
+    public class MethodInfoExtensionsTests
     {
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Fact]
-        public void ThrowsOnCreateNullMethodInfo()
-        {
-            Assert.Throws<ArgumentNullException>("methodInfo", () => new ActionInfo(null));
-        }
 
         /// <summary>
         /// 
@@ -42,11 +33,10 @@ namespace MvcRouteTester.AspNetCore.Tests.Internal
         [Fact]
         public void ThrowsOnGetTextNullGetTypeName()
         {
-            var methodInfo = typeof(ParameterController)
+            var tested = typeof(ParameterController)
                 .GetMethod(nameof(ParameterController.QueryStringParameter));
 
-            var tested = new ActionInfo(methodInfo);
-            Assert.Throws<ArgumentNullException>("getTypeName", () => tested.GetText(null));
+            Assert.Throws<ArgumentNullException>("getTypeName", () => tested.GetActionText(null));
         }
         
     }

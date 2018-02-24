@@ -58,10 +58,9 @@ namespace MvcRouteTester.AspNetCore.Internal
 
             var result = new ExpectedActionInvokeInfo
             {
-                ActionInfo = new ActionInfo(methodInfo),
+                ActionMethodInfo = methodInfo,
                 Arguments = arguments,
-                ArgumentAssertKinds = argumentAssertKinds,
-                MethodInfo = methodInfo
+                ArgumentAssertKinds = argumentAssertKinds
             };
             return result;
         }

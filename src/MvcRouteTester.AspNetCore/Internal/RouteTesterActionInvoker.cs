@@ -88,7 +88,7 @@ namespace MvcRouteTester.AspNetCore.Internal
 
             var actionInvokeInfo = new ActualActionInvokeInfo
             {
-                ActionInfo = new ActionInfo(actionMethodInfo),
+                ActionMethodInfo = actionMethodInfo,
                 Arguments = arguments
             };
 

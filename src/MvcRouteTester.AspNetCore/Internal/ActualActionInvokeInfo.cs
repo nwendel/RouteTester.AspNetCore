@@ -13,6 +13,9 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+
+using System.Reflection;
+
 namespace MvcRouteTester.AspNetCore.Internal
 {
 
@@ -27,7 +30,7 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <summary>
         /// 
         /// </summary>
-        public ActionInfo ActionInfo { get; set; }
+        public MethodInfo ActionMethodInfo { get; set; }
 
         /// <summary>
         /// 
