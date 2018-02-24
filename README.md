@@ -18,10 +18,7 @@ public class Example : IClassFixture<TestServerFixture>
         _server = testServerFixture.Server;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    [Fact]
+    [Fact]
     public void CanRoute()
     {
         RouteAssert.For(
@@ -30,10 +27,7 @@ public class Example : IClassFixture<TestServerFixture>
             routeAssert => routeAssert.MapsTo<HomeController>(a => a.SomeRoute()));
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    [Fact]
+    [Fact]
     public void CanRouteWithArguments()
     {
         RouteAssert.For(
