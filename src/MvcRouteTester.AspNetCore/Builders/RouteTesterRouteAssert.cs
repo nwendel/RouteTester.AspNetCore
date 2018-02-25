@@ -104,7 +104,7 @@ namespace MvcRouteTester.AspNetCore.Builders
 
         #endregion
 
-        #region Assert Expected
+        #region Assert Expected Async
 
         private IRouteAssert _routeAssert;
 
@@ -112,13 +112,13 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// 
         /// </summary>
         /// <param name="responseMessage"></param>
-        public void AssertExpected(HttpResponseMessage responseMessage)
+        public async Task AssertExpectedAsync(HttpResponseMessage responseMessage)
         {
-            _routeAssert.AssertExpected(responseMessage);
+            await _routeAssert.AssertExpectedAsync(responseMessage);
         }
 
         #endregion
-
+        
     }
 
 }

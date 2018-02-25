@@ -19,6 +19,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Http;
 using System.Reflection;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Xunit;
@@ -130,17 +131,17 @@ namespace MvcRouteTester.AspNetCore.Builders
 
         #endregion
 
-        #region Assert Expected
+        #region Assert Expected Async
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="responseMessage"></param>
-        public void AssertExpected(HttpResponseMessage responseMessage)
+        public async Task AssertExpectedAsync(HttpResponseMessage responseMessage)
         {
             responseMessage.EnsureSuccessStatusCode();
 
-            var key = responseMessage.Content.ReadAsStringAsync().Result;
+            var key = await responseMessage.Content.ReadAsStringAsync();
             var actualActionInvokeInfo = _actionInvokeInfoCache[key];
             _actionInvokeInfoCache.Remove(key);
 

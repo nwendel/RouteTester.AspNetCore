@@ -14,6 +14,7 @@
 // limitations under the License.
 #endregion
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace MvcRouteTester.AspNetCore.Builders
 {
@@ -24,16 +25,16 @@ namespace MvcRouteTester.AspNetCore.Builders
     public interface IRouteAssert
     {
 
-        #region Ensure
+        #region Assert Expected Async
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="responseMessage"></param>
-        void AssertExpected(HttpResponseMessage responseMessage);
+        Task AssertExpectedAsync(HttpResponseMessage responseMessage);
 
         #endregion
-
+        
     }
 
 }

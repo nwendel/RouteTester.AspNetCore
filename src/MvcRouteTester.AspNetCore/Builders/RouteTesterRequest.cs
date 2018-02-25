@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
 
 namespace MvcRouteTester.AspNetCore.Builders
@@ -87,29 +88,29 @@ namespace MvcRouteTester.AspNetCore.Builders
 
         #endregion
 
-        #region Execute
+        #region Execute Async
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public HttpResponseMessage Execute(TestServer server)
+        public async Task<HttpResponseMessage> ExecuteAsync(TestServer server)
         {
             var client = server.CreateClient();
             var requestMessage = new HttpRequestMessage(_method, _pathAndQuery);
 
             // REVIEW: Only with POST method?
-            if(_method == HttpMethod.Post && _formData.Any())
+            if (_method == HttpMethod.Post && _formData.Any())
             {
                 requestMessage.Content = new FormUrlEncodedContent(_formData);
             }
 
-            var responseMessage = client.SendAsync(requestMessage).Result;
+            var responseMessage = await client.SendAsync(requestMessage);
             return responseMessage;
         }
 
         #endregion
-
+        
     }
 
 }

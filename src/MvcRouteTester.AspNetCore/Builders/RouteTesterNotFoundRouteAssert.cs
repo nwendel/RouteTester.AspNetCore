@@ -15,6 +15,7 @@
 #endregion
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace MvcRouteTester.AspNetCore.Builders
@@ -26,23 +27,25 @@ namespace MvcRouteTester.AspNetCore.Builders
     public class RouteTesterNotFoundRouteAssert : IRouteAssert
     {
 
-        #region Assert Expected
+        #region Assert Expected Async
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="responseMessage"></param>
-        public void AssertExpected(HttpResponseMessage responseMessage)
+        public Task AssertExpectedAsync(HttpResponseMessage responseMessage)
         {
             if (responseMessage.StatusCode != HttpStatusCode.NotFound)
             {
-                // TODO: Rewrite!
+                // TODO: Remove Xunit usage
                 Assert.False(true, "Status code is not 404 (Not Found)");
             }
+
+            return Task.CompletedTask;
         }
 
         #endregion
-
+        
     }
 
 }

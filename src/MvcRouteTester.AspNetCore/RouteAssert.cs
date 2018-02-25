@@ -14,6 +14,7 @@
 // limitations under the License.
 #endregion
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using MvcRouteTester.AspNetCore.Builders;
@@ -36,6 +37,24 @@ namespace MvcRouteTester.AspNetCore
         /// <param name="routeAssertBuilder"></param>
         public static void For(TestServer server, Action<IRequestBuilder> requestBuilder, Action<IRouteAssertBuilder> routeAssertBuilder)
         {
+            // TODO: This can cause deadlock?
+            ForAsync(server, requestBuilder, routeAssertBuilder)
+                .GetAwaiter()
+                .GetResult();
+        }
+
+        #endregion
+
+        #region For Async
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="server"></param>
+        /// <param name="requestBuilder"></param>
+        /// <param name="routeAssertBuilder"></param>
+        public static async Task ForAsync(TestServer server, Action<IRequestBuilder> requestBuilder, Action<IRouteAssertBuilder> routeAssertBuilder)
+        {
             if (server == null)
             {
                 throw new ArgumentNullException(nameof(server));
@@ -56,12 +75,12 @@ namespace MvcRouteTester.AspNetCore
             requestBuilder(request);
             routeAssertBuilder(routeAssert);
 
-            var responseMessage = request.Execute(server);
-            routeAssert.AssertExpected(responseMessage);
+            var responseMessage = await request.ExecuteAsync(server);
+            await routeAssert.AssertExpectedAsync(responseMessage);
         }
 
         #endregion
-
+        
     }
 
 }
