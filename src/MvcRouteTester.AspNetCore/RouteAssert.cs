@@ -37,10 +37,9 @@ namespace MvcRouteTester.AspNetCore
         /// <param name="routeAssertBuilder"></param>
         public static void For(TestServer server, Action<IRequestBuilder> requestBuilder, Action<IRouteAssertBuilder> routeAssertBuilder)
         {
-            // TODO: This can cause deadlock?
-            ForAsync(server, requestBuilder, routeAssertBuilder)
-                .GetAwaiter()
-                .GetResult();
+            Task.Run(() => ForAsync(server, requestBuilder, routeAssertBuilder)
+                    .GetAwaiter().GetResult())
+                .GetAwaiter().GetResult();
         }
 
         #endregion
