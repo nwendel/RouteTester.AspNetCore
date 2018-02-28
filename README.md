@@ -19,18 +19,18 @@ public class Example : IClassFixture<TestServerFixture>
     }
 
     [Fact]
-    public void CanRoute()
+    public async Task CanRoute()
     {
-        RouteAssert.For(
+        await RouteAssert.ForAsync(
             _server,
             request => request.WithPathAndQuery("/some-route"),
             routeAssert => routeAssert.MapsTo<HomeController>(a => a.SomeRoute()));
     }
 
     [Fact]
-    public void CanRouteWithArguments()
+    public async Task CanRouteWithArguments()
     {
-        RouteAssert.For(
+        await RouteAssert.ForAsync(
             _server,
             request => request.WithPathAndQuery("/some-other-route?parameter=value"),
             routeAssert => routeAssert.MapsTo<HomeController>(a => a.SomeOtherRoute("value")));
