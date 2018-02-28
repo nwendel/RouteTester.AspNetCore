@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
 using Xunit;
 using Xunit.Sdk;
@@ -44,10 +45,10 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void ThrowsOnMapsToIncorrectController()
+        public async Task ThrowsOnMapsToIncorrectController()
         {
-            Assert.Throws<EqualException>(() =>
-                RouteAssert.For(
+            await Assert.ThrowsAsync<EqualException>(() =>
+                RouteAssert.ForAsync(
                     _server,
                     request => request.WithPathAndQuery("/simple-attribute-route"),
                     routeAssert => routeAssert.MapsTo<InvalidController>(a => a.Default())));
@@ -57,10 +58,10 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void ThrowsOnMapsToIncorrectActionMethodName()
+        public async Task ThrowsOnMapsToIncorrectActionMethodName()
         {
-            Assert.Throws<EqualException>(() =>
-                RouteAssert.For(
+            await Assert.ThrowsAsync<EqualException>(() =>
+                RouteAssert.ForAsync(
                     _server,
                     request => request.WithPathAndQuery("/simple-attribute-route"),
                     routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRouteAsync())));

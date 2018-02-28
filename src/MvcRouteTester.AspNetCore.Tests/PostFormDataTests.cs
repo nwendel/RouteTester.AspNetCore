@@ -15,6 +15,7 @@
 #endregion
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
 using Xunit;
 using TestWebApplication.Controllers;
@@ -46,9 +47,9 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void CanPostPerson()
+        public async Task CanPostPerson()
         {
-            RouteAssert.For(
+            await RouteAssert.ForAsync(
                 _server,
                 request => request
                     .WithPathAndQuery("/post-with-person")

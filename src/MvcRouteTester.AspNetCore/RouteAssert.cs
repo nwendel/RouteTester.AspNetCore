@@ -37,8 +37,7 @@ namespace MvcRouteTester.AspNetCore
         /// <param name="routeAssertBuilder"></param>
         public static void For(TestServer server, Action<IRequestBuilder> requestBuilder, Action<IRouteAssertBuilder> routeAssertBuilder)
         {
-            Task.Run(() => ForAsync(server, requestBuilder, routeAssertBuilder)
-                    .GetAwaiter().GetResult())
+            Task.Run(async () => await ForAsync(server, requestBuilder, routeAssertBuilder))
                 .GetAwaiter().GetResult();
         }
 

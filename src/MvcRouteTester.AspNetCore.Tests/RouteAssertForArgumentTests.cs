@@ -13,8 +13,8 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
 using TestWebApplication.Controllers;
 using Xunit;
@@ -46,10 +46,10 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void ThrowsOnNullServer()
+        public async Task ThrowsOnNullServer()
         {
-            Assert.Throws<ArgumentNullException>("server", () =>
-                RouteAssert.For(
+            await Assert.ThrowsAsync<ArgumentNullException>("server", () =>
+                RouteAssert.ForAsync(
                     null,
                     request => request.WithPathAndQuery("/simple-attribute-route"),
                     routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRoute())));
@@ -60,10 +60,10 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void ThrowsOnNullRequestBuilder()
+        public async Task ThrowsOnNullRequestBuilder()
         {
-            Assert.Throws<ArgumentNullException>("requestBuilder", () =>
-                RouteAssert.For(
+            await Assert.ThrowsAsync<ArgumentNullException>("requestBuilder", () =>
+                RouteAssert.ForAsync(
                     _server,
                     null,
                     routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRoute())));
@@ -74,10 +74,10 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void ThrowsOnNullRouteAssertBuilder()
+        public async Task ThrowsOnNullRouteAssertBuilder()
         {
-            Assert.Throws<ArgumentNullException>("routeAssertBuilder", () =>
-                RouteAssert.For(
+            await Assert.ThrowsAsync<ArgumentNullException>("routeAssertBuilder", () =>
+                RouteAssert.ForAsync(
                     _server,
                     request => request.WithPathAndQuery("/simple-attribute-route"),
                     null));

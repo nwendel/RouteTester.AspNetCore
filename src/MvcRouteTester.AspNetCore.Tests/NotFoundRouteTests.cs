@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
 using Xunit;
 using Xunit.Sdk;
@@ -43,9 +44,9 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void CanRouteNotFound()
+        public async Task CanRouteNotFound()
         {
-            RouteAssert.For(
+            await RouteAssert.ForAsync(
                 _server,
                 request => request.WithPathAndQuery("/non-existant-route"),
                 routeAssert => routeAssert.NotFound());
@@ -55,10 +56,10 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void ThrowsOnFound()
+        public async Task ThrowsOnFound()
         {
-            Assert.Throws<FalseException>(() =>
-                RouteAssert.For(
+            await Assert.ThrowsAsync<FalseException>(() =>
+                RouteAssert.ForAsync(
                     _server,
                     request => request.WithPathAndQuery("/simple-attribute-route"),
                     routeAssert => routeAssert.NotFound()));

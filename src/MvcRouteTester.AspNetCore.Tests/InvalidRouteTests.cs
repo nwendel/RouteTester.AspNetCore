@@ -14,6 +14,7 @@
 // limitations under the License.
 #endregion
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.TestHost;
 using Xunit;
@@ -45,10 +46,10 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void ThrowsOnMapsToStaticMethod()
+        public async Task ThrowsOnMapsToStaticMethod()
         {
-            Assert.Throws<ArgumentException>("actionCallExpression", () =>
-                RouteAssert.For(
+            await Assert.ThrowsAsync<ArgumentException>("actionCallExpression", () =>
+                RouteAssert.ForAsync(
                     _server,
                     request => request.WithPathAndQuery("/invalid/static"),
                     routeAssert => routeAssert.MapsTo<InvalidController>(a => InvalidController.Static())));
@@ -58,10 +59,10 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void ThrowsOnMapsToNonMethod()
+        public async Task ThrowsOnMapsToNonMethod()
         {
-            Assert.Throws<ArgumentException>("actionCallExpression", () =>
-                RouteAssert.For(
+            await Assert.ThrowsAsync<ArgumentException>("actionCallExpression", () =>
+                RouteAssert.ForAsync(
                     _server,
                     request => request.WithPathAndQuery("/invalid/static"),
                     routeAssert => routeAssert.MapsTo<InvalidController>(a => (IActionResult)null)));
@@ -71,10 +72,10 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void ThrowsOnMapsToNonActionMethod()
+        public async Task ThrowsOnMapsToNonActionMethod()
         {
-            Assert.Throws<ArgumentException>("actionCallExpression", () =>
-                RouteAssert.For(
+            await Assert.ThrowsAsync<ArgumentException>("actionCallExpression", () =>
+                RouteAssert.ForAsync(
                     _server,
                     request => request.WithPathAndQuery("/invalid/non-action"),
                     routeAssert => routeAssert.MapsTo<InvalidController>(a => a.NonAction())));

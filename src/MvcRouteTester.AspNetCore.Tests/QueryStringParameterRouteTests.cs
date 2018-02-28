@@ -14,6 +14,7 @@
 // limitations under the License.
 #endregion
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
 using Xunit;
 using Xunit.Sdk;
@@ -45,9 +46,9 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void CanRouteWithParameter()
+        public async Task CanRouteWithParameter()
         {
-            RouteAssert.For(
+            await RouteAssert.ForAsync(
                 _server,
                 request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
                 routeAssert => routeAssert.MapsTo<ParameterController>(a => a.QueryStringParameter("value")));
@@ -57,10 +58,10 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void ThrowsOnRouteWithParameterWrongValue()
+        public async Task ThrowsOnRouteWithParameterWrongValue()
         {
-            Assert.Throws<EqualException>(() =>
-               RouteAssert.For(
+            await Assert.ThrowsAsync<EqualException>(() =>
+               RouteAssert.ForAsync(
                     _server,
                     request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
                     routeAssert => routeAssert.MapsTo<ParameterController>(a => a.QueryStringParameter("wrong-value"))));
@@ -70,9 +71,9 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void CanRouteWithoutParameter()
+        public async Task CanRouteWithoutParameter()
         {
-            RouteAssert.For(
+            await RouteAssert.ForAsync(
                 _server,
                 request => request.WithPathAndQuery("/parameter/query-string-parameter"),
                 routeAssert => routeAssert.MapsTo<ParameterController>(a => a.QueryStringParameter(null)));
@@ -82,9 +83,9 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void CanRouteWithParameterMatchingAny()
+        public async Task CanRouteWithParameterMatchingAny()
         {
-            RouteAssert.For(
+            await RouteAssert.ForAsync(
                 _server,
                 request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
                 routeAssert => routeAssert.MapsTo<ParameterController>(a => a.QueryStringParameter(Args.Any<string>())));
@@ -94,9 +95,9 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void CanRouteWithParameterForParameterExpression()
+        public async Task CanRouteWithParameterForParameterExpression()
         {
-            RouteAssert.For(
+            await RouteAssert.ForAsync(
                 _server,
                 request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
                 routeAssert => routeAssert
@@ -111,10 +112,10 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void ThrowsOnRouteWithParameterForParameterExpressionWrongValue()
+        public async Task ThrowsOnRouteWithParameterForParameterExpressionWrongValue()
         {
-            Assert.Throws<EqualException>(() =>
-                RouteAssert.For(
+            await Assert.ThrowsAsync<EqualException>(() =>
+                RouteAssert.ForAsync(
                     _server,
                     request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=wrong-value"),
                     routeAssert => routeAssert
@@ -129,10 +130,10 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// 
         /// </summary>
         [Fact]
-        public void ThrowsOnRouteWithParameterForParameterWrongParameterName()
+        public async Task ThrowsOnRouteWithParameterForParameterWrongParameterName()
         {
-            Assert.Throws<ArgumentException>("parameterName", () =>
-                RouteAssert.For(
+            await Assert.ThrowsAsync<ArgumentException>("parameterName", () =>
+                RouteAssert.ForAsync(
                     _server,
                     request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=wrong-value"),
                     routeAssert => routeAssert
