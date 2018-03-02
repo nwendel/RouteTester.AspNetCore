@@ -115,13 +115,17 @@ namespace MvcRouteTester.AspNetCore.Builders
                 throw new ArgumentNullException(nameof(action));
             }
 
-            var validParameterName = _expectedActionInvokeInfo
+            var expectedParameter = _expectedActionInvokeInfo
                 .ActionMethodInfo
                 .GetParameters()
-                .Any(x => x.Name == parameterName);
-            if (!validParameterName)
+                .SingleOrDefault(x => x.Name == parameterName);
+            if (expectedParameter == null)
             {
                 throw new ArgumentException($"Invalid parameter name {parameterName}", nameof(parameterName));
+            }
+            if(expectedParameter.ParameterType != typeof(T))
+            {
+                throw new ArgumentException($"Invalid parameter type expected {expectedParameter.ParameterType.Name} but call was {typeof(T).Name}", nameof(T));
             }
 
             var parameterAssert = new ParameterAssert(parameterName, x => { action.Invoke((T)x); });

@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
 using Xunit;
@@ -51,7 +52,22 @@ namespace MvcRouteTester.AspNetCore.Tests
                 RouteAssert.ForAsync(
                     _server,
                     request => request.WithPathAndQuery("/parameter/same-name-with-string"),
-                    routeAssert => routeAssert.MapsTo<ParameterController>(a => a.SameName(null, default(int)))));
+                    routeAssert => routeAssert.MapsTo<ParameterController>(a => a.SameName(default(string), default(int)))));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public async Task ThrowsOnForParameterInvalidType()
+        {
+            await Assert.ThrowsAsync<ArgumentException>("T", () =>
+                RouteAssert.ForAsync(
+                    _server,
+                    request => request.WithPathAndQuery("/parameter/same-name-with-string"),
+                    routeAssert => routeAssert
+                        .MapsTo<ParameterController>(a => a.SameName(default(string), default(string)))
+                        .ForParameter<int>("parameter2", p => { })));
         }
 
     }
