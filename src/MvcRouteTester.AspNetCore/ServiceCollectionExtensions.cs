@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System.Linq;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,6 +37,11 @@ namespace MvcRouteTester.AspNetCore
         /// <param name="serviceCollection"></param>
         public static void AddMvcRouteTester(this IServiceCollection serviceCollection)
         {
+            if(!serviceCollection.Any(x => x.ImplementationType == typeof(ActionInvokerFactory)))
+            {
+                throw new MvcRouteTesterException("AddMvcRouteTester() must be called after AddMvc()");
+            }
+
             // Register services needed by MvcRouteTester
             serviceCollection.AddTransient<RouteTesterRequest>();
             serviceCollection.AddTransient<RouteTesterRouteAssert>();
