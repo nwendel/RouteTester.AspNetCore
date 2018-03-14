@@ -13,7 +13,7 @@ public class Example : IClassFixture<TestServerFixture>
 
     private readonly TestServer _server;
 
-    public BasicRouteTests(TestServerFixture testServerFixture)
+    public Example(TestServerFixture testServerFixture)
     {
         _server = testServerFixture.Server;
     }
