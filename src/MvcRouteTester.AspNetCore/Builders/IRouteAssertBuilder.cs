@@ -36,7 +36,7 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// <param name="actionCallExpression"></param>
         /// <returns></returns>
         IRouteAssertMapsToBuilder MapsTo<TController>(Expression<Func<TController, IActionResult>> actionCallExpression)
-            where TController : Controller;
+            where TController : ControllerBase;
 
         /// <summary>
         /// 
@@ -45,7 +45,7 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// <param name="actionCallExpression"></param>
         /// <returns></returns>
         IRouteAssertMapsToBuilder MapsTo<TController>(Expression<Func<TController, Task<IActionResult>>> actionCallExpression)
-            where TController : Controller;
+            where TController : ControllerBase;
 
         #endregion
 
