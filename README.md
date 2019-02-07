@@ -43,7 +43,7 @@ public class TestServerFixture
 
     public TestServerFixture()
     {
-        Server = new TestServer(new WebHostBuilder().UseStartup<TestStartup>());
+        Server = new TestServer(new WebHostBuilder().UseTestStartup<TestStartup, Startup>());
     }
 
     public TestServer Server { get; }
