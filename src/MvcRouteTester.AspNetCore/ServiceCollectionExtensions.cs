@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) Niklas Wendel 2018
+// Copyright (c) Niklas Wendel 2018-2019
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
 // you may not use this file except in compliance with the License. 
@@ -37,7 +37,7 @@ namespace MvcRouteTester.AspNetCore
         /// <param name="serviceCollection"></param>
         public static void AddMvcRouteTester(this IServiceCollection serviceCollection)
         {
-            if(!serviceCollection.Any(x => x.ImplementationType == typeof(ActionInvokerFactory)))
+            if(serviceCollection.All(x => x.ImplementationType != typeof(ActionInvokerFactory)))
             {
                 throw new MvcRouteTesterException("AddMvcRouteTester() must be called after AddMvc()");
             }
@@ -50,7 +50,7 @@ namespace MvcRouteTester.AspNetCore
             serviceCollection.AddSingleton<ActualActionInvokeInfoCache>();
             serviceCollection.AddSingleton<RouteExpressionParser>();
 
-            // Register Standard ActionInvoker as self insetad of via interface since MvcRouteTester depends on it for binding arguments
+            // Register Standard ActionInvoker as self instead of via interface since MvcRouteTester depends on it for binding arguments
             serviceCollection.AddSingleton<ActionInvokerFactory>();
 
             // Replace standard IActionInvokerFactory implementation which records action info and avoids calling the action

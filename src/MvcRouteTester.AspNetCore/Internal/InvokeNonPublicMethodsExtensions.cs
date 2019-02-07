@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) Niklas Wendel 2018
+// Copyright (c) Niklas Wendel 2018-2019
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
 // you may not use this file except in compliance with the License. 
@@ -28,22 +28,22 @@ namespace MvcRouteTester.AspNetCore.Internal
 
         #region Get Action Method Executor
 
-        private static readonly PropertyInfo _actionMethodExecutorPropertyInfo = typeof(ControllerActionInvokerCacheEntry).GetProperty("ActionMethodExecutor", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly PropertyInfo _objectMethodExecutorPropertyInfo = typeof(ControllerActionInvokerCacheEntry).GetProperty("ObjectMethodExecutor", BindingFlags.NonPublic | BindingFlags.Instance);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
-        public static ObjectMethodExecutor GetActionMethodExecutor(this ControllerActionInvokerCacheEntry self)
+        public static ObjectMethodExecutor GetObjectMethodExecutor(this ControllerActionInvokerCacheEntry self)
         {
-            var value = _actionMethodExecutorPropertyInfo.GetValue(self);
+            var value = _objectMethodExecutorPropertyInfo.GetValue(self);
             return new ObjectMethodExecutor(value);
         }
 
         #endregion
 
-        #region prepare Arguments
+        #region Prepare Arguments
 
         private static readonly MethodInfo _prepareArgumentsMethodInfo = typeof(ControllerActionInvoker).GetMethod("PrepareArguments", BindingFlags.NonPublic | BindingFlags.Static);
 

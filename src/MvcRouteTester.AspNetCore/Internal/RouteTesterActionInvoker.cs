@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) Niklas Wendel 2018
+// Copyright (c) Niklas Wendel 2018-2019
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
 // you may not use this file except in compliance with the License. 
@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -26,7 +27,7 @@ namespace MvcRouteTester.AspNetCore.Internal
 
     /// <summary>
     /// 
-    /// </summary>
+    /// </summary>F
     public class RouteTesterActionInvoker : IActionInvoker
     {
 
@@ -34,7 +35,8 @@ namespace MvcRouteTester.AspNetCore.Internal
 
         private readonly ActionContext _actionContext;
         private readonly IList<IValueProviderFactory> _valueProviderFactories;
-        private readonly ContentResultExecutor _contentResultExecutor;
+        //private readonly ContentResultExecutor _contentResultExecutor;
+        private readonly IActionResultExecutor<ContentResult> _contentResultExecutor;
         private readonly ControllerActionInvokerCache _controllerActionInvokerCache;
         private readonly ActionInvokerFactory _actionInvokerFactory;
         private readonly ActualActionInvokeInfoCache _actionInvokeInfoCache;
@@ -54,8 +56,8 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <param name="actionInvokeInfoCache"></param>
         public RouteTesterActionInvoker(
             ActionContext actionContext, 
-            IList<IValueProviderFactory> valueProviderFactories, 
-            ContentResultExecutor contentResultExecutor,
+            IList<IValueProviderFactory> valueProviderFactories,
+            IActionResultExecutor<ContentResult> contentResultExecutor,
             ControllerActionInvokerCache controllerActionInvokerCache,
             ActionInvokerFactory actionInvokerFactory,
             ActualActionInvokeInfoCache actionInvokeInfoCache)
@@ -114,7 +116,7 @@ namespace MvcRouteTester.AspNetCore.Internal
         private object[] BindArguments(ControllerContext controllerContext)
         {
             (var cacheEntry, var _) = _controllerActionInvokerCache.GetCachedResult(controllerContext);
-            var actionMethodExecutor = cacheEntry.GetActionMethodExecutor();
+            var actionMethodExecutor = cacheEntry.GetObjectMethodExecutor();
             var controllerActionInvoker = (ControllerActionInvoker)_actionInvokerFactory.CreateInvoker(_actionContext);
             var binder = cacheEntry.ControllerBinderDelegate;
 

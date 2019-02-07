@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) Niklas Wendel 2018
+// Copyright (c) Niklas Wendel 2018-2019
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
 // you may not use this file except in compliance with the License. 
@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
+using TestWebApplication;
 
 namespace MvcRouteTester.AspNetCore.Tests
 {
@@ -32,8 +33,7 @@ namespace MvcRouteTester.AspNetCore.Tests
         /// </summary>
         public TestServerFixture()
         {
-            Server = new TestServer(new WebHostBuilder()
-                .UseStartup<TestStartup>());
+            Server = new TestServer(new WebHostBuilder().UseTestStartup<TestStartup, Startup>());
         }
 
         /// <summary>

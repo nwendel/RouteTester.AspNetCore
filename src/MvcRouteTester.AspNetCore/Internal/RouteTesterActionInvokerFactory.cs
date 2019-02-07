@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) Niklas Wendel 2018
+// Copyright (c) Niklas Wendel 2018-2019
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
 // you may not use this file except in compliance with the License. 
@@ -31,7 +31,7 @@ namespace MvcRouteTester.AspNetCore.Internal
         #region Dependencies
 
         private readonly IOptions<MvcOptions> _mvcOptions;
-        private readonly ContentResultExecutor _contentResultExecutor;
+        private readonly IActionResultExecutor<ContentResult> _contentResultExecutor;
         private readonly ControllerActionInvokerCache _controllerActionInvokerCache;
         private readonly ActionInvokerFactory _actionInvokerFactory;
         private readonly ActualActionInvokeInfoCache _actionInvokeInfoCache;
@@ -49,8 +49,8 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <param name="actionInvokerFactory"></param>
         /// <param name="actionInvokeInfoCache"></param>
         public RouteTesterActionInvokerFactory(
-            IOptions<MvcOptions> mvcOptions, 
-            ContentResultExecutor contentResultExecutor,
+            IOptions<MvcOptions> mvcOptions,
+            IActionResultExecutor<ContentResult> contentResultExecutor,
             ControllerActionInvokerCache controllerActionInvokerCache,
             ActionInvokerFactory actionInvokerFactory,
             ActualActionInvokeInfoCache actionInvokeInfoCache)

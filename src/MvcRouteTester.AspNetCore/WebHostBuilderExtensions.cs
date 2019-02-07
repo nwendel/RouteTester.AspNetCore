@@ -13,36 +13,38 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace TestWebApplication
+namespace MvcRouteTester.AspNetCore
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class Program
+    public static class WebHostBuilderExtensions
     {
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="args"></param>
-        public static void Main(string[] args)
-        {
-            BuildWebHost(args).Run();
-        }
+        #region Use Test Startup
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="args"></param>
+        /// <typeparam name="TTestStartup"></typeparam>
+        /// <typeparam name="TStartup"></typeparam>
+        /// <param name="self"></param>
         /// <returns></returns>
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .Build();
+        public static IWebHostBuilder UseTestStartup<TTestStartup, TStartup>(this IWebHostBuilder self)
+            where TTestStartup : class
+            where TStartup : class
+        {
+            var applicationKey = typeof(TStartup).Assembly.FullName;
+
+            return self
+                .UseStartup<TTestStartup>()
+                .UseSetting(WebHostDefaults.ApplicationKey, applicationKey);
+        }
+
+        #endregion
 
     }
 

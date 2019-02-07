@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) Niklas Wendel 2018
+// Copyright (c) Niklas Wendel 2018-2019
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
 // you may not use this file except in compliance with the License. 
@@ -194,7 +194,6 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// <param name="actualActionInvokeInfo"></param>
         private void AssertExpectedParameterAsserts(ActualActionInvokeInfo actualActionInvokeInfo)
         {
-            // TODO: Remove Xunit usage
             foreach (var parameterAssert in _parameterAsserts)
             {
                 var index = actualActionInvokeInfo
