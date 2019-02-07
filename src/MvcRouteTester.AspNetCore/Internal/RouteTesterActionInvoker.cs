@@ -35,7 +35,6 @@ namespace MvcRouteTester.AspNetCore.Internal
 
         private readonly ActionContext _actionContext;
         private readonly IList<IValueProviderFactory> _valueProviderFactories;
-        //private readonly ContentResultExecutor _contentResultExecutor;
         private readonly IActionResultExecutor<ContentResult> _contentResultExecutor;
         private readonly ControllerActionInvokerCache _controllerActionInvokerCache;
         private readonly ActionInvokerFactory _actionInvokerFactory;
