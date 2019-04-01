@@ -16,6 +16,7 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace MvcRouteTester.AspNetCore.Internal
 {
@@ -25,6 +26,12 @@ namespace MvcRouteTester.AspNetCore.Internal
     /// </summary>
     public class RouteExpressionParser
     {
+
+        #region Fields
+
+        private readonly MethodInfo _anyMethod = typeof(Args).GetMethod(nameof(Args.Any));
+
+        #endregion
 
         #region Parse
 
@@ -49,7 +56,7 @@ namespace MvcRouteTester.AspNetCore.Internal
                         return ArgumentAssertKind.Value;
                     }
 
-                    var anyMethod = typeof(Args).GetMethod(nameof(Args.Any)).MakeGenericMethod(call.Method.ReturnType);
+                    var anyMethod = _anyMethod.MakeGenericMethod(call.Method.ReturnType);
                     return call.Method == anyMethod 
                         ? ArgumentAssertKind.Any 
                         : ArgumentAssertKind.Value;
