@@ -58,6 +58,16 @@ namespace MvcRouteTester.AspNetCore.Builders
 
         #endregion
 
+        #region With Json Data
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IRequestBuilder WithJsonData(object jsonData);
+
+        #endregion
+
     }
 
 }

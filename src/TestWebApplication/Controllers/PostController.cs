@@ -45,6 +45,12 @@ namespace TestWebApplication.Controllers
             throw new NotImplementedException();
         }
 
+        [HttpPost("post-with-json-person")]
+        public IActionResult WithJsonPerson([FromBody] Person person)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 
 }
