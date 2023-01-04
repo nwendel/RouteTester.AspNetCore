@@ -16,8 +16,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.Extensions.Options;
+using MvcRouteTester.AspNetCore.Internal.Wrappers;
 
 namespace MvcRouteTester.AspNetCore.Internal
 {
@@ -32,8 +32,8 @@ namespace MvcRouteTester.AspNetCore.Internal
 
         private readonly IOptions<MvcOptions> _mvcOptions;
         private readonly IActionResultExecutor<ContentResult> _contentResultExecutor;
-        private readonly ControllerActionInvokerCache _controllerActionInvokerCache;
-        private readonly ActionInvokerFactory _actionInvokerFactory;
+        private readonly ControllerActionInvokerCacheWrapper _controllerActionInvokerCache;
+        private readonly ActionInvokerFactoryWrapper _actionInvokerFactory;
         private readonly ActualActionInvokeInfoCache _actionInvokeInfoCache;
 
         #endregion
@@ -51,8 +51,8 @@ namespace MvcRouteTester.AspNetCore.Internal
         public RouteTesterActionInvokerFactory(
             IOptions<MvcOptions> mvcOptions,
             IActionResultExecutor<ContentResult> contentResultExecutor,
-            ControllerActionInvokerCache controllerActionInvokerCache,
-            ActionInvokerFactory actionInvokerFactory,
+            ControllerActionInvokerCacheWrapper controllerActionInvokerCache,
+            ActionInvokerFactoryWrapper actionInvokerFactory,
             ActualActionInvokeInfoCache actionInvokeInfoCache)
         {
             _mvcOptions = mvcOptions;

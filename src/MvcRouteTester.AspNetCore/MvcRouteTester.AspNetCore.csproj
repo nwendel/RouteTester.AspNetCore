@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
@@ -10,7 +10,7 @@
     <Title>MvcRouteTester.AspNetCore</Title>
     <Description>A library for unit testing AspNetCore routes</Description>
     <Version>2.2.1</Version>
-    <Copyright>Niklas Wendel 2018-2020</Copyright>
+    <Copyright>Niklas Wendel 2018-2023</Copyright>
     <Authors>Niklas Wendel</Authors>
     <PackageTags>Route;Test;Testing;AspNetCore;Mvc;UnitTest</PackageTags>
     <PackageProjectUrl>https://github.com/nwendel/mvcroutetester.aspnetcore</PackageProjectUrl>
@@ -19,8 +19,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="2.2.0" />
-    <PackageReference Include="xunit.assert" Version="2.4.1" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="6.0.12" />
+    <PackageReference Include="xunit.assert" Version="2.4.2" />
   </ItemGroup>
 
 </Project>

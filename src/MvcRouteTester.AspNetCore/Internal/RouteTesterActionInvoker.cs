@@ -19,8 +19,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MvcRouteTester.AspNetCore.Internal.Wrappers;
 
 namespace MvcRouteTester.AspNetCore.Internal
 {
@@ -36,8 +36,8 @@ namespace MvcRouteTester.AspNetCore.Internal
         private readonly ActionContext _actionContext;
         private readonly IList<IValueProviderFactory> _valueProviderFactories;
         private readonly IActionResultExecutor<ContentResult> _contentResultExecutor;
-        private readonly ControllerActionInvokerCache _controllerActionInvokerCache;
-        private readonly ActionInvokerFactory _actionInvokerFactory;
+        private readonly ControllerActionInvokerCacheWrapper _controllerActionInvokerCache;
+        private readonly ActionInvokerFactoryWrapper _actionInvokerFactory;
         private readonly ActualActionInvokeInfoCache _actionInvokeInfoCache;
 
         #endregion
@@ -54,11 +54,11 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <param name="actionInvokerFactory"></param>
         /// <param name="actionInvokeInfoCache"></param>
         public RouteTesterActionInvoker(
-            ActionContext actionContext, 
+            ActionContext actionContext,
             IList<IValueProviderFactory> valueProviderFactories,
             IActionResultExecutor<ContentResult> contentResultExecutor,
-            ControllerActionInvokerCache controllerActionInvokerCache,
-            ActionInvokerFactory actionInvokerFactory,
+            ControllerActionInvokerCacheWrapper controllerActionInvokerCache,
+            ActionInvokerFactoryWrapper actionInvokerFactory,
             ActualActionInvokeInfoCache actionInvokeInfoCache)
         {
             _actionContext = actionContext;
@@ -116,7 +116,7 @@ namespace MvcRouteTester.AspNetCore.Internal
         {
             (var cacheEntry, var _) = _controllerActionInvokerCache.GetCachedResult(controllerContext);
             var actionMethodExecutor = cacheEntry.GetObjectMethodExecutor();
-            var controllerActionInvoker = (ControllerActionInvoker)_actionInvokerFactory.CreateInvoker(_actionContext);
+            var controllerActionInvoker = _actionInvokerFactory.CreateInvoker(_actionContext);
             var binder = cacheEntry.ControllerBinderDelegate;
 
             var arguments = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
