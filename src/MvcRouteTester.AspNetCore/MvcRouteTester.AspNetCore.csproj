@@ -8,7 +8,7 @@
     <PackageId>MvcRouteTester.AspNetCore</PackageId>
     <Title>MvcRouteTester.AspNetCore</Title>
     <Description>A library for unit testing AspNetCore routes</Description>
-    <Version>2.2.1</Version>
+    <Version>6.0.0</Version>
     <Copyright>Niklas Wendel 2018-2023</Copyright>
     <Authors>Niklas Wendel</Authors>
     <PackageTags>Route;Test;Testing;AspNetCore;Mvc;UnitTest</PackageTags>
@@ -23,8 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="6.0.12" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
