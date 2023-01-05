@@ -14,11 +14,11 @@
 // limitations under the License.
 #endregion
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using MvcRouteTester.AspNetCore.Builders;
 using MvcRouteTester.AspNetCore.Internal;
-using MvcRouteTester.AspNetCore.Internal.Wrappers;
 
 namespace MvcRouteTester.AspNetCore
 {
@@ -50,15 +50,19 @@ namespace MvcRouteTester.AspNetCore
             serviceCollection.AddSingleton<ActualActionInvokeInfoCache>();
             serviceCollection.AddSingleton<RouteExpressionParser>();
 
-            serviceCollection.AddSingleton<ActionInvokerFactoryWrapper>();
+            serviceCollection.Configure<MvcOptions>(o => o.Filters.Add<MvcRouteTesterActionFilterAttribute>());
+
+            /* serviceCollection.AddSingleton<ActionInvokerFactoryWrapper>(); */
             /*
             // Register Standard ActionInvoker as self instead of via interface since MvcRouteTester depends on it for binding arguments
             serviceCollection.AddSingleton<ActionInvokerFactory>();
             */
 
+            /*
             // Replace standard IActionInvokerFactory implementation which one which records action info and avoids calling the action
             serviceCollection.RemoveWhere(x => x.ServiceType == typeof(IActionInvokerFactory));
             serviceCollection.AddSingleton<IActionInvokerFactory, RouteTesterActionInvokerFactory>();
+            */
 
             /*
             // Remove authorization

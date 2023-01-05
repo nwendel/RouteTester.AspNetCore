@@ -14,6 +14,7 @@
 // limitations under the License.
 #endregion
 
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace MvcRouteTester.AspNetCore.Internal
@@ -35,7 +36,7 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <summary>
         /// 
         /// </summary>
-        public object[] Arguments { get; set; }
+        public IReadOnlyDictionary<string, object> Arguments { get; set; }
 
         #endregion
 

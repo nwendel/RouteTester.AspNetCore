@@ -51,14 +51,14 @@ namespace MvcRouteTester.AspNetCore.Internal
             var argumentAssertKinds = methodCallExpression.Arguments
                 .Select(x =>
                 {
-                    if (!(x is MethodCallExpression call))
+                    if (x is not MethodCallExpression call)
                     {
                         return ArgumentAssertKind.Value;
                     }
 
                     var anyMethod = _anyMethod.MakeGenericMethod(call.Method.ReturnType);
-                    return call.Method == anyMethod 
-                        ? ArgumentAssertKind.Any 
+                    return call.Method == anyMethod
+                        ? ArgumentAssertKind.Any
                         : ArgumentAssertKind.Value;
                 })
                 .ToArray();
@@ -66,8 +66,8 @@ namespace MvcRouteTester.AspNetCore.Internal
             var result = new ExpectedActionInvokeInfo
             {
                 ActionMethodInfo = methodInfo,
-                Arguments = arguments,
-                ArgumentAssertKinds = argumentAssertKinds
+                Arguments = methodInfo.GetParameters().Select(x => x.Name).Zip(arguments).ToDictionary(k => k.First, v => v.Second),
+                ArgumentAssertKinds = methodInfo.GetParameters().Select(x => x.Name).Zip(argumentAssertKinds).ToDictionary(k => k.First, v => v.Second)
             };
             return result;
         }
@@ -83,7 +83,7 @@ namespace MvcRouteTester.AspNetCore.Internal
         /// <returns></returns>
         private static MethodCallExpression GetInstanceMethodCallExpression(LambdaExpression actionCallExpression)
         {
-            if (!(actionCallExpression.Body is MethodCallExpression methodCallExpression))
+            if (actionCallExpression.Body is not MethodCallExpression methodCallExpression)
             {
                 throw new ArgumentException("Not a method call expression", nameof(actionCallExpression));
             }
