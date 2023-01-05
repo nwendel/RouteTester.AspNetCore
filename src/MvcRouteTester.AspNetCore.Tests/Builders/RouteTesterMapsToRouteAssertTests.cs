@@ -1,26 +1,25 @@
 ﻿using MvcRouteTester.AspNetCore.Builders;
 using Xunit;
 
-namespace MvcRouteTester.AspNetCore.Tests.Builders
+namespace MvcRouteTester.AspNetCore.Tests.Builders;
+
+public class RouteTesterMapsToRouteAssertTests
 {
-    public class RouteTesterMapsToRouteAssertTests
+    [Fact]
+    public void ThrowsOnForParameterNullParameterName()
     {
-        [Fact]
-        public void ThrowsOnForParameterNullParameterName()
-        {
-            var tested = new RouteTesterMapsToRouteAssert(null!, null!, null!);
+        var tested = new RouteTesterMapsToRouteAssert(null!, null!, null!);
 
-            Assert.Throws<ArgumentNullException>("name", () =>
-                tested.ForParameter<string>(null!, p => { }));
-        }
+        Assert.Throws<ArgumentNullException>("name", () =>
+            tested.ForParameter<string>(null!, p => { }));
+    }
 
-        [Fact]
-        public void ThrowsOnForParameterNullAction()
-        {
-            var tested = new RouteTesterMapsToRouteAssert(null!, null!, null!);
+    [Fact]
+    public void ThrowsOnForParameterNullAction()
+    {
+        var tested = new RouteTesterMapsToRouteAssert(null!, null!, null!);
 
-            Assert.Throws<ArgumentNullException>("action", () =>
-                tested.ForParameter<string>("parameter", null!));
-        }
+        Assert.Throws<ArgumentNullException>("action", () =>
+            tested.ForParameter<string>("parameter", null!));
     }
 }

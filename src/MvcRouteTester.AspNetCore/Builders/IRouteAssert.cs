@@ -1,7 +1,6 @@
-﻿namespace MvcRouteTester.AspNetCore.Builders
+﻿namespace MvcRouteTester.AspNetCore.Builders;
+
+public interface IRouteAssert
 {
-    public interface IRouteAssert
-    {
-        Task AssertExpectedAsync(HttpResponseMessage responseMessage);
-    }
+    Task AssertExpectedAsync(HttpResponseMessage responseMessage);
 }

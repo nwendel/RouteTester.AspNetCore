@@ -3,39 +3,38 @@ using TestWebApplication.Controllers;
 using Xunit;
 using Xunit.Sdk;
 
-namespace MvcRouteTester.AspNetCore.Tests
+namespace MvcRouteTester.AspNetCore.Tests;
+
+public class SynchTests : IClassFixture<TestServerFixture>
 {
-    public class SynchTests : IClassFixture<TestServerFixture>
+    private readonly TestServer _server;
+
+    public SynchTests(TestServerFixture testServerFixture)
     {
-        private readonly TestServer _server;
-
-        public SynchTests(TestServerFixture testServerFixture)
+        if (testServerFixture == null)
         {
-            if (testServerFixture == null)
-            {
-                throw new ArgumentNullException(nameof(testServerFixture));
-            }
-
-            _server = testServerFixture.Server;
+            throw new ArgumentNullException(nameof(testServerFixture));
         }
 
-        [Fact]
-        public void CanGetSimpleAttributeRoute()
-        {
+        _server = testServerFixture.Server;
+    }
+
+    [Fact]
+    public void CanGetSimpleAttributeRoute()
+    {
+        RouteAssert.For(
+            _server,
+            request => request.WithPathAndQuery("/simple-attribute-route"),
+            routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRoute()));
+    }
+
+    [Fact]
+    public void ThrowsOnMapsToIncorrectController()
+    {
+        Assert.Throws<EqualException>(() =>
             RouteAssert.For(
                 _server,
                 request => request.WithPathAndQuery("/simple-attribute-route"),
-                routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRoute()));
-        }
-
-        [Fact]
-        public void ThrowsOnMapsToIncorrectController()
-        {
-            Assert.Throws<EqualException>(() =>
-                RouteAssert.For(
-                    _server,
-                    request => request.WithPathAndQuery("/simple-attribute-route"),
-                    routeAssert => routeAssert.MapsTo<InvalidController>(a => a.Default())));
-        }
+                routeAssert => routeAssert.MapsTo<InvalidController>(a => a.Default())));
     }
 }

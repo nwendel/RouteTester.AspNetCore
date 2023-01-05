@@ -1,7 +1,6 @@
-﻿namespace MvcRouteTester.AspNetCore
+﻿namespace MvcRouteTester.AspNetCore;
+
+public static class Args
 {
-    public static class Args
-    {
-        public static T Any<T>() => default!;
-    }
+    public static T Any<T>() => default!;
 }

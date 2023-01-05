@@ -1,10 +1,9 @@
-﻿namespace MvcRouteTester.AspNetCore
+﻿namespace MvcRouteTester.AspNetCore;
+
+public class MvcRouteTesterException : Exception
 {
-    public class MvcRouteTesterException : Exception
+    public MvcRouteTesterException(string message)
+        : base(message)
     {
-        public MvcRouteTesterException(string message)
-            : base(message)
-        {
-        }
     }
 }

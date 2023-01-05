@@ -1,7 +1,6 @@
-﻿namespace MvcRouteTester.AspNetCore.Builders
+﻿namespace MvcRouteTester.AspNetCore.Builders;
+
+public interface IRouteAssertMapsToBuilder
 {
-    public interface IRouteAssertMapsToBuilder
-    {
-        IRouteAssertMapsToBuilder ForParameter<T>(string name, Action<T?> action);
-    }
+    IRouteAssertMapsToBuilder ForParameter<T>(string name, Action<T?> action);
 }

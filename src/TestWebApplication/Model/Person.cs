@@ -1,9 +1,8 @@
-﻿namespace TestWebApplication.Model
-{
-    public class Person
-    {
-        public string? FirstName { get; set; }
+﻿namespace TestWebApplication.Model;
 
-        public string? LastName { get; set; }
-    }
+public class Person
+{
+    public string? FirstName { get; set; }
+
+    public string? LastName { get; set; }
 }

@@ -1,35 +1,34 @@
 ﻿using MvcRouteTester.AspNetCore.Infrastructure;
 using Xunit;
 
-namespace MvcRouteTester.AspNetCore.Tests.Infrastructure
+namespace MvcRouteTester.AspNetCore.Tests.Infrastructure;
+
+public class ExtensionsRemoveRangeTests
 {
-    public class ExtensionsRemoveRangeTests
+    [Fact]
+    public void CanRemoveRange()
     {
-        [Fact]
-        public void CanRemoveRange()
-        {
-            var tested = new List<string> { "one", "two", "three" };
+        var tested = new List<string> { "one", "two", "three" };
 
-            tested.RemoveRange(new[] { "one", "two" });
+        tested.RemoveRange(new[] { "one", "two" });
 
-            Assert.Single(tested);
-            Assert.Contains("three", tested);
-        }
+        Assert.Single(tested);
+        Assert.Contains("three", tested);
+    }
 
-        [Fact]
-        public void ThrowsOnRemoveRangeNullSelf()
-        {
-            List<string> tested = null!;
+    [Fact]
+    public void ThrowsOnRemoveRangeNullSelf()
+    {
+        List<string> tested = null!;
 
-            Assert.Throws<ArgumentNullException>("self", () => tested.RemoveRange(new[] { "one" }));
-        }
+        Assert.Throws<ArgumentNullException>("self", () => tested.RemoveRange(new[] { "one" }));
+    }
 
-        [Fact]
-        public void ThrowsOnRemoveRangeNullItems()
-        {
-            var tested = new List<string> { "one" };
+    [Fact]
+    public void ThrowsOnRemoveRangeNullItems()
+    {
+        var tested = new List<string> { "one" };
 
-            Assert.Throws<ArgumentNullException>("items", () => tested.RemoveRange(null!));
-        }
+        Assert.Throws<ArgumentNullException>("items", () => tested.RemoveRange(null!));
     }
 }
