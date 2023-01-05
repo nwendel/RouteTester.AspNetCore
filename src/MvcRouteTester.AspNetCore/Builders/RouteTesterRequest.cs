@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.TestHost;
+﻿using System.Net.Http.Json;
+using Microsoft.AspNetCore.TestHost;
 using MvcRouteTester.AspNetCore.Infrastructure;
 
 namespace MvcRouteTester.AspNetCore.Builders;
@@ -59,7 +60,7 @@ public class RouteTesterRequest : IRequestBuilder
             }
             else if (_jsonData != null)
             {
-                requestMessage.Content = _jsonData.ToHttpContent();
+                requestMessage.Content = JsonContent.Create(_jsonData, _jsonData.GetType());
             }
         }
 
