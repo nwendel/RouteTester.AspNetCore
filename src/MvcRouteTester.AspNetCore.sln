@@ -1,13 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcRouteTester.AspNetCore", "MvcRouteTester.AspNetCore\MvcRouteTester.AspNetCore.csproj", "{BCC4AD19-747B-47AF-8265-75F29509DE88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcRouteTester.AspNetCore", "MvcRouteTester.AspNetCore\MvcRouteTester.AspNetCore.csproj", "{BCC4AD19-747B-47AF-8265-75F29509DE88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcRouteTester.AspNetCore.Tests", "MvcRouteTester.AspNetCore.Tests\MvcRouteTester.AspNetCore.Tests.csproj", "{6286DFAF-A8E0-4DAE-93A8-0E75524A32E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcRouteTester.AspNetCore.Tests", "MvcRouteTester.AspNetCore.Tests\MvcRouteTester.AspNetCore.Tests.csproj", "{6286DFAF-A8E0-4DAE-93A8-0E75524A32E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWebApplication", "TestWebApplication\TestWebApplication.csproj", "{8166A085-9FD7-43E5-8488-24BAC647F373}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestWebApplication", "TestWebApplication\TestWebApplication.csproj", "{8166A085-9FD7-43E5-8488-24BAC647F373}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D021D080-6D1A-481C-820D-E767D07CE760}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		stylecop.json = stylecop.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
