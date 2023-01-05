@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using MvcRouteTester.AspNetCore.Infrastructure;
 using Xunit;
 
 namespace MvcRouteTester.AspNetCore.Builders;

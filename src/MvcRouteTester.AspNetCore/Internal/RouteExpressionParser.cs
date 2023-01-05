@@ -1,6 +1,5 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
-using MvcRouteTester.AspNetCore.Infrastructure;
 
 namespace MvcRouteTester.AspNetCore.Internal;
 
