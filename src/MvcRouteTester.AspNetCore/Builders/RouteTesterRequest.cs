@@ -13,7 +13,7 @@ namespace MvcRouteTester.AspNetCore.Builders
         private HttpMethod _method = HttpMethod.Get;
         private string _pathAndQuery = "/";
         private IDictionary<string, string> _formData = new Dictionary<string, string>();
-        private object _jsonData = null;
+        private object _jsonData;
 
         public IRequestBuilder WithMethod(HttpMethod method)
         {
@@ -61,8 +61,13 @@ namespace MvcRouteTester.AspNetCore.Builders
 
         public async Task<HttpResponseMessage> ExecuteAsync(TestServer server)
         {
+            if (server == null)
+            {
+                throw new ArgumentNullException(nameof(server));
+            }
+
             var client = server.CreateClient();
-            var requestMessage = new HttpRequestMessage(_method, _pathAndQuery);
+            using var requestMessage = new HttpRequestMessage(_method, _pathAndQuery);
 
             // REVIEW: Only with POST method?
             if (_method == HttpMethod.Post)

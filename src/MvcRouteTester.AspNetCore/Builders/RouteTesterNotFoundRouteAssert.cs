@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
@@ -9,6 +10,11 @@ namespace MvcRouteTester.AspNetCore.Builders
     {
         public Task AssertExpectedAsync(HttpResponseMessage responseMessage)
         {
+            if (responseMessage == null)
+            {
+                throw new ArgumentNullException(nameof(responseMessage));
+            }
+
             if (responseMessage.StatusCode != HttpStatusCode.NotFound)
             {
                 // TODO: Remove Xunit usage

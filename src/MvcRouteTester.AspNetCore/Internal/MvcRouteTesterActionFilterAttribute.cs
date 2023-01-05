@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace MvcRouteTester.AspNetCore.Internal;
 
-public class MvcRouteTesterActionFilterAttribute : ActionFilterAttribute
+public sealed class MvcRouteTesterActionFilterAttribute : ActionFilterAttribute
 {
     public MvcRouteTesterActionFilterAttribute()
     {
@@ -16,6 +16,11 @@ public class MvcRouteTesterActionFilterAttribute : ActionFilterAttribute
 
     public override void OnActionExecuting(ActionExecutingContext context)
     {
+        if (context == null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
+
         var actionDescriptor = (ControllerActionDescriptor)context.ActionDescriptor;
 
         var actionInvokeInfo = new ActualActionInvokeInfo

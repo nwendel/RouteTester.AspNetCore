@@ -83,6 +83,11 @@ namespace MvcRouteTester.AspNetCore.Builders
 
         public async Task AssertExpectedAsync(HttpResponseMessage responseMessage)
         {
+            if (responseMessage == null)
+            {
+                throw new ArgumentNullException(nameof(responseMessage));
+            }
+
             responseMessage.EnsureSuccessStatusCode();
 
             var key = await responseMessage.Content.ReadAsStringAsync();
@@ -117,8 +122,6 @@ namespace MvcRouteTester.AspNetCore.Builders
                         break;
                     case ArgumentAssertKind.Any:
                         break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
                 }
             }
         }
