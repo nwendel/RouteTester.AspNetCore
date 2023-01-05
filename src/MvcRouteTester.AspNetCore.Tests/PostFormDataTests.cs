@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
+using MvcRouteTester.AspNetCore.Infrastructure;
 using TestWebApplication.Controllers;
 using TestWebApplication.Model;
 using Xunit;
@@ -15,10 +15,7 @@ namespace MvcRouteTester.AspNetCore.Tests
 
         public PostFormDataTests(TestServerFixture testServerFixture)
         {
-            if (testServerFixture == null)
-            {
-                throw new ArgumentNullException(nameof(testServerFixture));
-            }
+            GuardAgainst.Null(testServerFixture);
 
             _server = testServerFixture.Server;
         }

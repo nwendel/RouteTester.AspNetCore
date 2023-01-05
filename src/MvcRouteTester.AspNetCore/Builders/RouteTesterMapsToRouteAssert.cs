@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using MvcRouteTester.AspNetCore.Infrastructure;
 using MvcRouteTester.AspNetCore.Internal;
 using Xunit;
 
@@ -52,15 +53,8 @@ namespace MvcRouteTester.AspNetCore.Builders
 
         public IRouteAssertMapsToBuilder ForParameter<T>(string name, Action<T?> action)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            if (action == null)
-            {
-                throw new ArgumentNullException(nameof(action));
-            }
+            GuardAgainst.Null(name);
+            GuardAgainst.Null(action);
 
             var expectedParameter = _expectedActionInvokeInfo!
                 .ActionMethodInfo
@@ -73,7 +67,7 @@ namespace MvcRouteTester.AspNetCore.Builders
 
             if (expectedParameter.ParameterType != typeof(T))
             {
-                throw new ArgumentException($"Invalid parameter type expected {expectedParameter.ParameterType.Name} but call was {typeof(T).Name}", nameof(T));
+                throw new ArgumentException($"Invalid parameter type. Expected {expectedParameter.ParameterType.Name} but was {typeof(T).Name}", nameof(action));
             }
 
             var parameterAssert = new ParameterAssert(name, x => { action.Invoke((T?)x); });
@@ -83,10 +77,7 @@ namespace MvcRouteTester.AspNetCore.Builders
 
         public async Task AssertExpectedAsync(HttpResponseMessage responseMessage)
         {
-            if (responseMessage == null)
-            {
-                throw new ArgumentNullException(nameof(responseMessage));
-            }
+            GuardAgainst.Null(responseMessage);
 
             responseMessage.EnsureSuccessStatusCode();
 

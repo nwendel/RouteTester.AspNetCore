@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
+using MvcRouteTester.AspNetCore.Infrastructure;
 
 namespace MvcRouteTester.AspNetCore.Internal
 {
@@ -11,6 +12,8 @@ namespace MvcRouteTester.AspNetCore.Internal
             IReadOnlyDictionary<string, ArgumentAssertKind> argumentAssertKinds)
             : base(actionMethodInfo, arguments)
         {
+            GuardAgainst.Null(argumentAssertKinds);
+
             ArgumentAssertKinds = argumentAssertKinds;
         }
 

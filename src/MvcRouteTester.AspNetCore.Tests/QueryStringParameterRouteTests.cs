@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
+using MvcRouteTester.AspNetCore.Infrastructure;
 using TestWebApplication.Controllers;
 using Xunit;
 using Xunit.Sdk;
@@ -13,10 +14,7 @@ namespace MvcRouteTester.AspNetCore.Tests
 
         public QueryStringParameterRouteTests(TestServerFixture testServerFixture)
         {
-            if (testServerFixture == null)
-            {
-                throw new ArgumentNullException(nameof(testServerFixture));
-            }
+            GuardAgainst.Null(testServerFixture);
 
             _server = testServerFixture.Server;
         }

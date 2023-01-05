@@ -1,4 +1,5 @@
 ﻿using System;
+using MvcRouteTester.AspNetCore.Infrastructure;
 
 namespace MvcRouteTester.AspNetCore.Builders
 {
@@ -6,6 +7,8 @@ namespace MvcRouteTester.AspNetCore.Builders
     {
         public ParameterAssert(string name, Action<object?> action)
         {
+            GuardAgainst.NullOrWhiteSpace(name);
+
             Name = name;
             Action = action;
         }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
+using MvcRouteTester.AspNetCore.Infrastructure;
 
 namespace MvcRouteTester.AspNetCore.Internal
 {
@@ -9,6 +10,9 @@ namespace MvcRouteTester.AspNetCore.Internal
             MethodInfo actionMethodInfo,
             IReadOnlyDictionary<string, object?> arguments)
         {
+            GuardAgainst.Null(actionMethodInfo);
+            GuardAgainst.Null(arguments);
+
             ActionMethodInfo = actionMethodInfo;
             Arguments = arguments;
         }

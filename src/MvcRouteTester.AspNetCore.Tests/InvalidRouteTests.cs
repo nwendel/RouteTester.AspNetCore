@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.TestHost;
+using MvcRouteTester.AspNetCore.Infrastructure;
 using TestWebApplication.Controllers;
 using Xunit;
 
@@ -13,10 +14,7 @@ namespace MvcRouteTester.AspNetCore.Tests
 
         public InvalidRouteTests(TestServerFixture testServerFixture)
         {
-            if (testServerFixture == null)
-            {
-                throw new ArgumentNullException(nameof(testServerFixture));
-            }
+            GuardAgainst.Null(testServerFixture);
 
             _server = testServerFixture.Server;
         }

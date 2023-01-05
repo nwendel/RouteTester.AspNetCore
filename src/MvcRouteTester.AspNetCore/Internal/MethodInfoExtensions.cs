@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using MvcRouteTester.AspNetCore.Infrastructure;
 
 namespace MvcRouteTester.AspNetCore.Internal
 {
@@ -9,15 +10,8 @@ namespace MvcRouteTester.AspNetCore.Internal
     {
         public static string GetActionText(this MethodInfo self, Func<Type, string> getTypeName)
         {
-            if (self == null)
-            {
-                throw new ArgumentNullException(nameof(self));
-            }
-
-            if (getTypeName == null)
-            {
-                throw new ArgumentNullException(nameof(getTypeName));
-            }
+            GuardAgainst.Null(self);
+            GuardAgainst.Null(getTypeName);
 
             var builder = new StringBuilder();
             builder.Append(getTypeName(self.ReflectedType!));

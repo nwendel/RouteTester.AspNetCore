@@ -2,7 +2,7 @@
 {
     public enum ArgumentAssertKind
     {
-        Value = 0,
-        Any = 1,
+        Value,
+        Any,
     }
 }

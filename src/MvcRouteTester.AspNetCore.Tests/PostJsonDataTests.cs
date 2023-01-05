@@ -1,7 +1,7 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
+using MvcRouteTester.AspNetCore.Infrastructure;
 using TestWebApplication.Controllers;
 using TestWebApplication.Model;
 using Xunit;
@@ -14,10 +14,7 @@ namespace MvcRouteTester.AspNetCore.Tests
 
         public PostJsonDataTests(TestServerFixture testServerFixture)
         {
-            if (testServerFixture == null)
-            {
-                throw new ArgumentNullException(nameof(testServerFixture));
-            }
+            GuardAgainst.Null(testServerFixture);
 
             _server = testServerFixture.Server;
         }
