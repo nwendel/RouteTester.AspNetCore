@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.TestHost;
+using System.Net.Http.Json;
+using Microsoft.AspNetCore.TestHost;
 
 namespace MvcRouteTester.AspNetCore.Builders;
 
@@ -58,8 +59,7 @@ public class RouteTesterRequest : IRequestBuilder
             }
             else if (_jsonData != null)
             {
-                // TODO: Can I rewrite this to avoid the extension methods?
-                requestMessage.Content = _jsonData.ToHttpContent();
+                requestMessage.Content = JsonContent.Create(_jsonData, _jsonData.GetType());
             }
         }
 
