@@ -1,19 +1,4 @@
-﻿#region License
-// Copyright (c) Niklas Wendel 2018-2019
-// 
-// Licensed under the Apache License, Version 2.0 (the "License"); 
-// you may not use this file except in compliance with the License. 
-// You may obtain a copy of the License at 
-// 
-// http://www.apache.org/licenses/LICENSE-2.0 
-// 
-// Unless required by applicable law or agreed to in writing, software 
-// distributed under the License is distributed on an "AS IS" BASIS, 
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-// See the License for the specific language governing permissions and 
-// limitations under the License.
-#endregion
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -27,38 +12,16 @@ using Xunit;
 
 namespace MvcRouteTester.AspNetCore.Builders
 {
-
-    /// <summary>
-    /// 
-    /// </summary>
     public class RouteTesterMapsToRouteAssert :
         IRouteAssertMapsToBuilder,
         IRouteAssert
     {
-
-        #region Dependencies
-
         private readonly ActualActionInvokeInfoCache _actionInvokeInfoCache;
         private readonly RouteExpressionParser _routeExpressionParser;
         private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;
-
-        #endregion
-
-        #region Fields
-
+        private readonly List<ParameterAssert> _parameterAsserts = new();
         private ExpectedActionInvokeInfo _expectedActionInvokeInfo;
-        private readonly List<ParameterAssert> _parameterAsserts = new List<ParameterAssert>();
 
-        #endregion
-
-        #region Constructor
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="actionInvokeInfoCache"></param>
-        /// <param name="routeExpressionParser"></param>
-        /// <param name="actionDescriptorCollectionProvider"></param>
         public RouteTesterMapsToRouteAssert(
             ActualActionInvokeInfoCache actionInvokeInfoCache,
             RouteExpressionParser routeExpressionParser,
@@ -69,14 +32,6 @@ namespace MvcRouteTester.AspNetCore.Builders
             _actionDescriptorCollectionProvider = actionDescriptorCollectionProvider;
         }
 
-        #endregion
-
-        #region Parse Action Call Expression
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="actionCallExpression"></param>
         public void ParseActionCallExpression(LambdaExpression actionCallExpression)
         {
             _expectedActionInvokeInfo = _routeExpressionParser.Parse(actionCallExpression);
@@ -90,26 +45,18 @@ namespace MvcRouteTester.AspNetCore.Builders
             {
                 return;
             }
+
             var actionText = _expectedActionInvokeInfo.ActionMethodInfo.GetActionText(x => x.Name);
             throw new ArgumentException($"Method {actionText} is not a valid controller action", nameof(actionCallExpression));
         }
 
-        #endregion
-
-        #region For Parameter
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="parameterName"></param>
-        /// <param name="action"></param>
-        /// <returns></returns>
-        public IRouteAssertMapsToBuilder ForParameter<T>(string parameterName, Action<T> action)
+        public IRouteAssertMapsToBuilder ForParameter<T>(string name, Action<T> action)
         {
-            if (parameterName == null)
+            if (name == null)
             {
-                throw new ArgumentNullException(nameof(parameterName));
+                throw new ArgumentNullException(nameof(name));
             }
+
             if (action == null)
             {
                 throw new ArgumentNullException(nameof(action));
@@ -118,29 +65,22 @@ namespace MvcRouteTester.AspNetCore.Builders
             var expectedParameter = _expectedActionInvokeInfo
                 .ActionMethodInfo
                 .GetParameters()
-                .SingleOrDefault(x => x.Name == parameterName);
+                .SingleOrDefault(x => x.Name == name);
             if (expectedParameter == null)
             {
-                throw new ArgumentException($"Invalid parameter name {parameterName}", nameof(parameterName));
+                throw new ArgumentException($"Invalid parameter name {name}", nameof(name));
             }
+
             if (expectedParameter.ParameterType != typeof(T))
             {
                 throw new ArgumentException($"Invalid parameter type expected {expectedParameter.ParameterType.Name} but call was {typeof(T).Name}", nameof(T));
             }
 
-            var parameterAssert = new ParameterAssert(parameterName, x => { action.Invoke((T)x); });
+            var parameterAssert = new ParameterAssert(name, x => { action.Invoke((T)x); });
             _parameterAsserts.Add(parameterAssert);
             return this;
         }
 
-        #endregion
-
-        #region Assert Expected Async
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="responseMessage"></param>
         public async Task AssertExpectedAsync(HttpResponseMessage responseMessage)
         {
             responseMessage.EnsureSuccessStatusCode();
@@ -154,20 +94,12 @@ namespace MvcRouteTester.AspNetCore.Builders
             AssertExpectedParameterAsserts(actualActionInvokeInfo);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="actualActionMethodInfo"></param>
         private void AssertExpectedMethodInfo(MethodInfo actualActionMethodInfo)
         {
             // TODO: Remove Xunit usage
             Assert.Equal(_expectedActionInvokeInfo.ActionMethodInfo, actualActionMethodInfo);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="actualActionInvokeInfo"></param>
         private void AssertExpectedParameterValues(ActualActionInvokeInfo actualActionInvokeInfo)
         {
             var parameterNames = _expectedActionInvokeInfo.ActionMethodInfo.GetParameters()
@@ -191,10 +123,6 @@ namespace MvcRouteTester.AspNetCore.Builders
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="actualActionInvokeInfo"></param>
         private void AssertExpectedParameterAsserts(ActualActionInvokeInfo actualActionInvokeInfo)
         {
             foreach (var parameterAssert in _parameterAsserts)
@@ -203,9 +131,5 @@ namespace MvcRouteTester.AspNetCore.Builders
                 parameterAssert.Action(value);
             }
         }
-
-        #endregion
-
     }
-
 }

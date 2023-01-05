@@ -31,7 +31,7 @@ public class MvcRouteTesterActionFilterAttribute : ActionFilterAttribute
 
         var contentResult = new ContentResult
         {
-            Content = key
+            Content = key,
         };
 
         context.Result = contentResult;
