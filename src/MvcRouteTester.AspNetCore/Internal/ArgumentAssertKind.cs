@@ -1,8 +1,7 @@
-﻿namespace MvcRouteTester.AspNetCore.Internal
+﻿namespace MvcRouteTester.AspNetCore.Internal;
+
+public enum ArgumentAssertKind
 {
-    public enum ArgumentAssertKind
-    {
-        Value,
-        Any,
-    }
+    Value,
+    Any,
 }

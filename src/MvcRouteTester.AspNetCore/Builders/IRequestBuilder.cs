@@ -1,15 +1,14 @@
 ﻿using MvcRouteTester.AspNetCore.Internal;
 
-namespace MvcRouteTester.AspNetCore.Builders
+namespace MvcRouteTester.AspNetCore.Builders;
+
+public interface IRequestBuilder : IFluentInterface
 {
-    public interface IRequestBuilder : IFluentInterface
-    {
-        IRequestBuilder WithMethod(HttpMethod method);
+    IRequestBuilder WithMethod(HttpMethod method);
 
-        IRequestBuilder WithPathAndQuery(string pathAndQuery);
+    IRequestBuilder WithPathAndQuery(string pathAndQuery);
 
-        IRequestBuilder WithFormData(IDictionary<string, string> formData);
+    IRequestBuilder WithFormData(IDictionary<string, string> formData);
 
-        IRequestBuilder WithJsonData(object jsonData);
-    }
+    IRequestBuilder WithJsonData(object jsonData);
 }

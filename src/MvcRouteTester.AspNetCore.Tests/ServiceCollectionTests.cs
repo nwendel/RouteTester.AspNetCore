@@ -1,16 +1,15 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace MvcRouteTester.AspNetCore.Tests
-{
-    public class ServiceCollectionTests
-    {
-        [Fact]
-        public void ThrowsOnAddRouteTeserBeforeAddMvc()
-        {
-            var tested = new ServiceCollection();
+namespace MvcRouteTester.AspNetCore.Tests;
 
-            Assert.Throws<MvcRouteTesterException>(() => tested.AddMvcRouteTester());
-        }
+public class ServiceCollectionTests
+{
+    [Fact]
+    public void ThrowsOnAddRouteTeserBeforeAddMvc()
+    {
+        var tested = new ServiceCollection();
+
+        Assert.Throws<MvcRouteTesterException>(() => tested.AddMvcRouteTester());
     }
 }

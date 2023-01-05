@@ -1,32 +1,31 @@
 ﻿using MvcRouteTester.AspNetCore.Builders;
 using Xunit;
 
-namespace MvcRouteTester.AspNetCore.Tests.Builders
+namespace MvcRouteTester.AspNetCore.Tests.Builders;
+
+public class RouteTesterRequestArgumentTests
 {
-    public class RouteTesterRequestArgumentTests
+    [Fact]
+    public void ThrowsOnWithMethodNullMethod()
     {
-        [Fact]
-        public void ThrowsOnWithMethodNullMethod()
-        {
-            var tested = new RouteTesterRequest();
+        var tested = new RouteTesterRequest();
 
-            Assert.Throws<ArgumentNullException>("method", () => tested.WithMethod(null!));
-        }
+        Assert.Throws<ArgumentNullException>("method", () => tested.WithMethod(null!));
+    }
 
-        [Fact]
-        public void ThrowsOnWithPathAndQueryNullPathAndQuery()
-        {
-            var tested = new RouteTesterRequest();
+    [Fact]
+    public void ThrowsOnWithPathAndQueryNullPathAndQuery()
+    {
+        var tested = new RouteTesterRequest();
 
-            Assert.Throws<ArgumentNullException>("pathAndQuery", () => tested.WithPathAndQuery(null!));
-        }
+        Assert.Throws<ArgumentNullException>("pathAndQuery", () => tested.WithPathAndQuery(null!));
+    }
 
-        [Fact]
-        public void ThrowsOnWithPathAndQueryNullFormData()
-        {
-            var tested = new RouteTesterRequest();
+    [Fact]
+    public void ThrowsOnWithPathAndQueryNullFormData()
+    {
+        var tested = new RouteTesterRequest();
 
-            Assert.Throws<ArgumentNullException>("formData", () => tested.WithFormData(null!));
-        }
+        Assert.Throws<ArgumentNullException>("formData", () => tested.WithFormData(null!));
     }
 }

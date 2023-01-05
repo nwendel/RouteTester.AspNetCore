@@ -1,19 +1,18 @@
 ﻿using MvcRouteTester.AspNetCore.Infrastructure;
 
-namespace MvcRouteTester.AspNetCore.Builders
+namespace MvcRouteTester.AspNetCore.Builders;
+
+public class ParameterAssert
 {
-    public class ParameterAssert
+    public ParameterAssert(string name, Action<object?> action)
     {
-        public ParameterAssert(string name, Action<object?> action)
-        {
-            GuardAgainst.NullOrWhiteSpace(name);
+        GuardAgainst.NullOrWhiteSpace(name);
 
-            Name = name;
-            Action = action;
-        }
-
-        public string Name { get; }
-
-        public Action<object?> Action { get; }
+        Name = name;
+        Action = action;
     }
+
+    public string Name { get; }
+
+    public Action<object?> Action { get; }
 }

@@ -1,34 +1,33 @@
-﻿namespace MvcRouteTester.AspNetCore.Internal
+﻿namespace MvcRouteTester.AspNetCore.Internal;
+
+public class ActualActionInvokeInfoCache
 {
-    public class ActualActionInvokeInfoCache
+    private readonly Dictionary<string, ActualActionInvokeInfo> _cache = new();
+
+    public ActualActionInvokeInfo this[string key]
     {
-        private readonly Dictionary<string, ActualActionInvokeInfo> _cache = new();
-
-        public ActualActionInvokeInfo this[string key]
-        {
-            get
-            {
-                lock (_cache)
-                {
-                    return _cache[key];
-                }
-            }
-        }
-
-        public void Add(string key, ActualActionInvokeInfo actualActionInvokeInfo)
+        get
         {
             lock (_cache)
             {
-                _cache.Add(key, actualActionInvokeInfo);
+                return _cache[key];
             }
         }
+    }
 
-        public void Remove(string key)
+    public void Add(string key, ActualActionInvokeInfo actualActionInvokeInfo)
+    {
+        lock (_cache)
         {
-            lock (_cache)
-            {
-                _cache.Remove(key);
-            }
+            _cache.Add(key, actualActionInvokeInfo);
+        }
+    }
+
+    public void Remove(string key)
+    {
+        lock (_cache)
+        {
+            _cache.Remove(key);
         }
     }
 }

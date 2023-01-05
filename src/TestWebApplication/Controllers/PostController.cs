@@ -1,26 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TestWebApplication.Model;
 
-namespace TestWebApplication.Controllers
+namespace TestWebApplication.Controllers;
+
+public class PostController : Controller
 {
-    public class PostController : Controller
+    [HttpPost("simple-attribute-route-post")]
+    public IActionResult SimpleAttributeRoute()
     {
-        [HttpPost("simple-attribute-route-post")]
-        public IActionResult SimpleAttributeRoute()
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
+    }
 
-        [HttpPost("post-with-person")]
-        public IActionResult WithPerson(Person person)
-        {
-            throw new NotImplementedException();
-        }
+    [HttpPost("post-with-person")]
+    public IActionResult WithPerson(Person person)
+    {
+        throw new NotImplementedException();
+    }
 
-        [HttpPost("post-with-json-person")]
-        public IActionResult WithJsonPerson([FromBody] Person person)
-        {
-            throw new NotImplementedException();
-        }
+    [HttpPost("post-with-json-person")]
+    public IActionResult WithJsonPerson([FromBody] Person person)
+    {
+        throw new NotImplementedException();
     }
 }

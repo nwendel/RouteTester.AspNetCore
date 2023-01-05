@@ -1,20 +1,19 @@
 ﻿using System.ComponentModel;
 
-namespace MvcRouteTester.AspNetCore.Internal
+namespace MvcRouteTester.AspNetCore.Internal;
+
+[EditorBrowsable(EditorBrowsableState.Never)]
+public interface IFluentInterface
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public interface IFluentInterface
-    {
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        Type GetType();
+    Type GetType();
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        int GetHashCode();
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    int GetHashCode();
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        string? ToString();
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    string? ToString();
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        bool Equals(object obj);
-    }
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    bool Equals(object obj);
 }
