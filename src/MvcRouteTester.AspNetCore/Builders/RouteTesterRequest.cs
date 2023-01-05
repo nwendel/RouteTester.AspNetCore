@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
+using MvcRouteTester.AspNetCore.Infrastructure;
 using MvcRouteTester.AspNetCore.Internal;
 
 namespace MvcRouteTester.AspNetCore.Builders
@@ -17,10 +17,7 @@ namespace MvcRouteTester.AspNetCore.Builders
 
         public IRequestBuilder WithMethod(HttpMethod method)
         {
-            if (method == null)
-            {
-                throw new ArgumentNullException(nameof(method));
-            }
+            GuardAgainst.Null(method);
 
             _method = method;
             return this;
@@ -28,10 +25,8 @@ namespace MvcRouteTester.AspNetCore.Builders
 
         public IRequestBuilder WithPathAndQuery(string pathAndQuery)
         {
-            if (pathAndQuery == null)
-            {
-                throw new ArgumentNullException(nameof(pathAndQuery));
-            }
+            // TODO: NullOrWhiteSpace?
+            GuardAgainst.Null(pathAndQuery);
 
             _pathAndQuery = pathAndQuery;
             return this;
@@ -39,10 +34,7 @@ namespace MvcRouteTester.AspNetCore.Builders
 
         public IRequestBuilder WithFormData(IDictionary<string, string> formData)
         {
-            if (formData == null)
-            {
-                throw new ArgumentNullException(nameof(formData));
-            }
+            GuardAgainst.Null(formData);
 
             _formData = formData;
             return this;
@@ -50,10 +42,7 @@ namespace MvcRouteTester.AspNetCore.Builders
 
         public IRequestBuilder WithJsonData(object jsonData)
         {
-            if (jsonData == null)
-            {
-                throw new ArgumentNullException(nameof(jsonData));
-            }
+            GuardAgainst.Null(jsonData);
 
             _jsonData = jsonData;
             return this;
@@ -61,10 +50,7 @@ namespace MvcRouteTester.AspNetCore.Builders
 
         public async Task<HttpResponseMessage> ExecuteAsync(TestServer server)
         {
-            if (server == null)
-            {
-                throw new ArgumentNullException(nameof(server));
-            }
+            GuardAgainst.Null(server);
 
             var client = server.CreateClient();
             using var requestMessage = new HttpRequestMessage(_method, _pathAndQuery);

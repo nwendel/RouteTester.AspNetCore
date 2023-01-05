@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using MvcRouteTester.AspNetCore.Builders;
+using MvcRouteTester.AspNetCore.Infrastructure;
 
 namespace MvcRouteTester.AspNetCore
 {
@@ -16,20 +17,9 @@ namespace MvcRouteTester.AspNetCore
 
         public static async Task ForAsync(TestServer server, Action<IRequestBuilder> requestBuilder, Action<IRouteAssertBuilder> routeAssertBuilder)
         {
-            if (server == null)
-            {
-                throw new ArgumentNullException(nameof(server));
-            }
-
-            if (requestBuilder == null)
-            {
-                throw new ArgumentNullException(nameof(requestBuilder));
-            }
-
-            if (routeAssertBuilder == null)
-            {
-                throw new ArgumentNullException(nameof(routeAssertBuilder));
-            }
+            GuardAgainst.Null(server);
+            GuardAgainst.Null(requestBuilder);
+            GuardAgainst.Null(routeAssertBuilder);
 
             var serviceProvider = server.Host.Services;
             var request = serviceProvider.GetRequiredService<RouteTesterRequest>();

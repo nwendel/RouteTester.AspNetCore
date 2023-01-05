@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
+using MvcRouteTester.AspNetCore.Infrastructure;
 using TestWebApplication.Controllers;
 using Xunit;
 using Xunit.Sdk;
@@ -13,10 +14,7 @@ namespace MvcRouteTester.AspNetCore.Tests
 
         public ParameterIncorrectRouteTests(TestServerFixture testServerFixture)
         {
-            if (testServerFixture == null)
-            {
-                throw new ArgumentNullException(nameof(testServerFixture));
-            }
+            GuardAgainst.Null(testServerFixture);
 
             _server = testServerFixture.Server;
         }
@@ -34,7 +32,7 @@ namespace MvcRouteTester.AspNetCore.Tests
         [Fact]
         public async Task ThrowsOnForParameterInvalidType()
         {
-            await Assert.ThrowsAsync<ArgumentException>("T", () =>
+            await Assert.ThrowsAsync<ArgumentException>("action", () =>
                 RouteAssert.ForAsync(
                     _server,
                     request => request.WithPathAndQuery("/parameter/same-name-with-string"),

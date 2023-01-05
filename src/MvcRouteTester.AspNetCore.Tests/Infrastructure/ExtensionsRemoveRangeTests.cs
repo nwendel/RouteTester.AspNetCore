@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using MvcRouteTester.AspNetCore.Internal;
+using MvcRouteTester.AspNetCore.Infrastructure;
 using Xunit;
 
-namespace MvcRouteTester.AspNetCore.Tests.Internal
+namespace MvcRouteTester.AspNetCore.Tests.Infrastructure
 {
     public class ExtensionsRemoveRangeTests
     {

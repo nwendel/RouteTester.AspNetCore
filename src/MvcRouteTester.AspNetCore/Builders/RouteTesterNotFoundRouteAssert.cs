@@ -1,7 +1,7 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using MvcRouteTester.AspNetCore.Infrastructure;
 using Xunit;
 
 namespace MvcRouteTester.AspNetCore.Builders
@@ -10,10 +10,7 @@ namespace MvcRouteTester.AspNetCore.Builders
     {
         public Task AssertExpectedAsync(HttpResponseMessage responseMessage)
         {
-            if (responseMessage == null)
-            {
-                throw new ArgumentNullException(nameof(responseMessage));
-            }
+            GuardAgainst.Null(responseMessage);
 
             if (responseMessage.StatusCode != HttpStatusCode.NotFound)
             {

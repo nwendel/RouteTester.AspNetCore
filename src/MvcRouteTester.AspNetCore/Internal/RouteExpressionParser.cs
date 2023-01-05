@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using MvcRouteTester.AspNetCore.Infrastructure;
 
 namespace MvcRouteTester.AspNetCore.Internal
 {
@@ -11,10 +12,7 @@ namespace MvcRouteTester.AspNetCore.Internal
 
         public ExpectedActionInvokeInfo Parse(LambdaExpression actionCallExpression)
         {
-            if (actionCallExpression == null)
-            {
-                throw new ArgumentNullException(nameof(actionCallExpression));
-            }
+            GuardAgainst.Null(actionCallExpression);
 
             var methodCallExpression = GetInstanceMethodCallExpression(actionCallExpression);
             var methodInfo = methodCallExpression.Method;

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
+using MvcRouteTester.AspNetCore.Infrastructure;
 
 namespace MvcRouteTester.AspNetCore.Internal;
 
@@ -11,15 +12,14 @@ public sealed class MvcRouteTesterActionFilterAttribute : ActionFilterAttribute
 {
     public MvcRouteTesterActionFilterAttribute()
     {
+        // TODO: Or possible int.MaxValue?
+        //       Not sure if it should run first or last...
         Order = int.MinValue;
     }
 
     public override void OnActionExecuting(ActionExecutingContext context)
     {
-        if (context == null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
+        GuardAgainst.Null(context);
 
         var actionDescriptor = (ControllerActionDescriptor)context.ActionDescriptor;
 
