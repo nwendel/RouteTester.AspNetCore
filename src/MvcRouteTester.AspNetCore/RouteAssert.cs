@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using MvcRouteTester.AspNetCore.Builders;
-using MvcRouteTester.AspNetCore.Infrastructure;
 
 namespace MvcRouteTester.AspNetCore;
 

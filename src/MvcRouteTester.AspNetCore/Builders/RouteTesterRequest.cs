@@ -1,6 +1,5 @@
-﻿using System.Net.Http.Json;
+using System.Net.Http.Json;
 using Microsoft.AspNetCore.TestHost;
-using MvcRouteTester.AspNetCore.Infrastructure;
 
 namespace MvcRouteTester.AspNetCore.Builders;
 

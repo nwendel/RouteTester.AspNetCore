@@ -1,6 +1,4 @@
-﻿using MvcRouteTester.AspNetCore.Infrastructure;
-
-namespace MvcRouteTester.AspNetCore.Builders;
+﻿namespace MvcRouteTester.AspNetCore.Builders;
 
 public class ParameterAssert
 {
