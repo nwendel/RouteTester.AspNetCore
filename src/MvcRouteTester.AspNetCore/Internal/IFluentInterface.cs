@@ -13,7 +13,7 @@ namespace MvcRouteTester.AspNetCore.Internal
         int GetHashCode();
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        string ToString();
+        string? ToString();
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         bool Equals(object obj);

@@ -13,7 +13,7 @@ namespace MvcRouteTester.AspNetCore.Tests.Internal
             var tested = typeof(ParameterController)
                 .GetMethod(nameof(ParameterController.QueryStringParameter));
 
-            Assert.Throws<ArgumentNullException>("getTypeName", () => tested.GetActionText(null));
+            Assert.Throws<ArgumentNullException>("getTypeName", () => tested!.GetActionText(null!));
         }
     }
 }

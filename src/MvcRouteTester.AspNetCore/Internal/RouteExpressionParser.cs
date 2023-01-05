@@ -7,7 +7,7 @@ namespace MvcRouteTester.AspNetCore.Internal
 {
     public class RouteExpressionParser
     {
-        private readonly MethodInfo _anyMethod = typeof(Args).GetMethod(nameof(Args.Any));
+        private readonly MethodInfo _anyMethod = typeof(Args).GetMethod(nameof(Args.Any))!;
 
         public ExpectedActionInvokeInfo Parse(LambdaExpression actionCallExpression)
         {
@@ -37,12 +37,10 @@ namespace MvcRouteTester.AspNetCore.Internal
                 })
                 .ToArray();
 
-            var result = new ExpectedActionInvokeInfo
-            {
-                ActionMethodInfo = methodInfo,
-                Arguments = methodInfo.GetParameters().Select(x => x.Name).Zip(arguments).ToDictionary(k => k.First, v => v.Second),
-                ArgumentAssertKinds = methodInfo.GetParameters().Select(x => x.Name).Zip(argumentAssertKinds).ToDictionary(k => k.First, v => v.Second),
-            };
+            var result = new ExpectedActionInvokeInfo(
+                methodInfo,
+                methodInfo.GetParameters().Select(x => x.Name!).Zip(arguments).ToDictionary(k => k.First, v => v.Second),
+                methodInfo.GetParameters().Select(x => x.Name!).Zip(argumentAssertKinds).ToDictionary(k => k.First, v => v.Second));
             return result;
         }
 

@@ -13,7 +13,7 @@ namespace MvcRouteTester.AspNetCore.Builders
         private HttpMethod _method = HttpMethod.Get;
         private string _pathAndQuery = "/";
         private IDictionary<string, string> _formData = new Dictionary<string, string>();
-        private object _jsonData;
+        private object? _jsonData;
 
         public IRequestBuilder WithMethod(HttpMethod method)
         {

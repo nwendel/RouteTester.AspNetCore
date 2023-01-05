@@ -172,3 +172,6 @@ dotnet_diagnostic.CA1024.severity = none
 
 # CA1716: Identifiers should not match keywords
 dotnet_diagnostic.CA1716.severity = none
+
+# S4457: Parameter validation in "async"/"await" methods should be wrapped
+dotnet_diagnostic.S4457.severity = none

@@ -45,19 +45,18 @@ namespace MvcRouteTester.AspNetCore.Internal
             }
         }
 
-        public static HttpContent ToHttpContent(this object data)
+        public static HttpContent? ToHttpContent(this object data)
         {
-            HttpContent httpContent = null;
-
-            if (data != null)
+            if (data == null)
             {
-                var ms = new MemoryStream();
-                SerializeJsonIntoStream(data, ms);
-                ms.Seek(0, SeekOrigin.Begin);
-                httpContent = new StreamContent(ms);
-                httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                return null;
             }
 
+            var ms = new MemoryStream();
+            SerializeJsonIntoStream(data, ms);
+            ms.Seek(0, SeekOrigin.Begin);
+            var httpContent = new StreamContent(ms);
+            httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             return httpContent;
         }
 

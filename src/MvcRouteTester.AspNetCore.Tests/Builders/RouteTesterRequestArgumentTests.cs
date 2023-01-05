@@ -11,7 +11,7 @@ namespace MvcRouteTester.AspNetCore.Tests.Builders
         {
             var tested = new RouteTesterRequest();
 
-            Assert.Throws<ArgumentNullException>("method", () => tested.WithMethod(null));
+            Assert.Throws<ArgumentNullException>("method", () => tested.WithMethod(null!));
         }
 
         [Fact]
@@ -19,7 +19,7 @@ namespace MvcRouteTester.AspNetCore.Tests.Builders
         {
             var tested = new RouteTesterRequest();
 
-            Assert.Throws<ArgumentNullException>("pathAndQuery", () => tested.WithPathAndQuery(null));
+            Assert.Throws<ArgumentNullException>("pathAndQuery", () => tested.WithPathAndQuery(null!));
         }
 
         [Fact]
@@ -27,7 +27,7 @@ namespace MvcRouteTester.AspNetCore.Tests.Builders
         {
             var tested = new RouteTesterRequest();
 
-            Assert.Throws<ArgumentNullException>("formData", () => tested.WithFormData(null));
+            Assert.Throws<ArgumentNullException>("formData", () => tested.WithFormData(null!));
         }
     }
 }

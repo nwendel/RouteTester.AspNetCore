@@ -25,7 +25,7 @@ namespace MvcRouteTester.AspNetCore.Tests
         {
             await Assert.ThrowsAsync<ArgumentNullException>("server", () =>
                 RouteAssert.ForAsync(
-                    null,
+                    null!,
                     request => request.WithPathAndQuery("/simple-attribute-route"),
                     routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRoute())));
         }
@@ -36,7 +36,7 @@ namespace MvcRouteTester.AspNetCore.Tests
             await Assert.ThrowsAsync<ArgumentNullException>("requestBuilder", () =>
                 RouteAssert.ForAsync(
                     _server,
-                    null,
+                    null!,
                     routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRoute())));
         }
 
@@ -47,7 +47,7 @@ namespace MvcRouteTester.AspNetCore.Tests
                 RouteAssert.ForAsync(
                     _server,
                     request => request.WithPathAndQuery("/simple-attribute-route"),
-                    null));
+                    null!));
         }
     }
 }

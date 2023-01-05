@@ -23,11 +23,9 @@ public sealed class MvcRouteTesterActionFilterAttribute : ActionFilterAttribute
 
         var actionDescriptor = (ControllerActionDescriptor)context.ActionDescriptor;
 
-        var actionInvokeInfo = new ActualActionInvokeInfo
-        {
-            ActionMethodInfo = actionDescriptor.MethodInfo,
-            Arguments = new Dictionary<string, object>(context.ActionArguments),
-        };
+        var actionInvokeInfo = new ActualActionInvokeInfo(
+            actionDescriptor.MethodInfo,
+            new Dictionary<string, object?>(context.ActionArguments));
 
         var actionInvokeInfoCache = context.HttpContext.RequestServices.GetRequiredService<ActualActionInvokeInfoCache>();
 

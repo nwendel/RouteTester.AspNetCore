@@ -38,7 +38,7 @@ namespace MvcRouteTester.AspNetCore.Tests
                 RouteAssert.ForAsync(
                     _server,
                     request => request.WithPathAndQuery("/invalid/static"),
-                    routeAssert => routeAssert.MapsTo<InvalidController>(a => (IActionResult)null)));
+                    routeAssert => routeAssert.MapsTo<InvalidController>(a => (IActionResult)null!)));
         }
 
         [Fact]

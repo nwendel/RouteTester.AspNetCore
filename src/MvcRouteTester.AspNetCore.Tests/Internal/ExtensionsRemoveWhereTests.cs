@@ -21,7 +21,7 @@ namespace MvcRouteTester.AspNetCore.Tests.Internal
         [Fact]
         public void ThrowsOnRemoveWhereNullSelf()
         {
-            List<string> tested = null;
+            List<string> tested = null!;
 
             Assert.Throws<ArgumentNullException>("self", () => tested.RemoveWhere(x => x == "one"));
         }
@@ -31,7 +31,7 @@ namespace MvcRouteTester.AspNetCore.Tests.Internal
         {
             var tested = new List<string> { "one" };
 
-            Assert.Throws<ArgumentNullException>("predicate", () => tested.RemoveWhere(null));
+            Assert.Throws<ArgumentNullException>("predicate", () => tested.RemoveWhere(null!));
         }
     }
 }
