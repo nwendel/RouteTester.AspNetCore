@@ -13,6 +13,11 @@ namespace MvcRouteTester.AspNetCore.Tests
 
         public QueryStringParameterRouteTests(TestServerFixture testServerFixture)
         {
+            if (testServerFixture == null)
+            {
+                throw new ArgumentNullException(nameof(testServerFixture));
+            }
+
             _server = testServerFixture.Server;
         }
 

@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
     <PackageId>MvcRouteTester.AspNetCore</PackageId>
     <Title>MvcRouteTester.AspNetCore</Title>
     <Description>A library for unit testing AspNetCore routes</Description>

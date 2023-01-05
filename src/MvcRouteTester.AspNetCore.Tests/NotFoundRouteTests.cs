@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.TestHost;
 using Xunit;
 using Xunit.Sdk;
@@ -11,6 +12,11 @@ namespace MvcRouteTester.AspNetCore.Tests
 
         public NotFoundRouteTests(TestServerFixture testServerFixture)
         {
+            if (testServerFixture == null)
+            {
+                throw new ArgumentNullException(nameof(testServerFixture));
+            }
+
             _server = testServerFixture.Server;
         }
 

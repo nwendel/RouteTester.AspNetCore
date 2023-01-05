@@ -11,6 +11,11 @@ namespace MvcRouteTester.AspNetCore.Internal
 
         public ExpectedActionInvokeInfo Parse(LambdaExpression actionCallExpression)
         {
+            if (actionCallExpression == null)
+            {
+                throw new ArgumentNullException(nameof(actionCallExpression));
+            }
+
             var methodCallExpression = GetInstanceMethodCallExpression(actionCallExpression);
             var methodInfo = methodCallExpression.Method;
 

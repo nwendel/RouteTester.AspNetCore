@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.TestHost;
+﻿using System;
+using Microsoft.AspNetCore.TestHost;
 using TestWebApplication.Controllers;
 using Xunit;
 using Xunit.Sdk;
@@ -11,6 +12,11 @@ namespace MvcRouteTester.AspNetCore.Tests
 
         public SynchTests(TestServerFixture testServerFixture)
         {
+            if (testServerFixture == null)
+            {
+                throw new ArgumentNullException(nameof(testServerFixture));
+            }
+
             _server = testServerFixture.Server;
         }
 
