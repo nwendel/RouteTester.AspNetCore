@@ -14,8 +14,8 @@
 // limitations under the License.
 #endregion
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using MvcRouteTester.AspNetCore.Builders;
 using MvcRouteTester.AspNetCore.Internal;
@@ -37,7 +37,7 @@ namespace MvcRouteTester.AspNetCore
         /// <param name="serviceCollection"></param>
         public static void AddMvcRouteTester(this IServiceCollection serviceCollection)
         {
-            if(serviceCollection.All(x => x.ImplementationType != typeof(ActionInvokerFactory)))
+            if (serviceCollection.All(x => x.ServiceType != typeof(IActionInvokerFactory)))
             {
                 throw new MvcRouteTesterException("AddMvcRouteTester() must be called after AddMvc()");
             }
@@ -50,16 +50,25 @@ namespace MvcRouteTester.AspNetCore
             serviceCollection.AddSingleton<ActualActionInvokeInfoCache>();
             serviceCollection.AddSingleton<RouteExpressionParser>();
 
+            serviceCollection.Configure<MvcOptions>(o => o.Filters.Add<MvcRouteTesterActionFilterAttribute>());
+
+            /* serviceCollection.AddSingleton<ActionInvokerFactoryWrapper>(); */
+            /*
             // Register Standard ActionInvoker as self instead of via interface since MvcRouteTester depends on it for binding arguments
             serviceCollection.AddSingleton<ActionInvokerFactory>();
+            */
 
-            // Replace standard IActionInvokerFactory implementation which records action info and avoids calling the action
+            /*
+            // Replace standard IActionInvokerFactory implementation which one which records action info and avoids calling the action
             serviceCollection.RemoveWhere(x => x.ServiceType == typeof(IActionInvokerFactory));
             serviceCollection.AddSingleton<IActionInvokerFactory, RouteTesterActionInvokerFactory>();
+            */
 
+            /*
             // Remove authorization
             // TODO: Should this be an option?
             serviceCollection.RemoveWhere(x => x.ImplementationType == typeof(AuthorizationApplicationModelProvider));
+            */
         }
 
         #endregion

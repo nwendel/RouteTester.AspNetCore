@@ -29,10 +29,7 @@ namespace MvcRouteTester.AspNetCore
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T Any<T>()
-        {
-            return default(T);
-        }
+        public static T Any<T>() => default;
 
         #endregion
 

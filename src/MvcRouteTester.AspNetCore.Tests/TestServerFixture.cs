@@ -61,10 +61,14 @@ namespace MvcRouteTester.AspNetCore.Tests
             /// 
             /// </summary>
             /// <param name="app"></param>
-            /// <param name="env"></param>
-            public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+            public void Configure(IApplicationBuilder app)
             {
-                app.UseMvc();
+                app.UseRouting();
+
+                app.UseEndpoints(x =>
+                {
+                    x.MapControllers();
+                });
             }
 
         }

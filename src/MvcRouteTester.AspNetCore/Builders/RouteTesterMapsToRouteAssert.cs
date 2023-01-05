@@ -22,8 +22,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Xunit;
 using MvcRouteTester.AspNetCore.Internal;
+using Xunit;
 
 namespace MvcRouteTester.AspNetCore.Builders
 {
@@ -61,7 +61,7 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// <param name="actionDescriptorCollectionProvider"></param>
         public RouteTesterMapsToRouteAssert(
             ActualActionInvokeInfoCache actionInvokeInfoCache,
-            RouteExpressionParser routeExpressionParser, 
+            RouteExpressionParser routeExpressionParser,
             IActionDescriptorCollectionProvider actionDescriptorCollectionProvider)
         {
             _actionInvokeInfoCache = actionInvokeInfoCache;
@@ -123,7 +123,7 @@ namespace MvcRouteTester.AspNetCore.Builders
             {
                 throw new ArgumentException($"Invalid parameter name {parameterName}", nameof(parameterName));
             }
-            if(expectedParameter.ParameterType != typeof(T))
+            if (expectedParameter.ParameterType != typeof(T))
             {
                 throw new ArgumentException($"Invalid parameter type expected {expectedParameter.ParameterType.Name} but call was {typeof(T).Name}", nameof(T));
             }
@@ -170,15 +170,18 @@ namespace MvcRouteTester.AspNetCore.Builders
         /// <param name="actualActionInvokeInfo"></param>
         private void AssertExpectedParameterValues(ActualActionInvokeInfo actualActionInvokeInfo)
         {
-            // TODO: Remove Xunit usage
-            for (var ix = 0; ix < _expectedActionInvokeInfo.ActionMethodInfo.GetParameters().Length; ix++)
+            var parameterNames = _expectedActionInvokeInfo.ActionMethodInfo.GetParameters()
+                .Select(x => x.Name)
+                .ToList();
+            foreach (var parameterName in parameterNames)
             {
-                switch (_expectedActionInvokeInfo.ArgumentAssertKinds[ix])
+                switch (_expectedActionInvokeInfo.ArgumentAssertKinds[parameterName])
                 {
                     case ArgumentAssertKind.Value:
+                        // TODO: Remove Xunit usage
                         Assert.Equal(
-                            _expectedActionInvokeInfo.Arguments[ix],
-                            actualActionInvokeInfo.Arguments[ix]);
+                            _expectedActionInvokeInfo.Arguments[parameterName],
+                            actualActionInvokeInfo.Arguments.TryGetValue(parameterName, out var actual) ? actual : null);
                         break;
                     case ArgumentAssertKind.Any:
                         break;
@@ -196,13 +199,7 @@ namespace MvcRouteTester.AspNetCore.Builders
         {
             foreach (var parameterAssert in _parameterAsserts)
             {
-                var index = actualActionInvokeInfo
-                    .ActionMethodInfo
-                    .GetParameters()
-                    .Select((p, ix) => new { Parameter = p, Index = ix })
-                    .Single(p => p.Parameter.Name == parameterAssert.Name)
-                    .Index;
-                var value = actualActionInvokeInfo.Arguments[index];
+                var value = actualActionInvokeInfo.Arguments[parameterAssert.Name];
                 parameterAssert.Action(value);
             }
         }
