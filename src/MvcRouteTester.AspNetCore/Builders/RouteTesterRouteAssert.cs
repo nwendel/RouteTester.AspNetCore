@@ -13,7 +13,7 @@ namespace MvcRouteTester.AspNetCore.Builders
     {
         private readonly IServiceProvider _serviceProvider;
 
-        private IRouteAssert _routeAssert;
+        private IRouteAssert? _routeAssert;
 
         public RouteTesterRouteAssert(IServiceProvider serviceProvider)
         {
@@ -40,7 +40,7 @@ namespace MvcRouteTester.AspNetCore.Builders
 
         public async Task AssertExpectedAsync(HttpResponseMessage responseMessage)
         {
-            await _routeAssert.AssertExpectedAsync(responseMessage);
+            await _routeAssert!.AssertExpectedAsync(responseMessage);
         }
 
         private IRouteAssertMapsToBuilder MapsToCore(LambdaExpression actionCallExpression)

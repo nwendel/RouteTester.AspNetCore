@@ -20,7 +20,7 @@ namespace MvcRouteTester.AspNetCore.Builders
         private readonly RouteExpressionParser _routeExpressionParser;
         private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;
         private readonly List<ParameterAssert> _parameterAsserts = new();
-        private ExpectedActionInvokeInfo _expectedActionInvokeInfo;
+        private ExpectedActionInvokeInfo? _expectedActionInvokeInfo;
 
         public RouteTesterMapsToRouteAssert(
             ActualActionInvokeInfoCache actionInvokeInfoCache,
@@ -50,7 +50,7 @@ namespace MvcRouteTester.AspNetCore.Builders
             throw new ArgumentException($"Method {actionText} is not a valid controller action", nameof(actionCallExpression));
         }
 
-        public IRouteAssertMapsToBuilder ForParameter<T>(string name, Action<T> action)
+        public IRouteAssertMapsToBuilder ForParameter<T>(string name, Action<T?> action)
         {
             if (name == null)
             {
@@ -62,7 +62,7 @@ namespace MvcRouteTester.AspNetCore.Builders
                 throw new ArgumentNullException(nameof(action));
             }
 
-            var expectedParameter = _expectedActionInvokeInfo
+            var expectedParameter = _expectedActionInvokeInfo!
                 .ActionMethodInfo
                 .GetParameters()
                 .SingleOrDefault(x => x.Name == name);
@@ -76,7 +76,7 @@ namespace MvcRouteTester.AspNetCore.Builders
                 throw new ArgumentException($"Invalid parameter type expected {expectedParameter.ParameterType.Name} but call was {typeof(T).Name}", nameof(T));
             }
 
-            var parameterAssert = new ParameterAssert(name, x => { action.Invoke((T)x); });
+            var parameterAssert = new ParameterAssert(name, x => { action.Invoke((T?)x); });
             _parameterAsserts.Add(parameterAssert);
             return this;
         }
@@ -102,13 +102,13 @@ namespace MvcRouteTester.AspNetCore.Builders
         private void AssertExpectedMethodInfo(MethodInfo actualActionMethodInfo)
         {
             // TODO: Remove Xunit usage
-            Assert.Equal(_expectedActionInvokeInfo.ActionMethodInfo, actualActionMethodInfo);
+            Assert.Equal(_expectedActionInvokeInfo!.ActionMethodInfo, actualActionMethodInfo);
         }
 
         private void AssertExpectedParameterValues(ActualActionInvokeInfo actualActionInvokeInfo)
         {
-            var parameterNames = _expectedActionInvokeInfo.ActionMethodInfo.GetParameters()
-                .Select(x => x.Name)
+            var parameterNames = _expectedActionInvokeInfo!.ActionMethodInfo.GetParameters()
+                .Select(x => x.Name!)
                 .ToList();
             foreach (var parameterName in parameterNames)
             {

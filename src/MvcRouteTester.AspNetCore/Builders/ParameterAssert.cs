@@ -4,7 +4,7 @@ namespace MvcRouteTester.AspNetCore.Builders
 {
     public class ParameterAssert
     {
-        public ParameterAssert(string name, Action<object> action)
+        public ParameterAssert(string name, Action<object?> action)
         {
             Name = name;
             Action = action;
@@ -12,6 +12,6 @@ namespace MvcRouteTester.AspNetCore.Builders
 
         public string Name { get; }
 
-        public Action<object> Action { get; }
+        public Action<object?> Action { get; }
     }
 }

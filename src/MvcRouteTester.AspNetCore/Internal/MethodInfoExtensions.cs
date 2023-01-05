@@ -20,7 +20,7 @@ namespace MvcRouteTester.AspNetCore.Internal
             }
 
             var builder = new StringBuilder();
-            builder.Append(getTypeName(self.ReflectedType));
+            builder.Append(getTypeName(self.ReflectedType!));
             builder.Append('.');
             builder.Append(self.Name);
             builder.Append('(');
