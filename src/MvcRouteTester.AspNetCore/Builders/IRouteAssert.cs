@@ -1,7 +1,4 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
-
-namespace MvcRouteTester.AspNetCore.Builders
+﻿namespace MvcRouteTester.AspNetCore.Builders
 {
     public interface IRouteAssert
     {

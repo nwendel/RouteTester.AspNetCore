@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
-using MvcRouteTester.AspNetCore.Internal;
+﻿using MvcRouteTester.AspNetCore.Internal;
 
 namespace MvcRouteTester.AspNetCore.Builders
 {

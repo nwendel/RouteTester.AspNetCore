@@ -1,5 +1,4 @@
-﻿using System;
-using MvcRouteTester.AspNetCore.Infrastructure;
+﻿using MvcRouteTester.AspNetCore.Infrastructure;
 
 namespace MvcRouteTester.AspNetCore.Builders
 {

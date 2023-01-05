@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MvcRouteTester.AspNetCore
+﻿namespace MvcRouteTester.AspNetCore
 {
     public class MvcRouteTesterException : Exception
     {

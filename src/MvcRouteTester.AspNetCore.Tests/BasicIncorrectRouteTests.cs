@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.TestHost;
+﻿using Microsoft.AspNetCore.TestHost;
 using MvcRouteTester.AspNetCore.Infrastructure;
 using TestWebApplication.Controllers;
 using Xunit;

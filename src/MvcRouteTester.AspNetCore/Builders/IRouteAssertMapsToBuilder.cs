@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MvcRouteTester.AspNetCore.Builders
+﻿namespace MvcRouteTester.AspNetCore.Builders
 {
     public interface IRouteAssertMapsToBuilder
     {
