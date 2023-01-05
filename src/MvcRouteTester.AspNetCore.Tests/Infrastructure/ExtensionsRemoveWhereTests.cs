@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using MvcRouteTester.AspNetCore.Infrastructure;
+﻿using MvcRouteTester.AspNetCore.Infrastructure;
 using Xunit;
 
 namespace MvcRouteTester.AspNetCore.Tests.Infrastructure

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace MvcRouteTester.AspNetCore.Internal
+﻿namespace MvcRouteTester.AspNetCore.Internal
 {
     public class ActualActionInvokeInfoCache
     {

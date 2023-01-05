@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.TestHost;
+﻿using Microsoft.AspNetCore.TestHost;
 using MvcRouteTester.AspNetCore.Infrastructure;
 using TestWebApplication.Controllers;
 using TestWebApplication.Model;

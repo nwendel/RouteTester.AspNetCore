@@ -1,5 +1,4 @@
-﻿using System;
-using MvcRouteTester.AspNetCore.Internal;
+﻿using MvcRouteTester.AspNetCore.Internal;
 using TestWebApplication.Controllers;
 using Xunit;
 

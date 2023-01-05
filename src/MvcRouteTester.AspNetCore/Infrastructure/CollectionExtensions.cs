@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace MvcRouteTester.AspNetCore.Infrastructure;
+﻿namespace MvcRouteTester.AspNetCore.Infrastructure;
 
 internal static class CollectionExtensions
 {

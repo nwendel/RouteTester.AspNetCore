@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.TestHost;
+﻿using Microsoft.AspNetCore.TestHost;
 using TestWebApplication.Controllers;
 using Xunit;
 using Xunit.Sdk;

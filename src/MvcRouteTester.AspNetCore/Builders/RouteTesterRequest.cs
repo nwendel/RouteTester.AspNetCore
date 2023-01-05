@@ -1,10 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.TestHost;
+﻿using Microsoft.AspNetCore.TestHost;
 using MvcRouteTester.AspNetCore.Infrastructure;
-using MvcRouteTester.AspNetCore.Internal;
 
 namespace MvcRouteTester.AspNetCore.Builders
 {
