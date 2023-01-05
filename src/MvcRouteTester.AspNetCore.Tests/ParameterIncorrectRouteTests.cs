@@ -28,7 +28,7 @@ namespace MvcRouteTester.AspNetCore.Tests
                 RouteAssert.ForAsync(
                     _server,
                     request => request.WithPathAndQuery("/parameter/same-name-with-string"),
-                    routeAssert => routeAssert.MapsTo<ParameterController>(a => a.SameName(default(string), default(int)))));
+                    routeAssert => routeAssert.MapsTo<ParameterController>(a => a.SameName(default!, default(int)))));
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace MvcRouteTester.AspNetCore.Tests
                     _server,
                     request => request.WithPathAndQuery("/parameter/same-name-with-string"),
                     routeAssert => routeAssert
-                        .MapsTo<ParameterController>(a => a.SameName(default(string), default(string)))
+                        .MapsTo<ParameterController>(a => a.SameName(default!, default(string)!))
                         .ForParameter<int>("parameter2", p => { })));
         }
     }

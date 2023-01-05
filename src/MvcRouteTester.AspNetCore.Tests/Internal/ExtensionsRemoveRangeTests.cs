@@ -21,7 +21,7 @@ namespace MvcRouteTester.AspNetCore.Tests.Internal
         [Fact]
         public void ThrowsOnRemoveRangeNullSelf()
         {
-            List<string> tested = null;
+            List<string> tested = null!;
 
             Assert.Throws<ArgumentNullException>("self", () => tested.RemoveRange(new[] { "one" }));
         }
@@ -31,7 +31,7 @@ namespace MvcRouteTester.AspNetCore.Tests.Internal
         {
             var tested = new List<string> { "one" };
 
-            Assert.Throws<ArgumentNullException>("items", () => tested.RemoveRange(null));
+            Assert.Throws<ArgumentNullException>("items", () => tested.RemoveRange(null!));
         }
     }
 }

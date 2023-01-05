@@ -46,7 +46,7 @@ namespace MvcRouteTester.AspNetCore.Tests
             await RouteAssert.ForAsync(
                 _server,
                 request => request.WithPathAndQuery("/parameter/query-string-parameter"),
-                routeAssert => routeAssert.MapsTo<ParameterController>(a => a.QueryStringParameter(null)));
+                routeAssert => routeAssert.MapsTo<ParameterController>(a => a.QueryStringParameter(null!)));
         }
 
         [Fact]
