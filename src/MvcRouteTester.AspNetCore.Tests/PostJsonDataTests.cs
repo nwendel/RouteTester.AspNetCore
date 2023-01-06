@@ -25,7 +25,7 @@ public class PostJsonDataTests : IClassFixture<TestServerFixture>
             request => request
                 .WithPathAndQuery("/post-with-json-person")
                 .WithMethod(HttpMethod.Post)
-                .WithJsonData(new Person
+                .WithJsonContent(new Person
                 {
                     FirstName = "Niklas",
                     LastName = "Wendel",

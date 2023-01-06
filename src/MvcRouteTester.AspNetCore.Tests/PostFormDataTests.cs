@@ -25,7 +25,7 @@ public class PostFormDataTests : IClassFixture<TestServerFixture>
             request => request
                 .WithPathAndQuery("/post-with-person")
                 .WithMethod(HttpMethod.Post)
-                .WithFormData(new Dictionary<string, string>
+                .WithFormContent(new Dictionary<string, string>
                 {
                     { "FirstName", "Niklas" },
                     { "LastName", "Wendel" },
