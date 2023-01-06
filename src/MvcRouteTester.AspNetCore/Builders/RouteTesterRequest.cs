@@ -1,14 +1,13 @@
-using System.Net.Http.Json;
+﻿using System.Net.Http.Json;
 using Microsoft.AspNetCore.TestHost;
 
 namespace MvcRouteTester.AspNetCore.Builders;
 
-public class RouteTesterRequest : IRequestBuilder
+public sealed class RouteTesterRequest : IRequestBuilder, IDisposable
 {
     private HttpMethod _method = HttpMethod.Get;
     private string _pathAndQuery = "/";
-    private IDictionary<string, string> _formData = new Dictionary<string, string>();
-    private object? _jsonData;
+    private HttpContent? _content;
 
     public IRequestBuilder WithMethod(HttpMethod method)
     {
@@ -20,26 +19,25 @@ public class RouteTesterRequest : IRequestBuilder
 
     public IRequestBuilder WithPathAndQuery(string pathAndQuery)
     {
-        // TODO: NullOrWhiteSpace?
-        GuardAgainst.Null(pathAndQuery);
+        GuardAgainst.NullOrWhiteSpace(pathAndQuery);
 
         _pathAndQuery = pathAndQuery;
         return this;
     }
 
-    public IRequestBuilder WithFormData(IDictionary<string, string> formData)
+    public IRequestBuilder WithFormContent(IDictionary<string, string> content)
     {
-        GuardAgainst.Null(formData);
+        GuardAgainst.Null(content);
 
-        _formData = formData;
+        _content = new FormUrlEncodedContent(content);
         return this;
     }
 
-    public IRequestBuilder WithJsonData(object jsonData)
+    public IRequestBuilder WithJsonContent(object content)
     {
-        GuardAgainst.Null(jsonData);
+        GuardAgainst.Null(content);
 
-        _jsonData = jsonData;
+        _content = JsonContent.Create(content, content.GetType());
         return this;
     }
 
@@ -51,19 +49,18 @@ public class RouteTesterRequest : IRequestBuilder
         using var requestMessage = new HttpRequestMessage(_method, _pathAndQuery);
 
         // REVIEW: Only with POST method?
-        if (_method == HttpMethod.Post)
+        if (_method == HttpMethod.Post && _content != null)
         {
-            if (_formData.Any())
-            {
-                requestMessage.Content = new FormUrlEncodedContent(_formData);
-            }
-            else if (_jsonData != null)
-            {
-                requestMessage.Content = JsonContent.Create(_jsonData, _jsonData.GetType());
-            }
+            requestMessage.Content = _content;
         }
 
         var responseMessage = await client.SendAsync(requestMessage);
         return responseMessage;
+    }
+
+    public void Dispose()
+    {
+        _content?.Dispose();
+        _content = null;
     }
 }

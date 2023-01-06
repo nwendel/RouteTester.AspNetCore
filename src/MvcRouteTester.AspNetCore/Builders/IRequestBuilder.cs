@@ -8,7 +8,7 @@ public interface IRequestBuilder : IFluentInterface
 
     IRequestBuilder WithPathAndQuery(string pathAndQuery);
 
-    IRequestBuilder WithFormData(IDictionary<string, string> formData);
+    IRequestBuilder WithFormContent(IDictionary<string, string> content);
 
-    IRequestBuilder WithJsonData(object jsonData);
+    IRequestBuilder WithJsonContent(object content);
 }
