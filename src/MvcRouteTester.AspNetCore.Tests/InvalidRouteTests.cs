@@ -1,20 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.TestHost;
-using MvcRouteTester.AspNetCore.Infrastructure;
-using TestWebApplication.Controllers;
+using MvcRouteTester.AspNetCore.Tests.TestHelpers;
+using TestApplication.Controllers;
 using Xunit;
 
 namespace MvcRouteTester.AspNetCore.Tests;
 
-public class InvalidRouteTests : IClassFixture<TestServerFixture>
+public sealed class InvalidRouteTests : IDisposable
 {
-    private readonly TestServer _server;
+    private readonly TestApplicationFactory _factory;
 
-    public InvalidRouteTests(TestServerFixture testServerFixture)
+    public InvalidRouteTests()
     {
-        GuardAgainst.Null(testServerFixture);
-
-        _server = testServerFixture.Server;
+        _factory = new TestApplicationFactory();
     }
 
     [Fact]
@@ -22,7 +19,7 @@ public class InvalidRouteTests : IClassFixture<TestServerFixture>
     {
         await Assert.ThrowsAsync<ArgumentException>("actionCallExpression", () =>
             RouteAssert.ForAsync(
-                _server,
+                _factory.Server,
                 request => request.WithPathAndQuery("/invalid/static"),
                 routeAssert => routeAssert.MapsTo<InvalidController>(a => InvalidController.Static())));
     }
@@ -32,7 +29,7 @@ public class InvalidRouteTests : IClassFixture<TestServerFixture>
     {
         await Assert.ThrowsAsync<ArgumentException>("actionCallExpression", () =>
             RouteAssert.ForAsync(
-                _server,
+                _factory.Server,
                 request => request.WithPathAndQuery("/invalid/static"),
                 routeAssert => routeAssert.MapsTo<InvalidController>(a => (IActionResult)null!)));
     }
@@ -42,8 +39,13 @@ public class InvalidRouteTests : IClassFixture<TestServerFixture>
     {
         await Assert.ThrowsAsync<ArgumentException>("actionCallExpression", () =>
             RouteAssert.ForAsync(
-                _server,
+                _factory.Server,
                 request => request.WithPathAndQuery("/invalid/non-action"),
                 routeAssert => routeAssert.MapsTo<InvalidController>(a => a.NonAction())));
+    }
+
+    public void Dispose()
+    {
+        _factory.Dispose();
     }
 }

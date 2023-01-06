@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace TestWebApplication.Controllers;
+namespace TestApplication.Controllers;
 
 public class InvalidController : Controller
 {

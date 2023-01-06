@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TestWebApplication.Model;
+using TestApplication.Model;
 
-namespace TestWebApplication.Controllers;
+namespace TestApplication.Controllers;
 
 public class PostController : Controller
 {
