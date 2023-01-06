@@ -28,7 +28,7 @@ public class NotFoundRouteTests : IClassFixture<TestServerFixture>
     [Fact]
     public async Task ThrowsOnFound()
     {
-        await Assert.ThrowsAsync<FalseException>(() =>
+        await Assert.ThrowsAsync<EqualException>(() =>
             RouteAssert.ForAsync(
                 _server,
                 request => request.WithPathAndQuery("/simple-attribute-route"),

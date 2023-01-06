@@ -2,7 +2,6 @@
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using MvcRouteTester.AspNetCore.Internal;
-using Xunit;
 
 namespace MvcRouteTester.AspNetCore.Builders;
 
@@ -86,7 +85,7 @@ public class RouteTesterMapsToRouteAssert :
     private void AssertExpectedMethodInfo(MethodInfo actualActionMethodInfo)
     {
         // TODO: Remove Xunit usage
-        Assert.Equal(_expectedActionInvokeInfo!.ActionMethodInfo, actualActionMethodInfo);
+        TestFramework.Equal(_expectedActionInvokeInfo!.ActionMethodInfo, actualActionMethodInfo);
     }
 
     private void AssertExpectedParameterValues(ActualActionInvokeInfo actualActionInvokeInfo)
@@ -100,7 +99,7 @@ public class RouteTesterMapsToRouteAssert :
             {
                 case ArgumentAssertKind.Value:
                     // TODO: Remove Xunit usage
-                    Assert.Equal(
+                    TestFramework.Equal(
                         _expectedActionInvokeInfo.Arguments[parameterName],
                         actualActionInvokeInfo.Arguments.TryGetValue(parameterName, out var actual) ? actual : null);
                     break;

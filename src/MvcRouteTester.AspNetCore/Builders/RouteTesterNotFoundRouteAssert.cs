@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using Xunit;
 
 namespace MvcRouteTester.AspNetCore.Builders;
 
@@ -9,11 +8,7 @@ public class RouteTesterNotFoundRouteAssert : IRouteAssert
     {
         GuardAgainst.Null(responseMessage);
 
-        if (responseMessage.StatusCode != HttpStatusCode.NotFound)
-        {
-            // TODO: Remove Xunit usage
-            Assert.False(true, "Status code is not 404 (Not Found)");
-        }
+        TestFramework.Equal(HttpStatusCode.NotFound, responseMessage.StatusCode);
 
         return Task.CompletedTask;
     }
