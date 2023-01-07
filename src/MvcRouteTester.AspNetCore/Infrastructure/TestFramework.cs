@@ -1,4 +1,6 @@
-﻿namespace MvcRouteTester.AspNetCore.Infrastructure;
+﻿using MvcRouteTester.AspNetCore.Infrastructure.TestFrameworks;
+
+namespace MvcRouteTester.AspNetCore.Infrastructure;
 
 internal static class TestFramework
 {
@@ -9,18 +11,14 @@ internal static class TestFramework
 
     private static ITestFramework? _detected;
 
-    public static ITestFramework Detected
+    private static ITestFramework Detected
     {
         get
         {
             if (_detected == null)
             {
                 _detected = _frameworks.SingleOrDefault(x => x.IsAvailable);
-
-                if (_detected == null)
-                {
-                    throw new InvalidOperationException("No TestFramework detected");
-                }
+                _detected ??= new NoTestFramework();
             }
 
             return _detected;
