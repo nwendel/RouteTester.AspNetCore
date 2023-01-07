@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.TestHost;
 
 namespace MvcRouteTester.AspNetCore.Tests.TestHelpers;
 
-internal sealed class TestApplicationFactory : WebApplicationFactory<Program>
+internal sealed class TestApplicationFactory : WebApplicationFactory<Program>, IWebApplicationFactory
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {

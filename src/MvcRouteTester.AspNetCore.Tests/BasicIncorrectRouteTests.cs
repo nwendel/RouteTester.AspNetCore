@@ -19,7 +19,7 @@ public sealed class BasicIncorrectRouteTests : IDisposable
     {
         await Assert.ThrowsAsync<EqualException>(() =>
             RouteAssert.ForAsync(
-                _factory.Server,
+                _factory,
                 request => request.WithPathAndQuery("/simple-attribute-route"),
                 routeAssert => routeAssert.MapsTo<InvalidController>(a => a.Default())));
     }
@@ -29,7 +29,7 @@ public sealed class BasicIncorrectRouteTests : IDisposable
     {
         await Assert.ThrowsAsync<EqualException>(() =>
             RouteAssert.ForAsync(
-                _factory.Server,
+                _factory,
                 request => request.WithPathAndQuery("/simple-attribute-route"),
                 routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRouteAsync())));
     }

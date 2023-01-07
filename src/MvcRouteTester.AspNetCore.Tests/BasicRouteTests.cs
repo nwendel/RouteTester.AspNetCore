@@ -17,7 +17,7 @@ public sealed class BasicRouteTests : IDisposable
     public async Task CanGetSimpleAttributeRoute()
     {
         await RouteAssert.ForAsync(
-            _factory.Server,
+            _factory,
             request => request.WithPathAndQuery("/simple-attribute-route"),
             routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRoute()));
     }
@@ -26,7 +26,7 @@ public sealed class BasicRouteTests : IDisposable
     public async Task CanGetSimpleAttributeRouteAsync()
     {
         await RouteAssert.ForAsync(
-            _factory.Server,
+            _factory,
             request => request.WithPathAndQuery("/simple-attribute-route-async"),
             routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRouteAsync()));
     }
@@ -35,7 +35,7 @@ public sealed class BasicRouteTests : IDisposable
     public async Task CanPostSimpleAttributeRoute()
     {
         await RouteAssert.ForAsync(
-            _factory.Server,
+            _factory,
             request => request
                 .WithMethod(HttpMethod.Post)
                 .WithPathAndQuery("/simple-attribute-route-post"),
