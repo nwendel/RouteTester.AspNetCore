@@ -25,7 +25,7 @@ public sealed class NotFoundRouteTests : IDisposable
     [Fact]
     public async Task ThrowsOnFound()
     {
-        await Assert.ThrowsAsync<FalseException>(() =>
+        await Assert.ThrowsAsync<EqualException>(() =>
             RouteAssert.ForAsync(
                 _factory,
                 request => request.WithPathAndQuery("/simple-attribute-route"),
