@@ -1,27 +1,24 @@
-﻿using Microsoft.AspNetCore.TestHost;
-using MvcRouteTester.AspNetCore.Infrastructure;
-using TestWebApplication.Controllers;
-using TestWebApplication.Model;
+﻿using MvcRouteTester.AspNetCore.Tests.TestHelpers;
+using TestApplication.Controllers;
+using TestApplication.Model;
 using Xunit;
 
 namespace MvcRouteTester.AspNetCore.Tests;
 
-public class PostFormDataTests : IClassFixture<TestServerFixture>
+public sealed class PostFormDataTests : IDisposable
 {
-    private readonly TestServer _server;
+    private readonly TestApplicationFactory _factory;
 
-    public PostFormDataTests(TestServerFixture testServerFixture)
+    public PostFormDataTests()
     {
-        GuardAgainst.Null(testServerFixture);
-
-        _server = testServerFixture.Server;
+        _factory = new TestApplicationFactory();
     }
 
     [Fact]
     public async Task CanPostPerson()
     {
         await RouteAssert.ForAsync(
-            _server,
+            _factory,
             request => request
                 .WithPathAndQuery("/post-with-person")
                 .WithMethod(HttpMethod.Post)
@@ -37,5 +34,10 @@ public class PostFormDataTests : IClassFixture<TestServerFixture>
                     Assert.Equal("Niklas", p!.FirstName);
                     Assert.Equal("Wendel", p!.LastName);
                 }));
+    }
+
+    public void Dispose()
+    {
+        _factory.Dispose();
     }
 }

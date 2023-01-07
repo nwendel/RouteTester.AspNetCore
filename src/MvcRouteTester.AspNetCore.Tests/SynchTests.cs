@@ -1,29 +1,24 @@
-﻿using Microsoft.AspNetCore.TestHost;
-using TestWebApplication.Controllers;
+﻿using MvcRouteTester.AspNetCore.Tests.TestHelpers;
+using TestApplication.Controllers;
 using Xunit;
 using Xunit.Sdk;
 
 namespace MvcRouteTester.AspNetCore.Tests;
 
-public class SynchTests : IClassFixture<TestServerFixture>
+public sealed class SynchTests : IDisposable
 {
-    private readonly TestServer _server;
+    private readonly TestApplicationFactory _factory;
 
-    public SynchTests(TestServerFixture testServerFixture)
+    public SynchTests()
     {
-        if (testServerFixture == null)
-        {
-            throw new ArgumentNullException(nameof(testServerFixture));
-        }
-
-        _server = testServerFixture.Server;
+        _factory = new TestApplicationFactory();
     }
 
     [Fact]
     public void CanGetSimpleAttributeRoute()
     {
         RouteAssert.For(
-            _server,
+            _factory,
             request => request.WithPathAndQuery("/simple-attribute-route"),
             routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRoute()));
     }
@@ -33,8 +28,13 @@ public class SynchTests : IClassFixture<TestServerFixture>
     {
         Assert.Throws<EqualException>(() =>
             RouteAssert.For(
-                _server,
+                _factory,
                 request => request.WithPathAndQuery("/simple-attribute-route"),
                 routeAssert => routeAssert.MapsTo<InvalidController>(a => a.Default())));
+    }
+
+    public void Dispose()
+    {
+        _factory?.Dispose();
     }
 }

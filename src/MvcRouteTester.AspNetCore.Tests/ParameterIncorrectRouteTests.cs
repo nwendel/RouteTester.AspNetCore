@@ -1,20 +1,17 @@
-﻿using Microsoft.AspNetCore.TestHost;
-using MvcRouteTester.AspNetCore.Infrastructure;
-using TestWebApplication.Controllers;
+﻿using MvcRouteTester.AspNetCore.Tests.TestHelpers;
+using TestApplication.Controllers;
 using Xunit;
 using Xunit.Sdk;
 
 namespace MvcRouteTester.AspNetCore.Tests;
 
-public class ParameterIncorrectRouteTests : IClassFixture<TestServerFixture>
+public sealed class ParameterIncorrectRouteTests : IDisposable
 {
-    private readonly TestServer _server;
+    private readonly TestApplicationFactory _factory;
 
-    public ParameterIncorrectRouteTests(TestServerFixture testServerFixture)
+    public ParameterIncorrectRouteTests()
     {
-        GuardAgainst.Null(testServerFixture);
-
-        _server = testServerFixture.Server;
+        _factory = new TestApplicationFactory();
     }
 
     [Fact]
@@ -22,7 +19,7 @@ public class ParameterIncorrectRouteTests : IClassFixture<TestServerFixture>
     {
         await Assert.ThrowsAsync<EqualException>(() =>
             RouteAssert.ForAsync(
-                _server,
+                _factory,
                 request => request.WithPathAndQuery("/parameter/same-name-with-string"),
                 routeAssert => routeAssert.MapsTo<ParameterController>(a => a.SameName(default!, default(int)))));
     }
@@ -32,10 +29,15 @@ public class ParameterIncorrectRouteTests : IClassFixture<TestServerFixture>
     {
         await Assert.ThrowsAsync<ArgumentException>("action", () =>
             RouteAssert.ForAsync(
-                _server,
+                _factory,
                 request => request.WithPathAndQuery("/parameter/same-name-with-string"),
                 routeAssert => routeAssert
                     .MapsTo<ParameterController>(a => a.SameName(default!, default(string)!))
                     .ForParameter<int>("parameter2", p => { })));
+    }
+
+    public void Dispose()
+    {
+        _factory.Dispose();
     }
 }
