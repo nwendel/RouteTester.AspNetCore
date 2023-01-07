@@ -1,26 +1,23 @@
-﻿using Microsoft.AspNetCore.TestHost;
-using MvcRouteTester.AspNetCore.Infrastructure;
+﻿using MvcRouteTester.AspNetCore.Tests.TestHelpers;
 using Xunit;
 using Xunit.Sdk;
 
 namespace MvcRouteTester.AspNetCore.Tests;
 
-public class NotFoundRouteTests : IClassFixture<TestServerFixture>
+public sealed class NotFoundRouteTests : IDisposable
 {
-    private readonly TestServer _server;
+    private readonly TestApplicationFactory _factory;
 
-    public NotFoundRouteTests(TestServerFixture testServerFixture)
+    public NotFoundRouteTests()
     {
-        GuardAgainst.Null(testServerFixture);
-
-        _server = testServerFixture.Server;
+        _factory = new TestApplicationFactory();
     }
 
     [Fact]
     public async Task CanRouteNotFound()
     {
         await RouteAssert.ForAsync(
-            _server,
+            _factory,
             request => request.WithPathAndQuery("/non-existant-route"),
             routeAssert => routeAssert.NotFound());
     }
@@ -30,8 +27,13 @@ public class NotFoundRouteTests : IClassFixture<TestServerFixture>
     {
         await Assert.ThrowsAsync<EqualException>(() =>
             RouteAssert.ForAsync(
-                _server,
+                _factory,
                 request => request.WithPathAndQuery("/simple-attribute-route"),
                 routeAssert => routeAssert.NotFound()));
+    }
+
+    public void Dispose()
+    {
+        _factory.Dispose();
     }
 }

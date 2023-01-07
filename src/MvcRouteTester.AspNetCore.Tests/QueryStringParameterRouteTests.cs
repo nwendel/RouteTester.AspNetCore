@@ -1,27 +1,24 @@
-﻿using Microsoft.AspNetCore.TestHost;
-using MvcRouteTester.AspNetCore.Infrastructure;
-using TestWebApplication.Controllers;
+﻿using MvcRouteTester.AspNetCore.Tests.TestHelpers;
+using TestApplication.Controllers;
 using Xunit;
 using Xunit.Sdk;
 
 namespace MvcRouteTester.AspNetCore.Tests;
 
-public class QueryStringParameterRouteTests : IClassFixture<TestServerFixture>
+public sealed class QueryStringParameterRouteTests : IDisposable
 {
-    private readonly TestServer _server;
+    private readonly TestApplicationFactory _factory;
 
-    public QueryStringParameterRouteTests(TestServerFixture testServerFixture)
+    public QueryStringParameterRouteTests()
     {
-        GuardAgainst.Null(testServerFixture);
-
-        _server = testServerFixture.Server;
+        _factory = new TestApplicationFactory();
     }
 
     [Fact]
     public async Task CanRouteWithParameter()
     {
         await RouteAssert.ForAsync(
-            _server,
+            _factory,
             request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
             routeAssert => routeAssert.MapsTo<ParameterController>(a => a.QueryStringParameter("value")));
     }
@@ -31,7 +28,7 @@ public class QueryStringParameterRouteTests : IClassFixture<TestServerFixture>
     {
         await Assert.ThrowsAsync<EqualException>(() =>
            RouteAssert.ForAsync(
-                _server,
+                _factory,
                 request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
                 routeAssert => routeAssert.MapsTo<ParameterController>(a => a.QueryStringParameter("wrong-value"))));
     }
@@ -40,7 +37,7 @@ public class QueryStringParameterRouteTests : IClassFixture<TestServerFixture>
     public async Task CanRouteWithoutParameter()
     {
         await RouteAssert.ForAsync(
-            _server,
+            _factory,
             request => request.WithPathAndQuery("/parameter/query-string-parameter"),
             routeAssert => routeAssert.MapsTo<ParameterController>(a => a.QueryStringParameter(null!)));
     }
@@ -49,7 +46,7 @@ public class QueryStringParameterRouteTests : IClassFixture<TestServerFixture>
     public async Task CanRouteWithParameterMatchingAny()
     {
         await RouteAssert.ForAsync(
-            _server,
+            _factory,
             request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
             routeAssert => routeAssert.MapsTo<ParameterController>(a => a.QueryStringParameter(Args.Any<string>())));
     }
@@ -58,7 +55,7 @@ public class QueryStringParameterRouteTests : IClassFixture<TestServerFixture>
     public async Task CanRouteWithParameterForParameterExpression()
     {
         await RouteAssert.ForAsync(
-            _server,
+            _factory,
             request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
             routeAssert => routeAssert
                 .MapsTo<ParameterController>(a => a.QueryStringParameter(Args.Any<string>()))
@@ -73,7 +70,7 @@ public class QueryStringParameterRouteTests : IClassFixture<TestServerFixture>
     {
         await Assert.ThrowsAsync<EqualException>(() =>
             RouteAssert.ForAsync(
-                _server,
+                _factory,
                 request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=wrong-value"),
                 routeAssert => routeAssert
                     .MapsTo<ParameterController>(a => a.QueryStringParameter(Args.Any<string>()))
@@ -88,7 +85,7 @@ public class QueryStringParameterRouteTests : IClassFixture<TestServerFixture>
     {
         await Assert.ThrowsAsync<ArgumentException>("name", () =>
             RouteAssert.ForAsync(
-                _server,
+                _factory,
                 request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=wrong-value"),
                 routeAssert => routeAssert
                     .MapsTo<ParameterController>(a => a.QueryStringParameter(Args.Any<string>()))
@@ -96,5 +93,10 @@ public class QueryStringParameterRouteTests : IClassFixture<TestServerFixture>
                     {
                         Assert.Equal("value", p);
                     })));
+    }
+
+    public void Dispose()
+    {
+        _factory.Dispose();
     }
 }

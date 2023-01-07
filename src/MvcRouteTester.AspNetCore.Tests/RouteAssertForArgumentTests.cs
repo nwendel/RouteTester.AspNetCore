@@ -1,27 +1,24 @@
-﻿using Microsoft.AspNetCore.TestHost;
-using MvcRouteTester.AspNetCore.Infrastructure;
-using TestWebApplication.Controllers;
+﻿using MvcRouteTester.AspNetCore.Tests.TestHelpers;
+using TestApplication.Controllers;
 using Xunit;
 
 namespace MvcRouteTester.AspNetCore.Tests;
 
-public class RouteAssertForArgumentTests : IClassFixture<TestServerFixture>
+public sealed class RouteAssertForArgumentTests : IDisposable
 {
-    private readonly TestServer _server;
+    private readonly TestApplicationFactory _factory;
 
-    public RouteAssertForArgumentTests(TestServerFixture testServerFixture)
+    public RouteAssertForArgumentTests()
     {
-        GuardAgainst.Null(testServerFixture);
-
-        _server = testServerFixture.Server;
+        _factory = new TestApplicationFactory();
     }
 
     [Fact]
     public async Task ThrowsOnNullServer()
     {
-        await Assert.ThrowsAsync<ArgumentNullException>("server", () =>
+        await Assert.ThrowsAsync<ArgumentNullException>("factory", () =>
             RouteAssert.ForAsync(
-                null!,
+                (IWebApplicationFactory)null!,
                 request => request.WithPathAndQuery("/simple-attribute-route"),
                 routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRoute())));
     }
@@ -31,7 +28,7 @@ public class RouteAssertForArgumentTests : IClassFixture<TestServerFixture>
     {
         await Assert.ThrowsAsync<ArgumentNullException>("requestBuilder", () =>
             RouteAssert.ForAsync(
-                _server,
+                _factory,
                 null!,
                 routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRoute())));
     }
@@ -41,8 +38,13 @@ public class RouteAssertForArgumentTests : IClassFixture<TestServerFixture>
     {
         await Assert.ThrowsAsync<ArgumentNullException>("routeAssertBuilder", () =>
             RouteAssert.ForAsync(
-                _server,
+                _factory,
                 request => request.WithPathAndQuery("/simple-attribute-route"),
                 null!));
+    }
+
+    public void Dispose()
+    {
+        _factory.Dispose();
     }
 }

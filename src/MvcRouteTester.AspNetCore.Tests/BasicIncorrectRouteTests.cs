@@ -1,20 +1,17 @@
-﻿using Microsoft.AspNetCore.TestHost;
-using MvcRouteTester.AspNetCore.Infrastructure;
-using TestWebApplication.Controllers;
+﻿using MvcRouteTester.AspNetCore.Tests.TestHelpers;
+using TestApplication.Controllers;
 using Xunit;
 using Xunit.Sdk;
 
 namespace MvcRouteTester.AspNetCore.Tests;
 
-public class BasicIncorrectRouteTests : IClassFixture<TestServerFixture>
+public sealed class BasicIncorrectRouteTests : IDisposable
 {
-    private readonly TestServer _server;
+    private readonly TestApplicationFactory _factory;
 
-    public BasicIncorrectRouteTests(TestServerFixture testServerFixture)
+    public BasicIncorrectRouteTests()
     {
-        GuardAgainst.Null(testServerFixture);
-
-        _server = testServerFixture.Server;
+        _factory = new TestApplicationFactory();
     }
 
     [Fact]
@@ -22,7 +19,7 @@ public class BasicIncorrectRouteTests : IClassFixture<TestServerFixture>
     {
         await Assert.ThrowsAsync<EqualException>(() =>
             RouteAssert.ForAsync(
-                _server,
+                _factory,
                 request => request.WithPathAndQuery("/simple-attribute-route"),
                 routeAssert => routeAssert.MapsTo<InvalidController>(a => a.Default())));
     }
@@ -32,8 +29,13 @@ public class BasicIncorrectRouteTests : IClassFixture<TestServerFixture>
     {
         await Assert.ThrowsAsync<EqualException>(() =>
             RouteAssert.ForAsync(
-                _server,
+                _factory,
                 request => request.WithPathAndQuery("/simple-attribute-route"),
                 routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRouteAsync())));
+    }
+
+    public void Dispose()
+    {
+        _factory.Dispose();
     }
 }

@@ -1,26 +1,23 @@
-﻿using Microsoft.AspNetCore.TestHost;
-using MvcRouteTester.AspNetCore.Infrastructure;
-using TestWebApplication.Controllers;
+﻿using MvcRouteTester.AspNetCore.Tests.TestHelpers;
+using TestApplication.Controllers;
 using Xunit;
 
 namespace MvcRouteTester.AspNetCore.Tests;
 
-public class BasicRouteTests : IClassFixture<TestServerFixture>
+public sealed class BasicRouteTests : IDisposable
 {
-    private readonly TestServer _server;
+    private readonly TestApplicationFactory _factory;
 
-    public BasicRouteTests(TestServerFixture testServerFixture)
+    public BasicRouteTests()
     {
-        GuardAgainst.Null(testServerFixture);
-
-        _server = testServerFixture.Server;
+        _factory = new TestApplicationFactory();
     }
 
     [Fact]
     public async Task CanGetSimpleAttributeRoute()
     {
         await RouteAssert.ForAsync(
-            _server,
+            _factory,
             request => request.WithPathAndQuery("/simple-attribute-route"),
             routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRoute()));
     }
@@ -29,7 +26,7 @@ public class BasicRouteTests : IClassFixture<TestServerFixture>
     public async Task CanGetSimpleAttributeRouteAsync()
     {
         await RouteAssert.ForAsync(
-            _server,
+            _factory,
             request => request.WithPathAndQuery("/simple-attribute-route-async"),
             routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRouteAsync()));
     }
@@ -38,10 +35,15 @@ public class BasicRouteTests : IClassFixture<TestServerFixture>
     public async Task CanPostSimpleAttributeRoute()
     {
         await RouteAssert.ForAsync(
-            _server,
+            _factory,
             request => request
                 .WithMethod(HttpMethod.Post)
                 .WithPathAndQuery("/simple-attribute-route-post"),
             routeAssert => routeAssert.MapsTo<PostController>(a => a.SimpleAttributeRoute()));
+    }
+
+    public void Dispose()
+    {
+        _factory.Dispose();
     }
 }
