@@ -17,7 +17,3 @@ app.UseEndpoints(x =>
 });
 
 app.Run();
-
-public partial class Program
-{
-}
