@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using TestApplication.Model;
+﻿using TestApplication.Model;
 
 namespace TestApplication.Controllers;
 

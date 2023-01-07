@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace TestApplication.Controllers;
+﻿namespace TestApplication.Controllers;
 
 public class ParameterController : Controller
 {
