@@ -18,7 +18,7 @@ public sealed class PostFormDataTests : IDisposable
     public async Task CanPostPerson()
     {
         await RouteAssert.ForAsync(
-            _factory,
+            _factory.Server,
             request => request
                 .WithPathAndQuery("/post-with-person")
                 .WithMethod(HttpMethod.Post)

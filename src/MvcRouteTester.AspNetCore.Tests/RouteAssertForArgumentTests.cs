@@ -16,9 +16,9 @@ public sealed class RouteAssertForArgumentTests : IDisposable
     [Fact]
     public async Task ThrowsOnNullServer()
     {
-        await Assert.ThrowsAsync<ArgumentNullException>("factory", () =>
+        await Assert.ThrowsAsync<ArgumentNullException>("server", () =>
             RouteAssert.ForAsync(
-                (IWebApplicationFactory)null!,
+                null!,
                 request => request.WithPathAndQuery("/simple-attribute-route"),
                 routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRoute())));
     }
@@ -28,7 +28,7 @@ public sealed class RouteAssertForArgumentTests : IDisposable
     {
         await Assert.ThrowsAsync<ArgumentNullException>("requestBuilder", () =>
             RouteAssert.ForAsync(
-                _factory,
+                _factory.Server,
                 null!,
                 routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRoute())));
     }
@@ -38,7 +38,7 @@ public sealed class RouteAssertForArgumentTests : IDisposable
     {
         await Assert.ThrowsAsync<ArgumentNullException>("routeAssertBuilder", () =>
             RouteAssert.ForAsync(
-                _factory,
+                _factory.Server,
                 request => request.WithPathAndQuery("/simple-attribute-route"),
                 null!));
     }
