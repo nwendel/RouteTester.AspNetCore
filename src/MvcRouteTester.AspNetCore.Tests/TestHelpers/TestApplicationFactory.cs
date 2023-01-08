@@ -19,8 +19,7 @@ internal sealed class TestApplicationFactory : WebApplicationFactory<Program>
     private sealed class TestStartup
 #pragma warning restore CA1812 // Internal class that is apparently never instantiated
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Temporary")]
-        public void ConfigureServices(IServiceCollection serviceCollection)
+        public static void ConfigureServices(IServiceCollection serviceCollection)
         {
             serviceCollection
                 .AddMvc()
@@ -28,8 +27,7 @@ internal sealed class TestApplicationFactory : WebApplicationFactory<Program>
             serviceCollection.AddMvcRouteTester();
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Temporary")]
-        public void Configure(IApplicationBuilder app)
+        public static void Configure(IApplicationBuilder app)
         {
             app.UseRouting();
 

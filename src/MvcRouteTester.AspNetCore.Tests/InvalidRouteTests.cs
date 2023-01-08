@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MvcRouteTester.AspNetCore.Tests.TestHelpers;
 using TestApplication.Controllers;
-using Xunit;
 
 namespace MvcRouteTester.AspNetCore.Tests;
 
