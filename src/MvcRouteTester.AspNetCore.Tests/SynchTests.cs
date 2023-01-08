@@ -18,7 +18,7 @@ public sealed class SynchTests : IDisposable
     public void CanGetSimpleAttributeRoute()
     {
         RouteAssert.For(
-            _factory,
+            _factory.Server,
             request => request.WithPathAndQuery("/simple-attribute-route"),
             routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRoute()));
     }
@@ -28,7 +28,7 @@ public sealed class SynchTests : IDisposable
     {
         Assert.Throws<EqualException>(() =>
             RouteAssert.For(
-                _factory,
+                _factory.Server,
                 request => request.WithPathAndQuery("/simple-attribute-route"),
                 routeAssert => routeAssert.MapsTo<InvalidController>(a => a.Default())));
     }

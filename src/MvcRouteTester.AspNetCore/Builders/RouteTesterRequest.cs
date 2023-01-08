@@ -58,23 +58,6 @@ public sealed class RouteTesterRequest : IRequestBuilder, IDisposable
         return responseMessage;
     }
 
-    public async Task<HttpResponseMessage> ExecuteAsync(IWebApplicationFactory factory)
-    {
-        GuardAgainst.Null(factory);
-
-        var client = factory.CreateClient();
-        using var requestMessage = new HttpRequestMessage(_method, _pathAndQuery);
-
-        // REVIEW: Only with POST method?
-        if (_method == HttpMethod.Post && _content != null)
-        {
-            requestMessage.Content = _content;
-        }
-
-        var responseMessage = await client.SendAsync(requestMessage);
-        return responseMessage;
-    }
-
     public void Dispose()
     {
         _content?.Dispose();

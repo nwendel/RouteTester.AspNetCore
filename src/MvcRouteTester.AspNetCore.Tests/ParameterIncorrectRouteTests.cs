@@ -19,7 +19,7 @@ public sealed class ParameterIncorrectRouteTests : IDisposable
     {
         await Assert.ThrowsAsync<EqualException>(() =>
             RouteAssert.ForAsync(
-                _factory,
+                _factory.Server,
                 request => request.WithPathAndQuery("/parameter/same-name-with-string"),
                 routeAssert => routeAssert.MapsTo<ParameterController>(a => a.SameName(default!, default(int)))));
     }
@@ -29,7 +29,7 @@ public sealed class ParameterIncorrectRouteTests : IDisposable
     {
         await Assert.ThrowsAsync<ArgumentException>("action", () =>
             RouteAssert.ForAsync(
-                _factory,
+                _factory.Server,
                 request => request.WithPathAndQuery("/parameter/same-name-with-string"),
                 routeAssert => routeAssert
                     .MapsTo<ParameterController>(a => a.SameName(default!, default(string)!))

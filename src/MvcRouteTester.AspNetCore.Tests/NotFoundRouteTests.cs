@@ -17,7 +17,7 @@ public sealed class NotFoundRouteTests : IDisposable
     public async Task CanRouteNotFound()
     {
         await RouteAssert.ForAsync(
-            _factory,
+            _factory.Server,
             request => request.WithPathAndQuery("/non-existant-route"),
             routeAssert => routeAssert.NotFound());
     }
@@ -27,7 +27,7 @@ public sealed class NotFoundRouteTests : IDisposable
     {
         await Assert.ThrowsAsync<EqualException>(() =>
             RouteAssert.ForAsync(
-                _factory,
+                _factory.Server,
                 request => request.WithPathAndQuery("/simple-attribute-route"),
                 routeAssert => routeAssert.NotFound()));
     }

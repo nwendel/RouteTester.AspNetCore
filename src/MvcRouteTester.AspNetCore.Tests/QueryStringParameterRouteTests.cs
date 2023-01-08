@@ -18,7 +18,7 @@ public sealed class QueryStringParameterRouteTests : IDisposable
     public async Task CanRouteWithParameter()
     {
         await RouteAssert.ForAsync(
-            _factory,
+            _factory.Server,
             request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
             routeAssert => routeAssert.MapsTo<ParameterController>(a => a.QueryStringParameter("value")));
     }
@@ -28,7 +28,7 @@ public sealed class QueryStringParameterRouteTests : IDisposable
     {
         await Assert.ThrowsAsync<EqualException>(() =>
            RouteAssert.ForAsync(
-                _factory,
+                _factory.Server,
                 request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
                 routeAssert => routeAssert.MapsTo<ParameterController>(a => a.QueryStringParameter("wrong-value"))));
     }
@@ -37,7 +37,7 @@ public sealed class QueryStringParameterRouteTests : IDisposable
     public async Task CanRouteWithoutParameter()
     {
         await RouteAssert.ForAsync(
-            _factory,
+            _factory.Server,
             request => request.WithPathAndQuery("/parameter/query-string-parameter"),
             routeAssert => routeAssert.MapsTo<ParameterController>(a => a.QueryStringParameter(null!)));
     }
@@ -46,7 +46,7 @@ public sealed class QueryStringParameterRouteTests : IDisposable
     public async Task CanRouteWithParameterMatchingAny()
     {
         await RouteAssert.ForAsync(
-            _factory,
+            _factory.Server,
             request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
             routeAssert => routeAssert.MapsTo<ParameterController>(a => a.QueryStringParameter(Args.Any<string>())));
     }
@@ -55,7 +55,7 @@ public sealed class QueryStringParameterRouteTests : IDisposable
     public async Task CanRouteWithParameterForParameterExpression()
     {
         await RouteAssert.ForAsync(
-            _factory,
+            _factory.Server,
             request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=value"),
             routeAssert => routeAssert
                 .MapsTo<ParameterController>(a => a.QueryStringParameter(Args.Any<string>()))
@@ -70,7 +70,7 @@ public sealed class QueryStringParameterRouteTests : IDisposable
     {
         await Assert.ThrowsAsync<EqualException>(() =>
             RouteAssert.ForAsync(
-                _factory,
+                _factory.Server,
                 request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=wrong-value"),
                 routeAssert => routeAssert
                     .MapsTo<ParameterController>(a => a.QueryStringParameter(Args.Any<string>()))
@@ -85,7 +85,7 @@ public sealed class QueryStringParameterRouteTests : IDisposable
     {
         await Assert.ThrowsAsync<ArgumentException>("name", () =>
             RouteAssert.ForAsync(
-                _factory,
+                _factory.Server,
                 request => request.WithPathAndQuery("/parameter/query-string-parameter?parameter=wrong-value"),
                 routeAssert => routeAssert
                     .MapsTo<ParameterController>(a => a.QueryStringParameter(Args.Any<string>()))

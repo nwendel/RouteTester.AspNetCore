@@ -19,7 +19,7 @@ public sealed class InvalidRouteTests : IDisposable
     {
         await Assert.ThrowsAsync<ArgumentException>("actionCallExpression", () =>
             RouteAssert.ForAsync(
-                _factory,
+                _factory.Server,
                 request => request.WithPathAndQuery("/invalid/static"),
                 routeAssert => routeAssert.MapsTo<InvalidController>(a => InvalidController.Static())));
     }
@@ -29,7 +29,7 @@ public sealed class InvalidRouteTests : IDisposable
     {
         await Assert.ThrowsAsync<ArgumentException>("actionCallExpression", () =>
             RouteAssert.ForAsync(
-                _factory,
+                _factory.Server,
                 request => request.WithPathAndQuery("/invalid/static"),
                 routeAssert => routeAssert.MapsTo<InvalidController>(a => (IActionResult)null!)));
     }
@@ -39,7 +39,7 @@ public sealed class InvalidRouteTests : IDisposable
     {
         await Assert.ThrowsAsync<ArgumentException>("actionCallExpression", () =>
             RouteAssert.ForAsync(
-                _factory,
+                _factory.Server,
                 request => request.WithPathAndQuery("/invalid/non-action"),
                 routeAssert => routeAssert.MapsTo<InvalidController>(a => a.NonAction())));
     }

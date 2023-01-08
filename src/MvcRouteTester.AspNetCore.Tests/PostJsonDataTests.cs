@@ -18,7 +18,7 @@ public sealed class PostJsonDataTests : IDisposable
     public async Task CanPostJsonPerson()
     {
         await RouteAssert.ForAsync(
-            _factory,
+            _factory.Server,
             request => request
                 .WithPathAndQuery("/post-with-json-person")
                 .WithMethod(HttpMethod.Post)
