@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Xunit;
 
 namespace MvcRouteTester.AspNetCore.Tests;
 

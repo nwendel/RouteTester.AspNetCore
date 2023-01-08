@@ -10,6 +10,7 @@ public static class MethodInfoExtensions
         GuardAgainst.Null(self);
         GuardAgainst.Null(getTypeName);
 
+        // TODO: Remove bang operator
         var builder = new StringBuilder();
         builder.Append(getTypeName(self.ReflectedType!));
         builder.Append('.');

@@ -36,6 +36,7 @@ public class RouteTesterRouteAssert :
 
     public async Task AssertExpectedAsync(HttpResponseMessage responseMessage)
     {
+        // TODO: Remove bang operator
         await _routeAssert!.AssertExpectedAsync(responseMessage);
     }
 
