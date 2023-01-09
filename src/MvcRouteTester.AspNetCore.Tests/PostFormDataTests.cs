@@ -29,8 +29,8 @@ public sealed class PostFormDataTests : IDisposable
                 .MapsTo<PostController>(a => a.WithPerson(Args.Any<Person>()))
                 .ForParameter<Person>("person", p =>
                 {
-                    Assert.Equal("Niklas", p!.FirstName);
-                    Assert.Equal("Wendel", p!.LastName);
+                    Assert.Equal("Niklas", p?.FirstName);
+                    Assert.Equal("Wendel", p?.LastName);
                 }));
     }
 
