@@ -5,12 +5,7 @@ namespace MvcRouteTester.AspNetCore.Tests;
 
 public sealed class QueryStringParameterRouteTests : IDisposable
 {
-    private readonly TestApplicationFactory _factory;
-
-    public QueryStringParameterRouteTests()
-    {
-        _factory = new TestApplicationFactory();
-    }
+    private readonly TestApplicationFactory _factory = new();
 
     [Fact]
     public async Task CanRouteWithParameter()

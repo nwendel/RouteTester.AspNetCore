@@ -5,12 +5,7 @@ namespace MvcRouteTester.AspNetCore.Tests;
 
 public sealed class PostJsonDataTests : IDisposable
 {
-    private readonly TestApplicationFactory _factory;
-
-    public PostJsonDataTests()
-    {
-        _factory = new TestApplicationFactory();
-    }
+    private readonly TestApplicationFactory _factory = new();
 
     [Fact]
     public async Task CanPostJsonPerson()

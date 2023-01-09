@@ -4,12 +4,7 @@ namespace MvcRouteTester.AspNetCore.Tests;
 
 public sealed class RouteAssertForArgumentTests : IDisposable
 {
-    private readonly TestApplicationFactory _factory;
-
-    public RouteAssertForArgumentTests()
-    {
-        _factory = new TestApplicationFactory();
-    }
+    private readonly TestApplicationFactory _factory = new();
 
     [Fact]
     public async Task ThrowsOnNullServer()

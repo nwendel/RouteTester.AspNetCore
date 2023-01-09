@@ -8,15 +8,9 @@ Install-Package MvcRouteTester.AspNetCore
 
 ### Example
 ```csharp
-public class Example : IClassFixture<TestServerFixture>
+public class Example
 {
-
-    private readonly TestServer _server;
-
-    public Example(TestServerFixture testServerFixture)
-    {
-        _server = testServerFixture.Server;
-    }
+    private readonly TestApplicationFactory _factory = new();
 
     [Fact]
     public async Task CanRoute()
@@ -35,34 +29,37 @@ public class Example : IClassFixture<TestServerFixture>
             request => request.WithPathAndQuery("/some-other-route?parameter=value"),
             routeAssert => routeAssert.MapsTo<HomeController>(a => a.SomeOtherRoute("value")));
     }
-
 }
 
-public class TestServerFixture
+public class TestApplicationFactory : WebApplicationFactory<Program>
 {
-
-    public TestServerFixture()
+    protected override IWebHostBuilder? CreateWebHostBuilder()
     {
-        Server = new TestServer(new WebHostBuilder().UseTestStartup<TestStartup, Startup>());
+        var builder = new WebHostBuilder();
+        builder.UseStartup<TestStartup>();
+
+        return builder;
     }
 
-    public TestServer Server { get; }
-
-    public class TestStartup
+    private sealed class TestStartup
     {
-
-        public void ConfigureServices(IServiceCollection serviceCollection)
+        public static void ConfigureServices(IServiceCollection serviceCollection)
         {
-            serviceCollection.AddMvc();
+            serviceCollection
+                .AddMvc()
+                .AddApplicationPart(typeof(Program).Assembly);
             serviceCollection.AddMvcRouteTester();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public static void Configure(IApplicationBuilder app)
         {
-            app.UseMvc();
+            app.UseRouting();
+
+            app.UseEndpoints(x =>
+            {
+                x.MapControllers();
+            });
         }
-
     }
-
 }
 ```
