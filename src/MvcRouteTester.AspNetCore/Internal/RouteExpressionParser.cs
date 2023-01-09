@@ -5,8 +5,7 @@ namespace MvcRouteTester.AspNetCore.Internal;
 
 public class RouteExpressionParser
 {
-    // TODO: Remove bang operator
-    private readonly MethodInfo _anyMethod = typeof(Args).GetMethod(nameof(Args.Any))!;
+    private readonly MethodInfo _anyMethod = typeof(Args).GetMethod(nameof(Args.Any)) ?? throw new UnreachabelCodeException();
 
     public ExpectedActionInvokeInfo Parse(LambdaExpression actionCallExpression)
     {

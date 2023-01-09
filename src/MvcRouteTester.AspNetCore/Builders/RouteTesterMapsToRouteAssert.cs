@@ -39,7 +39,7 @@ public class RouteTesterMapsToRouteAssert :
             return;
         }
 
-        var actionText = _expectedActionInvokeInfo.ActionMethodInfo.GetActionText(x => x.Name);
+        var actionText = _expectedActionInvokeInfo.ActionMethodInfo.GetActionText();
         throw new ArgumentException($"Method {actionText} is not a valid controller action", nameof(actionCallExpression));
     }
 
@@ -48,8 +48,9 @@ public class RouteTesterMapsToRouteAssert :
         GuardAgainst.Null(name);
         GuardAgainst.Null(action);
 
-        // TODO: Remove bang operator
-        var expectedParameter = _expectedActionInvokeInfo!
+        EnsureExpectedActionInvokeInfo();
+
+        var expectedParameter = _expectedActionInvokeInfo
             .ActionMethodInfo
             .GetParameters()
             .SingleOrDefault(x => x.Name == name);
@@ -85,14 +86,16 @@ public class RouteTesterMapsToRouteAssert :
 
     private void AssertExpectedMethodInfo(MethodInfo actualActionMethodInfo)
     {
-        // TODO: Remove bang operator
-        TestFramework.Equal(_expectedActionInvokeInfo!.ActionMethodInfo, actualActionMethodInfo);
+        EnsureExpectedActionInvokeInfo();
+
+        TestFramework.Equal(_expectedActionInvokeInfo.ActionMethodInfo, actualActionMethodInfo);
     }
 
     private void AssertExpectedParameterValues(ActualActionInvokeInfo actualActionInvokeInfo)
     {
-        // TODO: Remove bang operator
-        var parameterNames = _expectedActionInvokeInfo!.ActionMethodInfo.GetParameters()
+        EnsureExpectedActionInvokeInfo();
+
+        var parameterNames = _expectedActionInvokeInfo.ActionMethodInfo.GetParameters()
             .Select(x => x.Name!)
             .ToList();
         foreach (var parameterName in parameterNames)
@@ -100,7 +103,6 @@ public class RouteTesterMapsToRouteAssert :
             switch (_expectedActionInvokeInfo.ArgumentAssertKinds[parameterName])
             {
                 case ArgumentAssertKind.Value:
-                    // TODO: Remove Xunit usage
                     TestFramework.Equal(
                         _expectedActionInvokeInfo.Arguments[parameterName],
                         actualActionInvokeInfo.Arguments.TryGetValue(parameterName, out var actual) ? actual : null);
@@ -117,6 +119,15 @@ public class RouteTesterMapsToRouteAssert :
         {
             var value = actualActionInvokeInfo.Arguments[parameterAssert.Name];
             parameterAssert.Action(value);
+        }
+    }
+
+    [MemberNotNull(nameof(_expectedActionInvokeInfo))]
+    private void EnsureExpectedActionInvokeInfo()
+    {
+        if (_expectedActionInvokeInfo == null)
+        {
+            throw new InvalidOperationException("No expected action invok info");
         }
     }
 }

@@ -1,25 +1,16 @@
 ﻿using System.Reflection;
-using System.Text;
 
 namespace MvcRouteTester.AspNetCore.Internal;
 
 public static class MethodInfoExtensions
 {
-    public static string GetActionText(this MethodInfo self, Func<Type, string> getTypeName)
+    public static string GetActionText(this MethodInfo self)
     {
         GuardAgainst.Null(self);
-        GuardAgainst.Null(getTypeName);
+        GuardAgainst.Condition(self.ReflectedType == null, "No ReflectedType", nameof(self));
 
-        // TODO: Remove bang operator
-        var builder = new StringBuilder();
-        builder.Append(getTypeName(self.ReflectedType!));
-        builder.Append('.');
-        builder.Append(self.Name);
-        builder.Append('(');
-        builder.Append(string.Join(",", self
-            .GetParameters()
-            .Select(p => getTypeName(p.ParameterType))));
-        builder.Append(')');
-        return builder.ToString();
+        var parameters = string.Join(",", self.GetParameters().Select(x => x.ParameterType));
+        var actionText = $"{self.ReflectedType.Name}.{self.Name}({parameters})";
+        return actionText;
     }
 }
