@@ -37,7 +37,7 @@ public sealed class QueryStringParameterRouteTests : IDisposable
         await RouteAssert.ForAsync(
             _factory.Server,
             request => request.WithPathAndQuery("/parameter/query-string-parameter"),
-            routeAssert => routeAssert.MapsTo<ParameterController>(a => a.QueryStringParameter(null!)));
+            routeAssert => routeAssert.MapsTo<ParameterController>(a => a.QueryStringParameter(null)));
     }
 
     [Fact]
