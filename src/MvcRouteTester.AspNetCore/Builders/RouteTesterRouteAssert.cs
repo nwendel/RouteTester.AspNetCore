@@ -36,8 +36,12 @@ public class RouteTesterRouteAssert :
 
     public async Task AssertExpectedAsync(HttpResponseMessage responseMessage)
     {
-        // TODO: Remove bang operator
-        await _routeAssert!.AssertExpectedAsync(responseMessage);
+        if (_routeAssert == null)
+        {
+            throw new InvalidOperationException("No route assert");
+        }
+
+        await _routeAssert.AssertExpectedAsync(responseMessage);
     }
 
     private IRouteAssertMapsToBuilder MapsToCore(LambdaExpression actionCallExpression)
