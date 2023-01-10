@@ -3,11 +3,11 @@ using System.Reflection;
 
 namespace MvcRouteTester.AspNetCore.Internal;
 
-public class RouteExpressionParser
+public static class RouteExpressionParser
 {
-    private readonly MethodInfo _anyMethod = typeof(Args).GetMethod(nameof(Args.Any)) ?? throw new UnreachabelCodeException();
+    private static readonly MethodInfo _anyMethod = typeof(Args).GetMethod(nameof(Args.Any)) ?? throw new UnreachabelCodeException();
 
-    public ExpectedActionInvokeInfo Parse(LambdaExpression actionCallExpression)
+    public static ExpectedActionInvokeInfo Parse(LambdaExpression actionCallExpression)
     {
         GuardAgainst.Null(actionCallExpression);
 
@@ -55,7 +55,7 @@ public class RouteExpressionParser
         return methodCallExpression;
     }
 
-    private bool IsArgsAnyMethod(MethodCallExpression argumentExpression)
+    private static bool IsArgsAnyMethod(MethodCallExpression argumentExpression)
     {
         var anyMethod = _anyMethod.MakeGenericMethod(argumentExpression.Method.ReturnType);
         return argumentExpression.Method == anyMethod;

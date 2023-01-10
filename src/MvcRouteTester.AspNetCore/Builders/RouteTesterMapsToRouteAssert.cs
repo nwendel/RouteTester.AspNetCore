@@ -10,24 +10,21 @@ public class RouteTesterMapsToRouteAssert :
     IRouteAssert
 {
     private readonly ActualActionInvokeInfoCache _actionInvokeInfoCache;
-    private readonly RouteExpressionParser _routeExpressionParser;
     private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;
     private readonly List<ParameterAssert> _parameterAsserts = new();
     private ExpectedActionInvokeInfo? _expectedActionInvokeInfo;
 
     public RouteTesterMapsToRouteAssert(
         ActualActionInvokeInfoCache actionInvokeInfoCache,
-        RouteExpressionParser routeExpressionParser,
         IActionDescriptorCollectionProvider actionDescriptorCollectionProvider)
     {
         _actionInvokeInfoCache = actionInvokeInfoCache;
-        _routeExpressionParser = routeExpressionParser;
         _actionDescriptorCollectionProvider = actionDescriptorCollectionProvider;
     }
 
     public void ParseActionCallExpression(LambdaExpression actionCallExpression)
     {
-        _expectedActionInvokeInfo = _routeExpressionParser.Parse(actionCallExpression);
+        _expectedActionInvokeInfo = RouteExpressionParser.Parse(actionCallExpression);
 
         var isActionMethod = _actionDescriptorCollectionProvider
             .ActionDescriptors
