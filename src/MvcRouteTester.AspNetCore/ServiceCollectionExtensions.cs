@@ -19,7 +19,6 @@ public static class ServiceCollectionExtensions
         serviceCollection.AddTransient<RouteTesterMapsToRouteAssert>();
         serviceCollection.AddTransient<RouteTesterNotFoundRouteAssert>();
         serviceCollection.AddSingleton<ActualActionInvokeInfoCache>();
-        serviceCollection.AddSingleton<RouteExpressionParser>();
 
         serviceCollection.Configure<MvcOptions>(o => o.Filters.Add<MvcRouteTesterActionFilterAttribute>());
     }

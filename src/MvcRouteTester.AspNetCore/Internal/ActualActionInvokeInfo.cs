@@ -2,20 +2,12 @@
 
 namespace MvcRouteTester.AspNetCore.Internal;
 
-public class ActualActionInvokeInfo
+public class ActualActionInvokeInfo : ActionInvokeInfo<object?>
 {
     public ActualActionInvokeInfo(
         MethodInfo actionMethodInfo,
         IReadOnlyDictionary<string, object?> arguments)
+        : base(actionMethodInfo, arguments)
     {
-        GuardAgainst.Null(actionMethodInfo);
-        GuardAgainst.Null(arguments);
-
-        ActionMethodInfo = actionMethodInfo;
-        Arguments = arguments;
     }
-
-    public MethodInfo ActionMethodInfo { get; set; }
-
-    public IReadOnlyDictionary<string, object?> Arguments { get; set; }
 }

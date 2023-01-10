@@ -8,8 +8,9 @@ public sealed class MvcRouteTesterActionFilterAttribute : ActionFilterAttribute
 {
     public MvcRouteTesterActionFilterAttribute()
     {
-        // TODO: Or possible int.MaxValue?
+        // TODO: Or possibly int.MaxValue?
         //       Not sure if it should run first or last...
+        //       Maybe configurable? But question remains what should be default
         Order = int.MinValue;
     }
 
@@ -21,7 +22,7 @@ public sealed class MvcRouteTesterActionFilterAttribute : ActionFilterAttribute
 
         var actionInvokeInfo = new ActualActionInvokeInfo(
             actionDescriptor.MethodInfo,
-            new Dictionary<string, object?>(context.ActionArguments));
+            context.ActionArguments.AsReadOnly());
 
         var actionInvokeInfoCache = context.HttpContext.RequestServices.GetRequiredService<ActualActionInvokeInfoCache>();
 

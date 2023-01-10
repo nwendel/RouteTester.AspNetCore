@@ -2,18 +2,12 @@
 
 namespace MvcRouteTester.AspNetCore.Internal;
 
-public class ExpectedActionInvokeInfo : ActualActionInvokeInfo
+public class ExpectedActionInvokeInfo : ActionInvokeInfo<ExpectedArgumentAssert>
 {
     public ExpectedActionInvokeInfo(
         MethodInfo actionMethodInfo,
-        IReadOnlyDictionary<string, object?> arguments,
-        IReadOnlyDictionary<string, ArgumentAssertKind> argumentAssertKinds)
+        IReadOnlyDictionary<string, ExpectedArgumentAssert> arguments)
         : base(actionMethodInfo, arguments)
     {
-        GuardAgainst.Null(argumentAssertKinds);
-
-        ArgumentAssertKinds = argumentAssertKinds;
     }
-
-    public IReadOnlyDictionary<string, ArgumentAssertKind> ArgumentAssertKinds { get; set; }
 }

@@ -10,24 +10,21 @@ public class RouteTesterMapsToRouteAssert :
     IRouteAssert
 {
     private readonly ActualActionInvokeInfoCache _actionInvokeInfoCache;
-    private readonly RouteExpressionParser _routeExpressionParser;
     private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;
     private readonly List<ParameterAssert> _parameterAsserts = new();
     private ExpectedActionInvokeInfo? _expectedActionInvokeInfo;
 
     public RouteTesterMapsToRouteAssert(
         ActualActionInvokeInfoCache actionInvokeInfoCache,
-        RouteExpressionParser routeExpressionParser,
         IActionDescriptorCollectionProvider actionDescriptorCollectionProvider)
     {
         _actionInvokeInfoCache = actionInvokeInfoCache;
-        _routeExpressionParser = routeExpressionParser;
         _actionDescriptorCollectionProvider = actionDescriptorCollectionProvider;
     }
 
     public void ParseActionCallExpression(LambdaExpression actionCallExpression)
     {
-        _expectedActionInvokeInfo = _routeExpressionParser.Parse(actionCallExpression);
+        _expectedActionInvokeInfo = RouteExpressionParser.Parse(actionCallExpression);
 
         var isActionMethod = _actionDescriptorCollectionProvider
             .ActionDescriptors
@@ -96,15 +93,21 @@ public class RouteTesterMapsToRouteAssert :
         EnsureExpectedActionInvokeInfo();
 
         var parameterNames = _expectedActionInvokeInfo.ActionMethodInfo.GetParameters()
-            .Select(x => x.Name!)
+            .Select(x => x.Name)
             .ToList();
         foreach (var parameterName in parameterNames)
         {
-            switch (_expectedActionInvokeInfo.ArgumentAssertKinds[parameterName])
+            if (parameterName == null)
+            {
+                throw new InvalidOperationException("No parameter name");
+            }
+
+            var expectedArgument = _expectedActionInvokeInfo.Arguments[parameterName];
+            switch (expectedArgument.Kind)
             {
                 case ArgumentAssertKind.Value:
                     TestFramework.Equal(
-                        _expectedActionInvokeInfo.Arguments[parameterName],
+                        expectedArgument.Value,
                         actualActionInvokeInfo.Arguments.TryGetValue(parameterName, out var actual) ? actual : null);
                     break;
                 case ArgumentAssertKind.Any:
