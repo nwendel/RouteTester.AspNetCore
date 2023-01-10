@@ -96,15 +96,21 @@ public class RouteTesterMapsToRouteAssert :
         EnsureExpectedActionInvokeInfo();
 
         var parameterNames = _expectedActionInvokeInfo.ActionMethodInfo.GetParameters()
-            .Select(x => x.Name!)
+            .Select(x => x.Name)
             .ToList();
         foreach (var parameterName in parameterNames)
         {
-            switch (_expectedActionInvokeInfo.ArgumentAssertKinds[parameterName])
+            if (parameterName == null)
+            {
+                throw new InvalidOperationException("No parameter name");
+            }
+
+            var expectedArgument = _expectedActionInvokeInfo.Arguments[parameterName];
+            switch (expectedArgument.Kind)
             {
                 case ArgumentAssertKind.Value:
                     TestFramework.Equal(
-                        _expectedActionInvokeInfo.Arguments[parameterName],
+                        expectedArgument.Value,
                         actualActionInvokeInfo.Arguments.TryGetValue(parameterName, out var actual) ? actual : null);
                     break;
                 case ArgumentAssertKind.Any:

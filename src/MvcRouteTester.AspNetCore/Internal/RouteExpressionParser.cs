@@ -14,30 +14,28 @@ public class RouteExpressionParser
         var methodCallExpression = GetInstanceMethodCallExpression(actionCallExpression);
         var methodInfo = methodCallExpression.Method;
 
-        var arguments = methodCallExpression.Arguments
-            .Select(x => Expression.Lambda(x).Compile().DynamicInvoke())
-            .ToArray();
-        var argumentAssertKinds = methodCallExpression.Arguments
-            .Select(x =>
+        var argumentAsserts = methodCallExpression.Arguments
+            .Select((argument, ix) =>
             {
-                if (x is not MethodCallExpression call)
+                var parameterName = methodInfo.GetParameters()[ix].Name;
+                if (parameterName == null)
                 {
-                    return ArgumentAssertKind.Value;
+                    throw new InvalidOperationException("No paramter name");
                 }
 
-                var anyMethod = _anyMethod.MakeGenericMethod(call.Method.ReturnType);
-                return call.Method == anyMethod
-                    ? ArgumentAssertKind.Any
-                    : ArgumentAssertKind.Value;
-            })
-            .ToArray();
+                if (argument is MethodCallExpression argumentMethodCallExpression && IsArgsAnyMethod(argumentMethodCallExpression))
+                {
+                    return (parameterName, ArgumentAssertKind.Any, null);
+                }
 
-        // TODO: Remove bang operator
-        // TODO: Simplify this code
+                var value = Expression.Lambda(argument).Compile().DynamicInvoke();
+                return (parameterName, ArgumentAssertKind.Value, value);
+            })
+            .ToDictionary(k => k.parameterName, v => new ExpectedArgumentAssert(v.Value, v.value));
+
         var result = new ExpectedActionInvokeInfo(
             methodInfo,
-            methodInfo.GetParameters().Select(x => x.Name!).Zip(arguments).ToDictionary(k => k.First, v => v.Second),
-            methodInfo.GetParameters().Select(x => x.Name!).Zip(argumentAssertKinds).ToDictionary(k => k.First, v => v.Second));
+            argumentAsserts);
         return result;
     }
 
@@ -55,5 +53,11 @@ public class RouteExpressionParser
         }
 
         return methodCallExpression;
+    }
+
+    private bool IsArgsAnyMethod(MethodCallExpression argumentExpression)
+    {
+        var anyMethod = _anyMethod.MakeGenericMethod(argumentExpression.Method.ReturnType);
+        return argumentExpression.Method == anyMethod;
     }
 }

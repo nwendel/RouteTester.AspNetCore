@@ -2,5 +2,6 @@
 
 public static class Args
 {
-    public static T Any<T>() => default!;
+    // This method should never be called
+    public static T Any<T>() => throw new NotImplementedException();
 }
