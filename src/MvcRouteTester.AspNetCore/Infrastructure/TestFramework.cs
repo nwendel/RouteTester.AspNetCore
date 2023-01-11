@@ -17,8 +17,9 @@ internal static class TestFramework
         {
             if (_detected == null)
             {
+                // TODO: Is Single correct here?
                 _detected = _frameworks.SingleOrDefault(x => x.IsAvailable);
-                _detected ??= new NoTestFramework();
+                _detected ??= new UnknownTestFramework();
             }
 
             return _detected;
