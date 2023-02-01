@@ -2,7 +2,7 @@
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddMvc();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 

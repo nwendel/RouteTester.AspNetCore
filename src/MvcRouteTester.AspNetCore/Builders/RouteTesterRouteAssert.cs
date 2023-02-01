@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MvcRouteTester.AspNetCore.Builders;
@@ -26,6 +27,12 @@ public class RouteTesterRouteAssert :
         where TController : ControllerBase
     {
         return MapsToCore(actionCallExpression);
+    }
+
+    public IRouteAssertMapsToBuilder MapsTo<TPageModel>()
+        where TPageModel : PageModel
+    {
+        return null!;
     }
 
     public void NotFound()
