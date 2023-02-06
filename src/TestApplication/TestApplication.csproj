@@ -9,8 +9,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);CA1014;CS1591</NoWarn>
+  </PropertyGroup>
 
-    <IsPackable>false</IsPackable>
+  <PropertyGroup>
+      <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +21,10 @@
 
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute" />
   </ItemGroup>
 
   <ItemGroup>
