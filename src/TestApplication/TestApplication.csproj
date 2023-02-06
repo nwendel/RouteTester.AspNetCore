@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="MvcRouteTester.AspNetCore.Tests" />
+    <InternalsVisibleTo Include="RouteTester.AspNetCore.Tests" />
   </ItemGroup>
 
   <ItemGroup>
