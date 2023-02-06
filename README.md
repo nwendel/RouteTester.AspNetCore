@@ -1,9 +1,9 @@
-# MvcRouteTester.AspNetCore [![Build status](https://ci.appveyor.com/api/projects/status/sot37agt946gbm93?svg=true)](https://ci.appveyor.com/project/nwendel/mvcroutetester-aspnetcore)
+# RouteTester.AspNetCore [![Build status](https://ci.appveyor.com/api/projects/status/sot37agt946gbm93?svg=true)](https://ci.appveyor.com/project/nwendel/routetester-aspnetcore)
 
 ### NuGet Package
 
 ```
-Install-Package MvcRouteTester.AspNetCore
+Install-Package RouteTester.AspNetCore
 ```
 
 ### Example
@@ -48,7 +48,7 @@ public class TestApplicationFactory : WebApplicationFactory<Program>
             serviceCollection
                 .AddMvc()
                 .AddApplicationPart(typeof(Program).Assembly);
-            serviceCollection.AddMvcRouteTester();
+            serviceCollection.MvcRouteTester();
         }
 
         public static void Configure(IApplicationBuilder app)
