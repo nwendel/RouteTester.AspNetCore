@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using MvcRouteTester.AspNetCore.Internal;
+using RouteTester.AspNetCore.Internal;
 
 namespace RouteTester.AspNetCore.Tests.TestHelpers;
 

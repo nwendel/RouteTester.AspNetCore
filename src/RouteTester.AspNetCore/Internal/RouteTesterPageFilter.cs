@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace MvcRouteTester.AspNetCore.Internal;
+namespace RouteTester.AspNetCore.Internal;
 
 public class RouteTesterPageFilter : IAsyncPageFilter
 {
@@ -19,6 +19,15 @@ public class RouteTesterPageFilter : IAsyncPageFilter
         var t = actionDescriptor.PageTypeInfo;
         */
 
-        throw new NotImplementedException();
+        var key = Guid.NewGuid().ToString();
+
+        var contentResult = new ContentResult
+        {
+            Content = key,
+        };
+
+        context.Result = contentResult;
+
+        return Task.CompletedTask;
     }
 }
