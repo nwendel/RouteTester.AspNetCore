@@ -1,4 +1,4 @@
-# RouteTester.AspNetCore [![Build status](https://ci.appveyor.com/api/projects/status/sot37agt946gbm93?svg=true)](https://ci.appveyor.com/project/nwendel/routetester-aspnetcore)
+# RouteTester.AspNetCore ![Build](https://github.com/nwendel/routetester.aspnetcore/actions/workflows/build.yml/badge.svg) [![Coverage](https://codecov.io/gh/nwendel/routetester.aspnetcore/branch/main/graph/badge.svg?token=BMNOSIWUMV)]
 
 ### NuGet Package
 
