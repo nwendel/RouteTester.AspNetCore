@@ -1,4 +1,4 @@
-# RouteTester.AspNetCore ![Build](https://github.com/nwendel/routetester.aspnetcore/actions/workflows/build.yml/badge.svg) [![Coverage](https://codecov.io/gh/nwendel/routetester.aspnetcore/branch/main/graph/badge.svg?token=BMNOSIWUMV)]
+# RouteTester.AspNetCore ![Build](https://github.com/nwendel/routetester.aspnetcore/actions/workflows/build.yml/badge.svg) ![Coverage](https://codecov.io/gh/nwendel/routetester.aspnetcore/branch/main/graph/badge.svg?token=BMNOSIWUMV)
 
 ### NuGet Package
 
