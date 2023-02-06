@@ -9,16 +9,22 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);CA1014;CS1591</NoWarn>
+  </PropertyGroup>
 
-    <IsPackable>false</IsPackable>
+  <PropertyGroup>
+      <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="MvcRouteTester.AspNetCore.Tests" />
+    <InternalsVisibleTo Include="RouteTester.AspNetCore.Tests" />
   </ItemGroup>
 
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute" />
   </ItemGroup>
 
   <ItemGroup>
