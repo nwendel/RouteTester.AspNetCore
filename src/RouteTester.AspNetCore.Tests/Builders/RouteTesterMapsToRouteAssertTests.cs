@@ -7,7 +7,7 @@ public class RouteTesterMapsToRouteAssertTests
     [Fact]
     public void ThrowsOnForParameterNullParameterName()
     {
-        var tested = new RouteTesterMapsToRouteAssert(null!, null!);
+        var tested = new MapsToControllerActionRouteAssert(null!, null!);
 
         Assert.Throws<ArgumentNullException>("name", () =>
             tested.ForParameter<string>(null!, p => { }));
@@ -16,7 +16,7 @@ public class RouteTesterMapsToRouteAssertTests
     [Fact]
     public void ThrowsOnForParameterNullAction()
     {
-        var tested = new RouteTesterMapsToRouteAssert(null!, null!);
+        var tested = new MapsToControllerActionRouteAssert(null!, null!);
 
         Assert.Throws<ArgumentNullException>("action", () =>
             tested.ForParameter<string>("parameter", null!));

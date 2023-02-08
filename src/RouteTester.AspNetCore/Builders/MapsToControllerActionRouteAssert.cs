@@ -5,16 +5,17 @@ using RouteTester.AspNetCore.Internal;
 
 namespace RouteTester.AspNetCore.Builders;
 
-public class RouteTesterMapsToRouteAssert :
-    IRouteAssertMapsToBuilder,
+public class MapsToControllerActionRouteAssert :
+    IMapsToControllerActionBuilder,
     IRouteAssert
 {
     private readonly ActualActionInvokeInfoCache _actionInvokeInfoCache;
     private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;
+
     private readonly List<ParameterAssert> _parameterAsserts = new();
     private ExpectedActionInvokeInfo? _expectedActionInvokeInfo;
 
-    public RouteTesterMapsToRouteAssert(
+    public MapsToControllerActionRouteAssert(
         ActualActionInvokeInfoCache actionInvokeInfoCache,
         IActionDescriptorCollectionProvider actionDescriptorCollectionProvider)
     {
@@ -40,7 +41,7 @@ public class RouteTesterMapsToRouteAssert :
         throw new ArgumentException($"Method {actionText} is not a valid controller action", nameof(actionCallExpression));
     }
 
-    public IRouteAssertMapsToBuilder ForParameter<T>(string name, Action<T?> action)
+    public IMapsToControllerActionBuilder ForParameter<T>(string name, Action<T?> action)
     {
         GuardAgainst.Null(name);
         GuardAgainst.Null(action);

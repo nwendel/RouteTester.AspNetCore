@@ -13,7 +13,7 @@ public sealed class BasicRouteTests : IDisposable
         await RouteAssert.ForAsync(
             _factory.Server,
             request => request.WithPathAndQuery("/simple-attribute-route"),
-            routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRoute()));
+            assert => assert.MapsToControllerAction<HomeController>(a => a.SimpleAttributeRoute()));
     }
 
     [Fact]
@@ -22,7 +22,7 @@ public sealed class BasicRouteTests : IDisposable
         await RouteAssert.ForAsync(
             _factory.Server,
             request => request.WithPathAndQuery("/simple-attribute-route-async"),
-            routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRouteAsync()));
+            assert => assert.MapsToControllerAction<HomeController>(a => a.SimpleAttributeRouteAsync()));
     }
 
     [Fact]
@@ -33,7 +33,7 @@ public sealed class BasicRouteTests : IDisposable
             request => request
                 .WithMethod(HttpMethod.Post)
                 .WithPathAndQuery("/simple-attribute-route-post"),
-            routeAssert => routeAssert.MapsTo<PostController>(a => a.SimpleAttributeRoute()));
+            assert => assert.MapsToControllerAction<PostController>(a => a.SimpleAttributeRoute()));
     }
 
     public void Dispose()

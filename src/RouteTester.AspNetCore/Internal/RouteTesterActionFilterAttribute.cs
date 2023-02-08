@@ -19,13 +19,11 @@ public sealed class RouteTesterActionFilterAttribute : ActionFilterAttribute
         GuardAgainst.Null(context);
 
         var actionDescriptor = (ControllerActionDescriptor)context.ActionDescriptor;
-
         var actionInvokeInfo = new ActualActionInvokeInfo(
             actionDescriptor.MethodInfo,
             context.ActionArguments.AsReadOnly());
 
         var actionInvokeInfoCache = context.HttpContext.RequestServices.GetRequiredService<ActualActionInvokeInfoCache>();
-
         var key = Guid.NewGuid().ToString();
         actionInvokeInfoCache.Add(key, actionInvokeInfo);
 

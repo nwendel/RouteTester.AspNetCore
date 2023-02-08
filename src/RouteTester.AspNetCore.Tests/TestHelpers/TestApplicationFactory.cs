@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using RouteTester.AspNetCore.Internal;
 
 namespace RouteTester.AspNetCore.Tests.TestHelpers;
 
@@ -22,7 +23,11 @@ internal sealed class TestApplicationFactory : WebApplicationFactory<Program>
         public static void ConfigureServices(IServiceCollection serviceCollection)
         {
             serviceCollection
-                .AddMvc()
+                .AddControllers()
+                .AddApplicationPart(typeof(Program).Assembly);
+            serviceCollection
+                .AddRazorPages()
+                .AddMvcOptions(o => o.Filters.Add(new RouteTesterPageFilter()))
                 .AddApplicationPart(typeof(Program).Assembly);
             serviceCollection.AddRouteTester();
         }
@@ -34,6 +39,7 @@ internal sealed class TestApplicationFactory : WebApplicationFactory<Program>
             app.UseEndpoints(x =>
             {
                 x.MapControllers();
+                x.MapRazorPages();
             });
         }
     }
