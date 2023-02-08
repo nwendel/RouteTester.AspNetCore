@@ -15,7 +15,7 @@ public sealed class BasicIncorrectRouteTests : IDisposable
             RouteAssert.ForAsync(
                 _factory.Server,
                 request => request.WithPathAndQuery("/simple-attribute-route"),
-                routeAssert => routeAssert.MapsTo<InvalidController>(a => a.Default())));
+                routeAssert => routeAssert.MapsToControllerAction<InvalidController>(a => a.Default())));
     }
 
     [Fact]
@@ -25,7 +25,7 @@ public sealed class BasicIncorrectRouteTests : IDisposable
             RouteAssert.ForAsync(
                 _factory.Server,
                 request => request.WithPathAndQuery("/simple-attribute-route"),
-                routeAssert => routeAssert.MapsTo<HomeController>(a => a.SimpleAttributeRouteAsync())));
+                routeAssert => routeAssert.MapsToControllerAction<HomeController>(a => a.SimpleAttributeRouteAsync())));
     }
 
     public void Dispose()

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.TestHost;
 
 namespace RouteTester.AspNetCore.Builders;
 
-public sealed class RouteTesterRequest : IRequestBuilder, IDisposable
+public sealed class RequestBuilder : IRequestBuilder, IDisposable
 {
     private HttpMethod _method = HttpMethod.Get;
     private string _pathAndQuery = "/";

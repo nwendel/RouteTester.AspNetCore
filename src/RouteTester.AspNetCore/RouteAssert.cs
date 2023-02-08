@@ -13,7 +13,7 @@ public static class RouteAssert
         GuardAgainst.Null(routeAssertBuilder);
 
         var serviceProvider = server.Host.Services;
-        var request = serviceProvider.GetRequiredService<RouteTesterRequest>();
+        var request = serviceProvider.GetRequiredService<Builders.RequestBuilder>();
         var routeAssert = serviceProvider.GetRequiredService<RouteTesterRouteAssert>();
 
         requestBuilder(request);

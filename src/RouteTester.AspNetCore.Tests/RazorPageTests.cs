@@ -13,7 +13,7 @@ public sealed class RazorPageTests : IDisposable
         await RouteAssert.ForAsync(
             _factory.Server,
             request => request.WithPathAndQuery("/Simple"),
-            routeAssert => routeAssert.MapsTo<SimplePageModel>());
+            routeAssert => routeAssert.MapsToPageModel<SimplePageModel>());
     }
 
     public void Dispose()

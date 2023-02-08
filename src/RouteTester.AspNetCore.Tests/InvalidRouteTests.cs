@@ -15,7 +15,7 @@ public sealed class InvalidRouteTests : IDisposable
             RouteAssert.ForAsync(
                 _factory.Server,
                 request => request.WithPathAndQuery("/invalid/static"),
-                routeAssert => routeAssert.MapsTo<InvalidController>(a => InvalidController.Static())));
+                routeAssert => routeAssert.MapsToControllerAction<InvalidController>(a => InvalidController.Static())));
     }
 
     [Fact]
@@ -25,7 +25,7 @@ public sealed class InvalidRouteTests : IDisposable
             RouteAssert.ForAsync(
                 _factory.Server,
                 request => request.WithPathAndQuery("/invalid/static"),
-                routeAssert => routeAssert.MapsTo<InvalidController>(a => (IActionResult)null!)));
+                routeAssert => routeAssert.MapsToControllerAction<InvalidController>(a => (IActionResult)null!)));
     }
 
     [Fact]
@@ -35,7 +35,7 @@ public sealed class InvalidRouteTests : IDisposable
             RouteAssert.ForAsync(
                 _factory.Server,
                 request => request.WithPathAndQuery("/invalid/non-action"),
-                routeAssert => routeAssert.MapsTo<InvalidController>(a => a.NonAction())));
+                routeAssert => routeAssert.MapsToControllerAction<InvalidController>(a => a.NonAction())));
     }
 
     public void Dispose()

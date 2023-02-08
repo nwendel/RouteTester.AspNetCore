@@ -17,19 +17,19 @@ public class RouteTesterRouteAssert :
         _serviceProvider = serviceProvider;
     }
 
-    public IRouteAssertMapsToBuilder MapsTo<TController>(Expression<Func<TController, IActionResult>> actionCallExpression)
+    public IMapsToControllerActionBuilder MapsToControllerAction<TController>(Expression<Func<TController, IActionResult>> actionCallExpression)
         where TController : ControllerBase
     {
-        return MapsToCore(actionCallExpression);
+        return MapsToControllerActionCore(actionCallExpression);
     }
 
-    public IRouteAssertMapsToBuilder MapsTo<TController>(Expression<Func<TController, Task<IActionResult>>> actionCallExpression)
+    public IMapsToControllerActionBuilder MapsToControllerAction<TController>(Expression<Func<TController, Task<IActionResult>>> actionCallExpression)
         where TController : ControllerBase
     {
-        return MapsToCore(actionCallExpression);
+        return MapsToControllerActionCore(actionCallExpression);
     }
 
-    public IRouteAssertMapsToBuilder MapsTo<TPageModel>()
+    public IMapsToControllerActionBuilder MapsToPageModel<TPageModel>()
         where TPageModel : PageModel
     {
         return null!;
@@ -37,7 +37,7 @@ public class RouteTesterRouteAssert :
 
     public void NotFound()
     {
-        var builder = _serviceProvider.GetRequiredService<RouteTesterNotFoundRouteAssert>();
+        var builder = _serviceProvider.GetRequiredService<NotFoundRouteAssert>();
         _routeAssert = builder;
     }
 
@@ -51,9 +51,9 @@ public class RouteTesterRouteAssert :
         await _routeAssert.AssertExpectedAsync(responseMessage);
     }
 
-    private IRouteAssertMapsToBuilder MapsToCore(LambdaExpression actionCallExpression)
+    private IMapsToControllerActionBuilder MapsToControllerActionCore(LambdaExpression actionCallExpression)
     {
-        var builder = _serviceProvider.GetRequiredService<RouteTesterMapsToRouteAssert>();
+        var builder = _serviceProvider.GetRequiredService<MapsToControllerActionRouteAssert>();
         builder.ParseActionCallExpression(actionCallExpression);
         _routeAssert = builder;
         return builder;

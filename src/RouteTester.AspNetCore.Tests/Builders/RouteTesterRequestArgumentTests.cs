@@ -7,7 +7,7 @@ public class RouteTesterRequestArgumentTests
     [Fact]
     public void ThrowsOnWithMethodNullMethod()
     {
-        using var tested = new RouteTesterRequest();
+        using var tested = new RequestBuilder();
 
         Assert.Throws<ArgumentNullException>("method", () => tested.WithMethod(null!));
     }
@@ -15,7 +15,7 @@ public class RouteTesterRequestArgumentTests
     [Fact]
     public void ThrowsOnWithPathAndQueryNullPathAndQuery()
     {
-        using var tested = new RouteTesterRequest();
+        using var tested = new RequestBuilder();
 
         Assert.Throws<ArgumentNullException>("pathAndQuery", () => tested.WithPathAndQuery(null!));
     }
@@ -23,7 +23,7 @@ public class RouteTesterRequestArgumentTests
     [Fact]
     public void ThrowsOnWithFormContentNull()
     {
-        using var tested = new RouteTesterRequest();
+        using var tested = new RequestBuilder();
 
         Assert.Throws<ArgumentNullException>("content", () => tested.WithFormContent(null!));
     }
@@ -31,7 +31,7 @@ public class RouteTesterRequestArgumentTests
     [Fact]
     public void ThrowsOnWithJsonContentNull()
     {
-        using var tested = new RouteTesterRequest();
+        using var tested = new RequestBuilder();
 
         Assert.Throws<ArgumentNullException>("content", () => tested.WithJsonContent(null!));
     }

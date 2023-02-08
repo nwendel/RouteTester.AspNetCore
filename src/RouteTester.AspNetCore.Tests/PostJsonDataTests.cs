@@ -22,7 +22,7 @@ public sealed class PostJsonDataTests : IDisposable
                     LastName = "Wendel",
                 }),
             routeAssert => routeAssert
-                .MapsTo<PostController>(a => a.WithJsonPerson(Args.Any<Person>()))
+                .MapsToControllerAction<PostController>(a => a.WithJsonPerson(Args.Any<Person>()))
                 .ForParameter<Person>("person", p =>
                 {
                     Assert.Equal("Niklas", p?.FirstName);

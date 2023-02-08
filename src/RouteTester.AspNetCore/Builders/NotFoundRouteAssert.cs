@@ -2,7 +2,7 @@
 
 namespace RouteTester.AspNetCore.Builders;
 
-public class RouteTesterNotFoundRouteAssert : IRouteAssert
+public class NotFoundRouteAssert : IRouteAssert
 {
     public Task AssertExpectedAsync(HttpResponseMessage responseMessage)
     {

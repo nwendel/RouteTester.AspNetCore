@@ -15,7 +15,7 @@ public sealed class ParameterIncorrectRouteTests : IDisposable
             RouteAssert.ForAsync(
                 _factory.Server,
                 request => request.WithPathAndQuery("/parameter/same-name-with-string"),
-                routeAssert => routeAssert.MapsTo<ParameterController>(a => a.SameName(default, default(int)))));
+                routeAssert => routeAssert.MapsToControllerAction<ParameterController>(a => a.SameName(default, default(int)))));
     }
 
     [Fact]
@@ -26,7 +26,7 @@ public sealed class ParameterIncorrectRouteTests : IDisposable
                 _factory.Server,
                 request => request.WithPathAndQuery("/parameter/same-name-with-string"),
                 routeAssert => routeAssert
-                    .MapsTo<ParameterController>(a => a.SameName(default, default(string)))
+                    .MapsToControllerAction<ParameterController>(a => a.SameName(default, default(string)))
                     .ForParameter<int>("parameter2", p => { })));
     }
 
