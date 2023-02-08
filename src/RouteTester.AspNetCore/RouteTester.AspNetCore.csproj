@@ -2,20 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AnalysisMode>AllEnabledByDefault</AnalysisMode>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <NoWarn>$(NoWarn);CA1014;CS1591</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup>
     <PackageId>RouteTester.AspNetCore</PackageId>
     <Title>RouteTester.AspNetCore</Title>
     <Description>A library for unit testing AspNetCore routes</Description>
-    <Version>7.0.0</Version>
+    <Version>7.0.1</Version>
     <Copyright>Niklas Wendel 2018-2023</Copyright>
     <Authors>Niklas Wendel</Authors>
     <PackageTags>Route;Test;Testing;AspNetCore;UnitTest</PackageTags>
@@ -25,10 +24,12 @@
     <RepositoryUrl>https://github.com/nwendel/RouteTester.AspNetCore</RepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
     <InternalsVisibleTo Include="RouteTester.AspNetCore.Tests" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +38,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="7.0.1" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

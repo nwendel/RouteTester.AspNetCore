@@ -26,7 +26,7 @@ charset = utf-8-bom
 # Organize usings
 dotnet_sort_system_directives_first = true
 # Namespaces
-csharp_style_namespace_declarations = file_scoped:error
+csharp_style_namespace_declarations = file_scoped:silent
 # this. preferences
 dotnet_style_qualification_for_field = false:silent
 dotnet_style_qualification_for_property = false:silent
@@ -160,18 +160,11 @@ dotnet_diagnostic.IDE0090.severity = error
 # S3925: "ISerializable" should be implemented correctly
 dotnet_diagnostic.S3925.severity = none
 
-
 # IDE1006: Naming Styles
 dotnet_diagnostic.IDE1006.severity = none
 
+# CS1591: Missing XML comment for publicly visible type or member
+dotnet_diagnostic.CS1591.severity = none
+
 # CA2007: Consider calling ConfigureAwait on the awaited task
 dotnet_diagnostic.CA2007.severity = none
-
-# CA1024: Use properties where appropriate
-dotnet_diagnostic.CA1024.severity = none
-
-# CA1716: Identifiers should not match keywords
-dotnet_diagnostic.CA1716.severity = none
-
-# S4457: Parameter validation in "async"/"await" methods should be wrapped
-dotnet_diagnostic.S4457.severity = none

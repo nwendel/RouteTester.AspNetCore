@@ -6,6 +6,8 @@ namespace RouteTester.AspNetCore.Infrastructure;
 public interface IFluentInterface
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [SuppressMessage("Design", "CA1024:Use properties where appropriate", Justification = "Name must match System.Object.GetType")]
+    [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "Name must match System.Object.GetType")]
     Type GetType();
 
     [EditorBrowsable(EditorBrowsableState.Never)]
