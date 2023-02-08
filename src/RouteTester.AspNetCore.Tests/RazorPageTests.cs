@@ -8,12 +8,12 @@ public sealed class RazorPageTests : IDisposable
     private readonly TestApplicationFactory _factory = new();
 
     [Fact]
-    public async Task Asdf()
+    public async Task CanGetSimpleRazorPage()
     {
         await RouteAssert.ForAsync(
             _factory.Server,
             request => request.WithPathAndQuery("/Simple"),
-            assert => assert.MapsToPageModel<SimplePageModel>());
+            assert => assert.MapsToRazorPage<SimplePageModel>());
     }
 
     public void Dispose()

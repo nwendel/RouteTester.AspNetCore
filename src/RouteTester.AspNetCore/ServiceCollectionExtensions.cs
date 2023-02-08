@@ -23,5 +23,6 @@ public static class ServiceCollectionExtensions
         // RazorPages
         serviceCollection.Configure<MvcOptions>(o => o.Filters.Add<RouteTesterActionFilterAttribute>());
         serviceCollection.AddTransient<MapsToPageModelRouteAssert>();
+        serviceCollection.AddSingleton<ActualPageModelCache>();
     }
 }

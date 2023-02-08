@@ -11,7 +11,7 @@ public interface IRouteAssertBuilder
     IMapsToControllerActionBuilder MapsToControllerAction<TController>(Expression<Func<TController, Task<IActionResult>>> actionCallExpression)
         where TController : ControllerBase;
 
-    void MapsToPageModel<TPageModel>()
+    void MapsToRazorPage<TPageModel>()
         where TPageModel : PageModel;
 
     void NotFound();

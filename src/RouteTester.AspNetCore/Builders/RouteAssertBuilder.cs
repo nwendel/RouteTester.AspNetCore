@@ -29,10 +29,11 @@ public class RouteAssertBuilder :
         return MapsToControllerActionCore(actionCallExpression);
     }
 
-    public void MapsToPageModel<TPageModel>()
+    public void MapsToRazorPage<TPageModel>()
         where TPageModel : PageModel
     {
         var builder = _serviceProvider.GetRequiredService<MapsToPageModelRouteAssert>();
+        builder.Expectation(typeof(TPageModel));
         _routeAssert = builder;
     }
 

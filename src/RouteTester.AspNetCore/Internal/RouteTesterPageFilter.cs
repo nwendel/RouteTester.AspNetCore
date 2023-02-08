@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace RouteTester.AspNetCore.Internal;
 
@@ -13,13 +14,9 @@ public class RouteTesterPageFilter : IAsyncPageFilter
 
         var model = context.HandlerInstance;
 
-        /*
-        var actionDescriptor = context.ActionDescriptor;
-        var m = actionDescriptor.ModelTypeInfo;
-        var t = actionDescriptor.PageTypeInfo;
-        */
-
+        var actualPageModelCache = context.HttpContext.RequestServices.GetRequiredService<ActualPageModelCache>();
         var key = Guid.NewGuid().ToString();
+        actualPageModelCache.Add(key, model);
 
         var contentResult = new ContentResult
         {
