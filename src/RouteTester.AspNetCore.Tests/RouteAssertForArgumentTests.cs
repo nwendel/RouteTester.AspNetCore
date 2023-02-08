@@ -14,7 +14,7 @@ public sealed class RouteAssertForArgumentTests : IDisposable
             RouteAssert.ForAsync(
                 null!,
                 request => request.WithPathAndQuery("/simple-attribute-route"),
-                routeAssert => routeAssert.MapsToControllerAction<HomeController>(a => a.SimpleAttributeRoute())));
+                assert => assert.MapsToControllerAction<HomeController>(a => a.SimpleAttributeRoute())));
     }
 
     [Fact]
@@ -24,7 +24,7 @@ public sealed class RouteAssertForArgumentTests : IDisposable
             RouteAssert.ForAsync(
                 _factory.Server,
                 null!,
-                routeAssert => routeAssert.MapsToControllerAction<HomeController>(a => a.SimpleAttributeRoute())));
+                assert => assert.MapsToControllerAction<HomeController>(a => a.SimpleAttributeRoute())));
     }
 
     [Fact]

@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace RouteTester.AspNetCore.Builders;
 
-public class RouteTesterRouteAssert :
+public class RouteAssertBuilder :
     IRouteAssertBuilder,
     IRouteAssert
 {
@@ -12,7 +12,7 @@ public class RouteTesterRouteAssert :
 
     private IRouteAssert? _routeAssert;
 
-    public RouteTesterRouteAssert(IServiceProvider serviceProvider)
+    public RouteAssertBuilder(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
     }
@@ -29,10 +29,11 @@ public class RouteTesterRouteAssert :
         return MapsToControllerActionCore(actionCallExpression);
     }
 
-    public IMapsToControllerActionBuilder MapsToPageModel<TPageModel>()
+    public void MapsToPageModel<TPageModel>()
         where TPageModel : PageModel
     {
-        return null!;
+        var builder = _serviceProvider.GetRequiredService<MapsToPageModelRouteAssert>();
+        _routeAssert = builder;
     }
 
     public void NotFound()

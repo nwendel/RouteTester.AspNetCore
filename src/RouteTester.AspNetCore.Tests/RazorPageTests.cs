@@ -7,13 +7,13 @@ public sealed class RazorPageTests : IDisposable
 {
     private readonly TestApplicationFactory _factory = new();
 
-    [Fact(Skip = "Not implemented yet")]
+    [Fact]
     public async Task Asdf()
     {
         await RouteAssert.ForAsync(
             _factory.Server,
             request => request.WithPathAndQuery("/Simple"),
-            routeAssert => routeAssert.MapsToPageModel<SimplePageModel>());
+            assert => assert.MapsToPageModel<SimplePageModel>());
     }
 
     public void Dispose()

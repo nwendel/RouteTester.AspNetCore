@@ -21,7 +21,7 @@ public sealed class PostJsonDataTests : IDisposable
                     FirstName = "Niklas",
                     LastName = "Wendel",
                 }),
-            routeAssert => routeAssert
+            assert => assert
                 .MapsToControllerAction<PostController>(a => a.WithJsonPerson(Args.Any<Person>()))
                 .ForParameter<Person>("person", p =>
                 {

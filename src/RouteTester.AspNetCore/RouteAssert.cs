@@ -14,7 +14,7 @@ public static class RouteAssert
 
         var serviceProvider = server.Host.Services;
         var request = serviceProvider.GetRequiredService<Builders.RequestBuilder>();
-        var routeAssert = serviceProvider.GetRequiredService<RouteTesterRouteAssert>();
+        var routeAssert = serviceProvider.GetRequiredService<RouteAssertBuilder>();
 
         requestBuilder(request);
         routeAssertBuilder(routeAssert);

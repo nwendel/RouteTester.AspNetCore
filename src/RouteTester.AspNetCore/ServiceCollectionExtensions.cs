@@ -15,12 +15,13 @@ public static class ServiceCollectionExtensions
 
         // Controllers
         serviceCollection.AddTransient<RequestBuilder>();
-        serviceCollection.AddTransient<RouteTesterRouteAssert>();
+        serviceCollection.AddTransient<RouteAssertBuilder>();
         serviceCollection.AddTransient<MapsToControllerActionRouteAssert>();
         serviceCollection.AddTransient<NotFoundRouteAssert>();
         serviceCollection.AddSingleton<ActualActionInvokeInfoCache>();
 
         // RazorPages
         serviceCollection.Configure<MvcOptions>(o => o.Filters.Add<RouteTesterActionFilterAttribute>());
+        serviceCollection.AddTransient<MapsToPageModelRouteAssert>();
     }
 }

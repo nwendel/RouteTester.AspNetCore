@@ -21,7 +21,7 @@ public sealed class PostFormDataTests : IDisposable
                     { "FirstName", "Niklas" },
                     { "LastName", "Wendel" },
                 }),
-            routeAssert => routeAssert
+            assert => assert
                 .MapsToControllerAction<PostController>(a => a.WithPerson(Args.Any<Person>()))
                 .ForParameter<Person>("person", p =>
                 {

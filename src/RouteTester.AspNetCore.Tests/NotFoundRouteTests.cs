@@ -13,7 +13,7 @@ public sealed class NotFoundRouteTests : IDisposable
         await RouteAssert.ForAsync(
             _factory.Server,
             request => request.WithPathAndQuery("/non-existant-route"),
-            routeAssert => routeAssert.NotFound());
+            assert => assert.NotFound());
     }
 
     [Fact]
@@ -23,7 +23,7 @@ public sealed class NotFoundRouteTests : IDisposable
             RouteAssert.ForAsync(
                 _factory.Server,
                 request => request.WithPathAndQuery("/simple-attribute-route"),
-                routeAssert => routeAssert.NotFound()));
+                assert => assert.NotFound()));
     }
 
     public void Dispose()

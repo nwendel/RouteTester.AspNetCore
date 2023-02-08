@@ -18,7 +18,7 @@ public class Example
         await RouteAssert.ForAsync(
             _server,
             request => request.WithPathAndQuery("/some-route"),
-            routeAssert => routeAssert.MapsTo<HomeController>(a => a.SomeRoute()));
+            assert => assert.MapsTo<HomeController>(a => a.SomeRoute()));
     }
 
     [Fact]
@@ -27,7 +27,7 @@ public class Example
         await RouteAssert.ForAsync(
             _server,
             request => request.WithPathAndQuery("/some-other-route?parameter=value"),
-            routeAssert => routeAssert.MapsTo<HomeController>(a => a.SomeOtherRoute("value")));
+            assert => assert.MapsTo<HomeController>(a => a.SomeOtherRoute("value")));
     }
 }
 
