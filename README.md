@@ -1,4 +1,4 @@
-# RouteTester.AspNetCore ![Build](https://github.com/nwendel/routetester.aspnetcore/actions/workflows/build.yml/badge.svg) [![Coverage](https://codecov.io/gh/nwendel/routetester.aspnetcore/branch/main/graph/badge.svg?token=BMNOSIWUMV)]
+# RouteTester.AspNetCore ![Build](https://github.com/nwendel/routetester.aspnetcore/actions/workflows/build.yml/badge.svg) ![Coverage](https://codecov.io/gh/nwendel/routetester.aspnetcore/branch/main/graph/badge.svg?token=BMNOSIWUMV)
 
 ### NuGet Package
 
@@ -18,7 +18,7 @@ public class Example
         await RouteAssert.ForAsync(
             _server,
             request => request.WithPathAndQuery("/some-route"),
-            assert => assert.MapsTo<HomeController>(a => a.SomeRoute()));
+            routeAssert => routeAssert.MapsTo<HomeController>(a => a.SomeRoute()));
     }
 
     [Fact]
@@ -27,7 +27,7 @@ public class Example
         await RouteAssert.ForAsync(
             _server,
             request => request.WithPathAndQuery("/some-other-route?parameter=value"),
-            assert => assert.MapsTo<HomeController>(a => a.SomeOtherRoute("value")));
+            routeAssert => routeAssert.MapsTo<HomeController>(a => a.SomeOtherRoute("value")));
     }
 }
 
