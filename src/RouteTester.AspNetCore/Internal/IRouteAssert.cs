@@ -1,4 +1,4 @@
-﻿namespace RouteTester.AspNetCore.Builders;
+﻿namespace RouteTester.AspNetCore.Internal;
 
 public interface IRouteAssert
 {

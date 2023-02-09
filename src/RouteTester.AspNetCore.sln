@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApplication", "TestAppl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{67323CE3-A6FC-45E3-99DB-ECBF083585B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RouteTester.AspNetCore.Tests.Conventions", "RouteTester.AspNetCore.Tests.Conventions\RouteTester.AspNetCore.Tests.Conventions.csproj", "{A69B8851-8C12-4945-A551-51D6CD898668}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{8B890A65-4436-449D-A9C8-F0FEFA0D8102}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B890A65-4436-449D-A9C8-F0FEFA0D8102}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B890A65-4436-449D-A9C8-F0FEFA0D8102}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A69B8851-8C12-4945-A551-51D6CD898668}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A69B8851-8C12-4945-A551-51D6CD898668}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A69B8851-8C12-4945-A551-51D6CD898668}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A69B8851-8C12-4945-A551-51D6CD898668}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +50,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{6286DFAF-A8E0-4DAE-93A8-0E75524A32E7} = {67323CE3-A6FC-45E3-99DB-ECBF083585B1}
 		{8B890A65-4436-449D-A9C8-F0FEFA0D8102} = {67323CE3-A6FC-45E3-99DB-ECBF083585B1}
+		{A69B8851-8C12-4945-A551-51D6CD898668} = {67323CE3-A6FC-45E3-99DB-ECBF083585B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BCED860A-0EDB-4B94-921B-D28863E5A1B6}

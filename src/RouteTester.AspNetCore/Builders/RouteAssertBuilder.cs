@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.DependencyInjection;
+using RouteTester.AspNetCore.Internal;
 
 namespace RouteTester.AspNetCore.Builders;
 

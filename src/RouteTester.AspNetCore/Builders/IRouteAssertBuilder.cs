@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace RouteTester.AspNetCore.Builders;
 
-public interface IRouteAssertBuilder
+public interface IRouteAssertBuilder : IFluentInterface
 {
     IMapsToControllerActionBuilder MapsToControllerAction<TController>(Expression<Func<TController, IActionResult>> actionCallExpression)
         where TController : ControllerBase;
